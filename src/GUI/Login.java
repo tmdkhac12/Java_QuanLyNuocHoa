@@ -18,9 +18,12 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         // Setup Frame Attributes
         this.setResizable(false);
-
+        setTitle("Hệ thống quản lý cửa hàng bán nước hoa");
+        
+        
         // Init Frame's Components
         initComponents();
+        setLocationRelativeTo(null);
         setUpLogo();
 
     }
@@ -147,6 +150,8 @@ public class Login extends javax.swing.JFrame {
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
         // TODO add your handling code here:
+        this.dispose();
+        new Main().setVisible(true);
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     private void txtMatKhauKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMatKhauKeyPressed

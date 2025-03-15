@@ -1,14 +1,13 @@
 package GUI;
 
-import javax.swing.SwingConstants;
+import javax.swing.*;
+
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
-import java.awt.Color;
-import java.awt.Insets;
-import javax.swing.JFrame;
-import javax.swing.UIManager;
+
+import java.awt.*;
 import javax.swing.border.EmptyBorder;
 
 /*
@@ -21,6 +20,10 @@ import javax.swing.border.EmptyBorder;
  * @author QUAN
  */
 public class Main extends javax.swing.JFrame {
+    // Panel
+    private KhachHang khachHangPanel;
+    private NhanVien nhanVienPanel;
+    private ThuocTinh thuocTinhPanel;
 
     /** Creates new form Main */
     public Main() {
@@ -320,6 +323,8 @@ public class Main extends javax.swing.JFrame {
 
     private void btnThuocTinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThuocTinhActionPerformed
         // TODO add your handling code here:
+        this.thuocTinhPanel = new ThuocTinh();
+        addTaskBar(mainContent2, thuocTinhPanel);
     }//GEN-LAST:event_btnThuocTinhActionPerformed
 
     private void btnPhieuNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPhieuNhapActionPerformed
@@ -332,6 +337,8 @@ public class Main extends javax.swing.JFrame {
 
     private void btnKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhachHangActionPerformed
         // TODO add your handling code here:
+        this.khachHangPanel = new KhachHang();
+        addTaskBar(mainContent2, khachHangPanel);
     }//GEN-LAST:event_btnKhachHangActionPerformed
 
     private void btnNhaCungCapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhaCungCapActionPerformed
@@ -340,6 +347,8 @@ public class Main extends javax.swing.JFrame {
 
     private void btnNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhanVienActionPerformed
         // TODO add your handling code here:
+        this.nhanVienPanel = new NhanVien();
+        addTaskBar(mainContent2, nhanVienPanel);
     }//GEN-LAST:event_btnNhanVienActionPerformed
 
     private void btnThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeActionPerformed
@@ -436,40 +445,15 @@ public class Main extends javax.swing.JFrame {
         UIManager.put("TableHeader.bottomSeparatorColor", new Color(242, 242, 242));
         btnTrangChuActionPerformed(null);
     }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Main().setVisible(true);
-            }
-        });
+    private void addTaskBar(Container mainContent, JPanel panel) {
+        mainContent.setLayout(new BorderLayout());
+        panel.setSize(mainContent.getSize());
+        mainContent.removeAll();
+        mainContent.add(panel, BorderLayout.CENTER);
+        mainContent.setVisible(true);
+        mainContent.revalidate();
+        mainContent.repaint();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
