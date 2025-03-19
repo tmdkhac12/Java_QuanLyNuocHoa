@@ -24,6 +24,7 @@ public class Main extends javax.swing.JFrame {
     private KhachHang khachHangPanel;
     private NhanVien nhanVienPanel;
     private ThuocTinh thuocTinhPanel;
+    private PhieuNhap phieuNhapPanel;
 
     /** Creates new form Main */
     public Main() {
@@ -329,6 +330,8 @@ public class Main extends javax.swing.JFrame {
 
     private void btnPhieuNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPhieuNhapActionPerformed
         // TODO add your handling code here:
+        this.phieuNhapPanel = new PhieuNhap();
+        addTaskBar(mainContent2, phieuNhapPanel);
     }//GEN-LAST:event_btnPhieuNhapActionPerformed
 
     private void btnHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoaDonActionPerformed

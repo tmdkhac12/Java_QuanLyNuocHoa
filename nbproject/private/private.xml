@@ -3,21 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/QUAN/Documents/NetBeansProjects/quanlynuochoa/src/GUI/KHang/ChiTietKHang.java</file>
-            <file>file:/C:/Users/QUAN/Documents/NetBeansProjects/quanlynuochoa/src/GUI/TTinh/NotHuong.java</file>
-            <file>file:/C:/Users/QUAN/Documents/NetBeansProjects/quanlynuochoa/src/GUI/TTinh/ThuongHieu.java</file>
-            <file>file:/C:/Users/QUAN/Documents/NetBeansProjects/quanlynuochoa/src/GUI/NVien/ThemNhanVien.java</file>
-            <file>file:/C:/Users/QUAN/Documents/NetBeansProjects/quanlynuochoa/src/GUI/KHang/SuaKHang.java</file>
-            <file>file:/C:/Users/QUAN/Documents/NetBeansProjects/quanlynuochoa/src/GUI/Login.java</file>
-            <file>file:/C:/Users/QUAN/Documents/NetBeansProjects/quanlynuochoa/src/GUI/KhachHang.java</file>
-            <file>file:/C:/Users/QUAN/Documents/NetBeansProjects/quanlynuochoa/src/GUI/TTinh/NongDo.java</file>
-            <file>file:/C:/Users/QUAN/Documents/NetBeansProjects/quanlynuochoa/src/GUI/ThuocTinh.java</file>
-            <file>file:/C:/Users/QUAN/Documents/NetBeansProjects/quanlynuochoa/src/GUI/NhanVien.java</file>
-            <file>file:/C:/Users/QUAN/Documents/NetBeansProjects/quanlynuochoa/src/GUI/NVien/SuaNhanVien.java</file>
-            <file>file:/C:/Users/QUAN/Documents/NetBeansProjects/quanlynuochoa/src/GUI/NVien/ChiTietNhanVien.java</file>
-            <file>file:/C:/Users/QUAN/Documents/NetBeansProjects/quanlynuochoa/src/GUI/TTinh/KhuyenMai.java</file>
-            <file>file:/C:/Users/QUAN/Documents/NetBeansProjects/quanlynuochoa/src/GUI/Main.java</file>
-            <file>file:/C:/Users/QUAN/Documents/NetBeansProjects/quanlynuochoa/src/GUI/KHang/ThemKHang.java</file>
+            <file>file:/D:/DoanCuaHangNuocHoaJava/Java_QuanLyNuocHoa/src/GUI/PhieuNhap.java</file>
+            <file>file:/D:/DoanCuaHangNuocHoaJava/Java_QuanLyNuocHoa/src/GUI/HoaDon.java</file>
+            <file>file:/D:/DoanCuaHangNuocHoaJava/Java_QuanLyNuocHoa/src/GUI/KHang/ThemKHang.java</file>
+            <file>file:/D:/DoanCuaHangNuocHoaJava/Java_QuanLyNuocHoa/src/GUI/Login.java</file>
+            <file>file:/D:/DoanCuaHangNuocHoaJava/Java_QuanLyNuocHoa/src/GUI/PNhap/ChiTietPhieuNhap.java</file>
+            <file>file:/D:/DoanCuaHangNuocHoaJava/Java_QuanLyNuocHoa/src/GUI/NhanVien.java</file>
+            <file>file:/D:/DoanCuaHangNuocHoaJava/Java_QuanLyNuocHoa/src/GUI/KHang/ChiTietKHang.java</file>
+            <file>file:/D:/DoanCuaHangNuocHoaJava/Java_QuanLyNuocHoa/src/GUI/KHang/SuaKHang.java</file>
+            <file>file:/D:/DoanCuaHangNuocHoaJava/Java_QuanLyNuocHoa/src/GUI/HDon/ChiTietHoaDon.java</file>
+            <file>file:/D:/DoanCuaHangNuocHoaJava/Java_QuanLyNuocHoa/src/GUI/Main.java</file>
+            <file>file:/D:/DoanCuaHangNuocHoaJava/Java_QuanLyNuocHoa/src/GUI/ThuocTinh.java</file>
+            <file>file:/D:/DoanCuaHangNuocHoaJava/Java_QuanLyNuocHoa/src/GUI/TTinh/KhuyenMai.java</file>
+            <file>file:/D:/DoanCuaHangNuocHoaJava/Java_QuanLyNuocHoa/src/GUI/KhachHang.java</file>
         </group>
     </open-files>
 </project-private>
