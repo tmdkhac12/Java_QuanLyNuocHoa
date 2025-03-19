@@ -25,7 +25,9 @@ public class Main extends javax.swing.JFrame {
     private NhanVien nhanVienPanel;
     private ThuocTinh thuocTinhPanel;
     private PhieuNhap phieuNhapPanel;
-
+    private HoaDon hoaDonPanel;
+    private ThongKe thongKePanel;
+    private NhomQuyen nhomQuyenPanel;
     /** Creates new form Main */
     public Main() {
         // Setup Frame Attributes
@@ -336,6 +338,8 @@ public class Main extends javax.swing.JFrame {
 
     private void btnHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoaDonActionPerformed
         // TODO add your handling code here:
+        this.hoaDonPanel = new HoaDon();
+        addTaskBar(mainContent2, hoaDonPanel);
     }//GEN-LAST:event_btnHoaDonActionPerformed
 
     private void btnKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhachHangActionPerformed
@@ -356,10 +360,14 @@ public class Main extends javax.swing.JFrame {
 
     private void btnThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeActionPerformed
         // TODO add your handling code here:
+        this.thongKePanel = new ThongKe();
+        addTaskBar(mainContent2, thongKePanel);
     }//GEN-LAST:event_btnThongKeActionPerformed
 
     private void btnNhomQuyenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhomQuyenActionPerformed
         // TODO add your handling code here:
+        this.nhomQuyenPanel = new NhomQuyen();
+        addTaskBar(mainContent2, nhomQuyenPanel);
     }//GEN-LAST:event_btnNhomQuyenActionPerformed
 
     private void btnDangXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangXuatActionPerformed
