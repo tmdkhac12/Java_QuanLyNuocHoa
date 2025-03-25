@@ -36,9 +36,6 @@ public class ChiTietNhanVien extends javax.swing.JFrame {
         txtTenNV = new javax.swing.JTextField();
         btnCancel = new javax.swing.JButton();
         lblTenNV = new javax.swing.JLabel();
-        lblGioiTinh = new javax.swing.JLabel();
-        rdbMale = new javax.swing.JRadioButton();
-        rdbFemale = new javax.swing.JRadioButton();
         lblUsername = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
         lblPassword = new javax.swing.JLabel();
@@ -86,14 +83,6 @@ public class ChiTietNhanVien extends javax.swing.JFrame {
 
         lblTenNV.setText("Họ và tên");
 
-        lblGioiTinh.setText("Giới tính");
-
-        btnGroupGioiTinh.add(rdbMale);
-        rdbMale.setText("Nam");
-
-        btnGroupGioiTinh.add(rdbFemale);
-        rdbFemale.setText("Nữ");
-
         lblUsername.setText("Tên đăng nhập");
 
         lblPassword.setText("Mật khẩu");
@@ -112,28 +101,21 @@ public class ChiTietNhanVien extends javax.swing.JFrame {
             pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCenterLayout.createSequentialGroup()
                 .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlCenterLayout.createSequentialGroup()
-                            .addGap(49, 49, 49)
-                            .addComponent(rdbMale)
-                            .addGap(131, 131, 131)
-                            .addComponent(rdbFemale))
-                        .addGroup(pnlCenterLayout.createSequentialGroup()
-                            .addGap(32, 32, 32)
-                            .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(lblTenNV, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtTenNV)
-                                .addComponent(lblGioiTinh, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtUsername)
-                                .addComponent(txtPassword)
-                                .addComponent(lblNhomQuyen, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jComboBox1, 0, 352, Short.MAX_VALUE)
-                                .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(pnlCenterLayout.createSequentialGroup()
-                        .addGap(137, 137, 137)
+                        .addGap(32, 32, 32)
+                        .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblTenNV, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTenNV)
+                            .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtUsername)
+                            .addComponent(txtPassword)
+                            .addComponent(lblNhomQuyen, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox1, 0, 352, Short.MAX_VALUE)
+                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlCenterLayout.createSequentialGroup()
+                        .addGap(140, 140, 140)
                         .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
@@ -144,31 +126,25 @@ public class ChiTietNhanVien extends javax.swing.JFrame {
                 .addComponent(lblTenNV)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtTenNV, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(lblGioiTinh)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rdbMale)
-                    .addComponent(rdbFemale))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(lblUsername)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(lblPassword)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(lblNhomQuyen)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(lblTrangThai)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
                 .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -186,8 +162,8 @@ public class ChiTietNhanVien extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(pnlTop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlCenter, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addComponent(pnlCenter, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -202,7 +178,6 @@ public class ChiTietNhanVien extends javax.swing.JFrame {
     private javax.swing.ButtonGroup btnGroupGioiTinh;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JLabel lblGioiTinh;
     private javax.swing.JLabel lblNhomQuyen;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblTenNV;
@@ -211,8 +186,6 @@ public class ChiTietNhanVien extends javax.swing.JFrame {
     private javax.swing.JLabel lblUsername;
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JPanel pnlTop;
-    private javax.swing.JRadioButton rdbFemale;
-    private javax.swing.JRadioButton rdbMale;
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtTenNV;
     private javax.swing.JTextField txtUsername;

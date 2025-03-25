@@ -120,11 +120,11 @@ public class KhachHang extends javax.swing.JPanel {
 
         tblKhachHang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "Nguyễn Văn Nam", "273 An Dương Vương, P3, Q5 ", "0898433611", "vannam@gmail.com "},
-                {"2", "Nguyễn Gia Khang", "377 Trần Bình Trọng, P1, Q Tân Bình ", "0644577823 ", "khang2@gmail.com "}
+                {"1", "Nguyễn Văn Nam", "0898433611", "vannam@gmail.com "},
+                {"2", "Nguyễn Gia Khang", "0644577823 ", "khang2@gmail.com "}
             },
             new String [] {
-                "Mã khách hàng", "Tên khách hàng", "Địa chỉ ", "Số điện thoại ", "Email "
+                "Mã khách hàng", "Tên khách hàng", "Số điện thoại ", "Email "
             }
         ));
         jScrollPane1.setViewportView(tblKhachHang);
@@ -133,7 +133,6 @@ public class KhachHang extends javax.swing.JPanel {
             tblKhachHang.getColumnModel().getColumn(1).setResizable(false);
             tblKhachHang.getColumnModel().getColumn(2).setResizable(false);
             tblKhachHang.getColumnModel().getColumn(3).setResizable(false);
-            tblKhachHang.getColumnModel().getColumn(4).setResizable(false);
         }
         tblKhachHang.getAccessibleContext().setAccessibleParent(tblKhachHang);
 

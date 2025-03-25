@@ -37,11 +37,9 @@ public class ChiTietKHang extends javax.swing.JFrame {
         txtTenKH = new javax.swing.JTextField();
         lblSoDT = new javax.swing.JLabel();
         txtSoDT = new javax.swing.JTextField();
-        lblDiaChi = new javax.swing.JLabel();
-        txtDiaChi = new javax.swing.JTextField();
         btnCancel = new javax.swing.JButton();
-        lblDiaChi1 = new javax.swing.JLabel();
-        txtDiaChi1 = new javax.swing.JTextField();
+        lblEmail = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,8 +66,6 @@ public class ChiTietKHang extends javax.swing.JFrame {
 
         lblSoDT.setText("Số điện thoại");
 
-        lblDiaChi.setText("Địa chỉ");
-
         btnCancel.setBackground(new java.awt.Color(204, 0, 102));
         btnCancel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
@@ -80,7 +76,7 @@ public class ChiTietKHang extends javax.swing.JFrame {
             }
         });
 
-        lblDiaChi1.setText("Email");
+        lblEmail.setText("Email");
 
         javax.swing.GroupLayout pnlCenterLayout = new javax.swing.GroupLayout(pnlCenter);
         pnlCenter.setLayout(pnlCenterLayout);
@@ -89,22 +85,20 @@ public class ChiTietKHang extends javax.swing.JFrame {
             .addGroup(pnlCenterLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtDiaChi, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtSoDT, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtTenKH, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtDiaChi1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlCenterLayout.createSequentialGroup()
                         .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblTenKH)
                             .addComponent(lblSoDT)
-                            .addComponent(lblDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblDiaChi1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 377, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCenterLayout.createSequentialGroup()
-                .addContainerGap(142, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(156, 156, 156))
+                .addGap(148, 148, 148))
         );
         pnlCenterLayout.setVerticalGroup(
             pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,17 +111,13 @@ public class ChiTietKHang extends javax.swing.JFrame {
                 .addComponent(lblSoDT)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSoDT, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblDiaChi)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblEmail)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblDiaChi1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtDiaChi1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addGap(22, 22, 22))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -155,15 +145,13 @@ public class ChiTietKHang extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
-    private javax.swing.JLabel lblDiaChi;
-    private javax.swing.JLabel lblDiaChi1;
+    private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblSoDT;
     private javax.swing.JLabel lblTenKH;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JPanel pnlTop;
-    private javax.swing.JTextField txtDiaChi;
-    private javax.swing.JTextField txtDiaChi1;
+    private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtSoDT;
     private javax.swing.JTextField txtTenKH;
     // End of variables declaration//GEN-END:variables

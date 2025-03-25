@@ -37,12 +37,10 @@ public class SuaKHang extends javax.swing.JFrame {
         txtTenKH = new javax.swing.JTextField();
         lblSoDT = new javax.swing.JLabel();
         txtSoDT = new javax.swing.JTextField();
-        lblDiaChi = new javax.swing.JLabel();
-        txtDiaChi = new javax.swing.JTextField();
         btnSave = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        txtDiaChi1 = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,8 +66,6 @@ public class SuaKHang extends javax.swing.JFrame {
         lblTenKH.setText("Tên khách hàng");
 
         lblSoDT.setText("Số điện thoại");
-
-        lblDiaChi.setText("Địa chỉ");
 
         btnSave.setBackground(new java.awt.Color(0, 102, 204));
         btnSave.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -98,31 +94,24 @@ public class SuaKHang extends javax.swing.JFrame {
         pnlCenterLayout.setHorizontalGroup(
             pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCenterLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtSoDT, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtTenKH, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtEmail)
                     .addGroup(pnlCenterLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)
-                        .addGap(0, 459, Short.MAX_VALUE))
-                    .addGroup(pnlCenterLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDiaChi, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtSoDT, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtTenKH, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(pnlCenterLayout.createSequentialGroup()
-                                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblTenKH)
-                                    .addComponent(lblSoDT)
-                                    .addComponent(lblDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtDiaChi1))))
+                            .addComponent(jLabel1)
+                            .addComponent(lblTenKH)
+                            .addComponent(lblSoDT))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(pnlCenterLayout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                .addGap(46, 46, 46)
                 .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45))
+                .addGap(41, 41, 41))
         );
         pnlCenterLayout.setVerticalGroup(
             pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,19 +124,19 @@ public class SuaKHang extends javax.swing.JFrame {
                 .addComponent(lblSoDT)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSoDT, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblDiaChi)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtDiaChi1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44))
+                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlCenterLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCenterLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                        .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -162,7 +151,8 @@ public class SuaKHang extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlTop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlCenter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pnlCenter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -180,14 +170,12 @@ public class SuaKHang extends javax.swing.JFrame {
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnSave;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel lblDiaChi;
     private javax.swing.JLabel lblSoDT;
     private javax.swing.JLabel lblTenKH;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JPanel pnlTop;
-    private javax.swing.JTextField txtDiaChi;
-    private javax.swing.JTextField txtDiaChi1;
+    private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtSoDT;
     private javax.swing.JTextField txtTenKH;
     // End of variables declaration//GEN-END:variables

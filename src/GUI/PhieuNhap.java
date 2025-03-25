@@ -5,6 +5,8 @@
 
 package GUI;
 
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+
 /**
  *
  * @author hoang
@@ -14,6 +16,7 @@ public class PhieuNhap extends javax.swing.JPanel {
     /** Creates new form PhieuNhap */
     public PhieuNhap() {
         initComponents();
+        addIcon();
     }
 
     /** This method is called from within the constructor to
@@ -182,7 +185,7 @@ public class PhieuNhap extends javax.swing.JPanel {
             }
         });
 
-        btnTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/glass_12861007.png"))); // NOI18N
+        btnTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icon/glass_12861007.png"))); // NOI18N
         btnTimKiem.setText("Tìm kiếm");
         btnTimKiem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnTimKiem.setPreferredSize(new java.awt.Dimension(130, 60));
@@ -330,7 +333,14 @@ public class PhieuNhap extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTimKiemMouseClicked
 
-
+    private void addIcon() {
+        btnThemPN.setIcon(new FlatSVGIcon("./res/icon/add.svg"));
+        btnHuyPhieu.setIcon(new FlatSVGIcon("./res/icon/delete.svg"));
+        btnChiTietPN.setIcon(new FlatSVGIcon("./res/icon/detail.svg"));
+        btnXuatExcelPN.setIcon(new FlatSVGIcon("./res/icon/export_excel.svg"));
+        btnLamMoi.setIcon(new FlatSVGIcon("./res/icon/refresh.svg"));
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChiTietPN;
     private javax.swing.JButton btnHuyPhieu;

@@ -127,7 +127,7 @@
             <Component class="javax.swing.JTable" name="tblNhanVien">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="7" rowCount="2">
+                  <Table columnCount="6" rowCount="2">
                     <Column editable="true" title="M&#xe3; NV" type="java.lang.Object">
                       <Data value="1"/>
                       <Data value="2"/>
@@ -135,10 +135,6 @@
                     <Column editable="true" title="H&#x1ecd; t&#xea;n" type="java.lang.Object">
                       <Data value="L&#xea; Kh&#xe1;nh Ho&#xe0;ng"/>
                       <Data value="L&#xea; C&#xf4;ng Duy"/>
-                    </Column>
-                    <Column editable="true" title="Gi&#x1edb;i t&#xed;nh" type="java.lang.Object">
-                      <Data value="Nam"/>
-                      <Data value="Nam"/>
                     </Column>
                     <Column editable="true" title="T&#xea;n &#x111;&#x103;ng nh&#x1ead;p" type="java.lang.Object">
                       <Data value="hoang2"/>
@@ -160,11 +156,6 @@
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                       <Title/>
                       <Editor/>

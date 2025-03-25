@@ -8,6 +8,9 @@ package GUI;
 import GUI.NQuyen.ChiTietNQuyen;
 import GUI.NQuyen.SuaNQuyen;
 import GUI.NQuyen.ThemNQuyen;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+
+
 /**
  *
  * @author hoang
@@ -17,6 +20,7 @@ public class NhomQuyen extends javax.swing.JPanel {
     /** Creates new form NhomQuyen */
     public NhomQuyen() {
         initComponents();
+        addIcon();
     }
 
     /** This method is called from within the constructor to
@@ -132,7 +136,17 @@ public class NhomQuyen extends javax.swing.JPanel {
         new ChiTietNQuyen().setVisible(true);
     }//GEN-LAST:event_btnChiTietActionPerformed
 
+    private void tblNhomQuyenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhomQuyenMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblNhomQuyenMouseClicked
 
+    private void addIcon() {
+        btnThem.setIcon(new FlatSVGIcon("./res/icon/add.svg"));
+        btnSua.setIcon(new FlatSVGIcon("./res/icon/edit.svg"));
+        btnXoa.setIcon(new FlatSVGIcon("./res/icon/delete.svg"));
+        btnChiTiet.setIcon(new FlatSVGIcon("./res/icon/detail.svg"));
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChiTiet;
     private javax.swing.JButton btnSua;

@@ -115,11 +115,11 @@ public class NhanVien extends javax.swing.JPanel {
 
         tblNhanVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "Lê Khánh Hoàng", "Nam", "hoang2", "hoang2", "Nhân Viên Bán Hàng", "Hoạt Động "},
-                {"2", "Lê Công Duy", "Nam", "duyduy", "duyduy", "Nhân Viên Bán Hàng", "Ngưng Hoạt Động"}
+                {"1", "Lê Khánh Hoàng", "hoang2", "hoang2", "Nhân Viên Bán Hàng", "Hoạt Động "},
+                {"2", "Lê Công Duy", "duyduy", "duyduy", "Nhân Viên Bán Hàng", "Ngưng Hoạt Động"}
             },
             new String [] {
-                "Mã NV", "Họ tên", "Giới tính", "Tên đăng nhập", "Mật khẩu", "Nhóm quyền ", "Trạng thái tài khoản "
+                "Mã NV", "Họ tên", "Tên đăng nhập", "Mật khẩu", "Nhóm quyền ", "Trạng thái tài khoản "
             }
         ));
         jScrollPane1.setViewportView(tblNhanVien);
@@ -130,7 +130,6 @@ public class NhanVien extends javax.swing.JPanel {
             tblNhanVien.getColumnModel().getColumn(3).setResizable(false);
             tblNhanVien.getColumnModel().getColumn(4).setResizable(false);
             tblNhanVien.getColumnModel().getColumn(5).setResizable(false);
-            tblNhanVien.getColumnModel().getColumn(6).setResizable(false);
         }
 
         javax.swing.GroupLayout pnlCenterLayout = new javax.swing.GroupLayout(pnlCenter);

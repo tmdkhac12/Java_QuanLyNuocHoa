@@ -36,8 +36,6 @@ public class ThemKHang extends javax.swing.JFrame {
         txtTenKH = new javax.swing.JTextField();
         lblSoDT = new javax.swing.JLabel();
         txtSoDT = new javax.swing.JTextField();
-        lblDiaChi = new javax.swing.JLabel();
-        txtDiaChi = new javax.swing.JTextField();
         btnThemKH = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         lblDiaChi1 = new javax.swing.JLabel();
@@ -57,7 +55,7 @@ public class ThemKHang extends javax.swing.JFrame {
         pnlTop.setLayout(pnlTopLayout);
         pnlTopLayout.setHorizontalGroup(
             pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
         );
         pnlTopLayout.setVerticalGroup(
             pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -67,8 +65,6 @@ public class ThemKHang extends javax.swing.JFrame {
         lblTenKH.setText("Tên khách hàng");
 
         lblSoDT.setText("Số điện thoại");
-
-        lblDiaChi.setText("Địa chỉ");
 
         btnThemKH.setBackground(new java.awt.Color(0, 102, 204));
         btnThemKH.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -105,7 +101,6 @@ public class ThemKHang extends javax.swing.JFrame {
             .addGroup(pnlCenterLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtDiaChi, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtSoDT, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtTenKH, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtDiaChi1, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -113,16 +108,15 @@ public class ThemKHang extends javax.swing.JFrame {
                         .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblTenKH)
                             .addComponent(lblSoDT)
-                            .addComponent(lblDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblDiaChi1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(pnlCenterLayout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addGap(51, 51, 51)
                 .addComponent(btnThemKH, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45))
+                .addGap(46, 46, 46))
         );
         pnlCenterLayout.setVerticalGroup(
             pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,23 +129,15 @@ public class ThemKHang extends javax.swing.JFrame {
                 .addComponent(lblSoDT)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSoDT, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblDiaChi)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblDiaChi1)
-                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlCenterLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDiaChi1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 151, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCenterLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnThemKH, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(56, 56, 56))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtDiaChi1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51)
+                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnThemKH, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -166,7 +152,8 @@ public class ThemKHang extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlTop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlCenter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pnlCenter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -187,14 +174,12 @@ public class ThemKHang extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnThemKH;
-    private javax.swing.JLabel lblDiaChi;
     private javax.swing.JLabel lblDiaChi1;
     private javax.swing.JLabel lblSoDT;
     private javax.swing.JLabel lblTenKH;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JPanel pnlTop;
-    private javax.swing.JTextField txtDiaChi;
     private javax.swing.JTextField txtDiaChi1;
     private javax.swing.JTextField txtSoDT;
     private javax.swing.JTextField txtTenKH;

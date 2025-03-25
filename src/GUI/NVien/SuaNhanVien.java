@@ -37,9 +37,6 @@ public class SuaNhanVien extends javax.swing.JFrame {
         btnThemNV = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         lblTenNV = new javax.swing.JLabel();
-        lblGioiTinh = new javax.swing.JLabel();
-        rdbMale = new javax.swing.JRadioButton();
-        rdbFemale = new javax.swing.JRadioButton();
         lblUsername = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
         lblPassword = new javax.swing.JLabel();
@@ -81,14 +78,6 @@ public class SuaNhanVien extends javax.swing.JFrame {
 
         lblTenNV.setText("Họ và tên");
 
-        lblGioiTinh.setText("Giới tính");
-
-        btnGroupGioiTinh.add(rdbMale);
-        rdbMale.setText("Nam");
-
-        btnGroupGioiTinh.add(rdbFemale);
-        rdbFemale.setText("Nữ");
-
         lblUsername.setText("Tên đăng nhập");
 
         lblPassword.setText("Mật khẩu");
@@ -98,6 +87,11 @@ public class SuaNhanVien extends javax.swing.JFrame {
         lblTrangThai.setText("Trạng thái tài khoản");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -111,7 +105,6 @@ public class SuaNhanVien extends javax.swing.JFrame {
                     .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTenNV, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTenNV)
-                    .addComponent(lblGioiTinh, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtUsername)
                     .addComponent(txtPassword)
@@ -123,13 +116,7 @@ public class SuaNhanVien extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
                         .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(pnlCenterLayout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addComponent(rdbMale)
-                .addGap(131, 131, 131)
-                .addComponent(rdbFemale)
-                .addGap(54, 54, 54))
+                .addGap(0, 45, Short.MAX_VALUE))
         );
         pnlCenterLayout.setVerticalGroup(
             pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,29 +125,23 @@ public class SuaNhanVien extends javax.swing.JFrame {
                 .addComponent(lblTenNV)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtTenNV, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(lblGioiTinh)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rdbMale)
-                    .addComponent(rdbFemale))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(lblUsername)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(lblPassword)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(lblNhomQuyen)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(lblTrangThai)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
                 .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThemNV, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -208,6 +189,10 @@ public class SuaNhanVien extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
@@ -215,7 +200,6 @@ public class SuaNhanVien extends javax.swing.JFrame {
     private javax.swing.JButton btnThemNV;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JLabel lblGioiTinh;
     private javax.swing.JLabel lblNhomQuyen;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblTenNV;
@@ -224,8 +208,6 @@ public class SuaNhanVien extends javax.swing.JFrame {
     private javax.swing.JLabel lblUsername;
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JPanel pnlTop;
-    private javax.swing.JRadioButton rdbFemale;
-    private javax.swing.JRadioButton rdbMale;
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtTenNV;
     private javax.swing.JTextField txtUsername;
