@@ -1,29 +1,23 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 
 package GUI;
 
-import java.awt.event.MouseEvent;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 /**
  *
  * @author Admin
  */
-public class SanPham extends javax.swing.JFrame {
-    private void tblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {                                         
-    int selectedRow = tblSanPham.getSelectedRow();
-    if (selectedRow != -1) { // Kiểm tra xem có dòng nào được chọn không
-        String maSP = tblSanPham.getValueAt(selectedRow, 0).toString();
-        String tenSP = tblSanPham.getValueAt(selectedRow, 1).toString();
-        System.out.println("Mã sản phẩm: " + maSP + ", Tên sản phẩm: " + tenSP);
-    }
-}   
+public class SanPham extends javax.swing.JPanel {
 
     /** Creates new form SanPham */
     public SanPham() {
         initComponents();
+        addIcon();
+        setUpTable();
     }
 
     /** This method is called from within the constructor to
@@ -36,56 +30,51 @@ public class SanPham extends javax.swing.JFrame {
     private void initComponents() {
 
         pnlTop = new javax.swing.JPanel();
+        btnThemSP = new javax.swing.JButton();
+        btnSuaSP = new javax.swing.JButton();
+        btnXoaSP = new javax.swing.JButton();
         btnChiTietSP = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        btnXuatExcelSP = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         txtTimKiem = new javax.swing.JTextField();
         pnlCenter = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblSanPham = new javax.swing.JTable();
 
         setPreferredSize(new java.awt.Dimension(1200, 800));
+        setLayout(new java.awt.BorderLayout());
 
         pnlTop.setBackground(new java.awt.Color(255, 255, 255));
         pnlTop.setPreferredSize(new java.awt.Dimension(1000, 80));
 
-        btnChiTietSP.setBackground(new java.awt.Color(255, 255, 0));
+        btnThemSP.setText("Thêm");
+        btnThemSP.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnlTop.add(btnThemSP);
+
+        btnSuaSP.setText("Sửa");
+        btnSuaSP.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnlTop.add(btnSuaSP);
+
+        btnXoaSP.setText("Xóa");
+        btnXoaSP.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnlTop.add(btnXoaSP);
+
         btnChiTietSP.setText("Chi tiết");
         btnChiTietSP.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlTop.add(btnChiTietSP);
 
-        jButton1.setText("Thêm");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        pnlTop.add(jButton1);
+        btnXuatExcelSP.setText("Xuất excel");
+        btnXuatExcelSP.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnlTop.add(btnXuatExcelSP);
 
-        jButton2.setText("Sửa");
-        pnlTop.add(jButton2);
-
-        jButton3.setText("Xóa");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        pnlTop.add(jButton3);
-
-        jButton4.setText("Xuất file excel");
-        pnlTop.add(jButton4);
-
-        jLabel3.setText("Tìm kiếm");
-        pnlTop.add(jLabel3);
+        jLabel1.setLabelFor(txtTimKiem);
+        jLabel1.setText("Tìm kiếm :");
+        pnlTop.add(jLabel1);
 
         txtTimKiem.setPreferredSize(new java.awt.Dimension(100, 30));
         pnlTop.add(txtTimKiem);
 
-        getContentPane().add(pnlTop, java.awt.BorderLayout.NORTH);
+        add(pnlTop, java.awt.BorderLayout.NORTH);
 
         pnlCenter.setPreferredSize(new java.awt.Dimension(1200, 700));
 
@@ -94,14 +83,9 @@ public class SanPham extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Mã sản phẩm", "Tên sản phẩm", "Số lượng tồn", "Size", "Loại", "Thương hiệu", "Xuất xứ", "Khu vực kho", "Giá nhập", "Giá xuất"
+                "Mã sản phẩm", "Tên sản phẩm", "Số lượng tồn", "Dung tích", "Nồng độ", "Thương hiệu", "Giớii tính", "Giá nhập", "Giá xuất"
             }
         ));
-        tblSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblSanPhamMouseClicked(evt);
-            }
-        });
         jScrollPane2.setViewportView(tblSanPham);
 
         javax.swing.GroupLayout pnlCenterLayout = new javax.swing.GroupLayout(pnlCenter);
@@ -115,25 +99,33 @@ public class SanPham extends javax.swing.JFrame {
             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
         );
 
-        getContentPane().add(pnlCenter, java.awt.BorderLayout.CENTER);
+        add(pnlCenter, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+     private void addIcon() {
+        btnThemSP.setIcon(new FlatSVGIcon("./res/icon/add.svg"));
+        btnSuaSP.setIcon(new FlatSVGIcon("./res/icon/edit.svg"));
+        btnXoaSP.setIcon(new FlatSVGIcon("./res/icon/delete.svg"));
+        btnChiTietSP.setIcon(new FlatSVGIcon("./res/icon/detail.svg"));
+        btnXuatExcelSP.setIcon(new FlatSVGIcon("./res/icon/export_excel.svg"));
+    }
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void setUpTable() {
+        // Set ẩn hiển thị ô vuông khi bấm vào cell 
+        tblSanPham.setFocusable(false);
+        
+        // Set không cho cell có thể chỉnh sửa 
+        tblSanPham.setDefaultEditor(Object.class, null);
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChiTietSP;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton btnSuaSP;
+    private javax.swing.JButton btnThemSP;
+    private javax.swing.JButton btnXoaSP;
+    private javax.swing.JButton btnXuatExcelSP;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JPanel pnlTop;
