@@ -5,10 +5,19 @@
 
 package GUI;
 
+import BUS.KhachHangBUS;
+import BUS.NhanVienBUS;
+import DTO.KhachHangDTO;
+import DTO.NhanVienDTO;
 import GUI.NVien.ChiTietNhanVien;
 import GUI.NVien.SuaNhanVien;
 import GUI.NVien.ThemNhanVien;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 /**
  *
@@ -22,6 +31,7 @@ public class NhanVien extends javax.swing.JPanel {
         initComponents();
         addIcon();
         setUpTable();
+        loadDataToTable();
     }
 
     /** This method is called from within the constructor to
@@ -196,7 +206,36 @@ public class NhanVien extends javax.swing.JPanel {
         // Set không cho cell có thể chỉnh sửa 
         tblNhanVien.setDefaultEditor(Object.class, null);
     }
-    
+
+    private void loadDataToTable() {
+        NhanVienBUS nhanVienBUS = new NhanVienBUS();
+        ArrayList<NhanVienDTO> nhanVienDTOArrayList = nhanVienBUS.getAllNhanViens();
+
+        // Get Table Model and clear data
+        DefaultTableModel model = (DefaultTableModel) tblNhanVien.getModel();
+        model.setRowCount(0);
+
+        for (NhanVienDTO nhanVienDTO : nhanVienDTOArrayList) {
+            String status = (nhanVienDTO.isStatus() ? "Hoạt Động" : "Ngưng hoạt động");
+            model.addRow(new Object[]{
+                    nhanVienDTO.getId(),
+                    nhanVienDTO.getName(),
+                    nhanVienDTO.getUsername(),
+                    nhanVienDTO.getPassword(),
+                    nhanVienDTO.getRoleGroupName(),
+                    status
+            });
+        }
+
+        // Create renderer for table to align text center
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+        for (int i = 0; i < tblNhanVien.getColumnCount(); i++) {
+            tblNhanVien.getColumnModel().getColumn(i).setCellRenderer(renderer);
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChiTietNV;
     private javax.swing.JButton btnSuaNV;

@@ -5,7 +5,16 @@
 
 package GUI.TTinh;
 
+import BUS.KhuyenMaiBUS;
+import BUS.NotHuongBUS;
+import DTO.KhuyenMaiDTO;
+import DTO.NotHuongDTO;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,6 +27,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         initComponents();
         setUpTable();
         addIcon();
+        loadDataToTable();
     }
 
     /** This method is called from within the constructor to
@@ -198,7 +208,32 @@ public class KhuyenMai extends javax.swing.JPanel {
         btnSua.setIcon(new FlatSVGIcon("./res/icon/edit.svg"));
         btnXoa.setIcon(new FlatSVGIcon("./res/icon/delete.svg"));
     }
-    
+
+    private void loadDataToTable() {
+        KhuyenMaiBUS khuyenMaiBUS = new KhuyenMaiBUS();
+        ArrayList<KhuyenMaiDTO> khuyenMaiDTOArrayList = khuyenMaiBUS.getAllKhuyenMais();
+
+        DefaultTableModel model = (DefaultTableModel) tblKhuyenMai.getModel();
+        model.setRowCount(0);
+
+        for (KhuyenMaiDTO khuyenMaiDTO : khuyenMaiDTOArrayList) {
+            model.addRow(new Object[]{
+                    khuyenMaiDTO.getId(),
+                    khuyenMaiDTO.getName(),
+                    (int) khuyenMaiDTO.getDiscountPercent(),
+                    khuyenMaiDTO.getStartDate(),
+                    khuyenMaiDTO.getEndDate()
+            });
+        }
+
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+        for (int i = 0; i < tblKhuyenMai.getColumnCount(); i++) {
+            tblKhuyenMai.getColumnModel().getColumn(i).setCellRenderer(renderer);
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;

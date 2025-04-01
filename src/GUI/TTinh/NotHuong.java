@@ -5,7 +5,15 @@
 
 package GUI.TTinh;
 
+import BUS.NotHuongBUS;
+import DTO.NotHuongDTO;
+import DTO.ThuongHieuDTO;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,6 +26,7 @@ public class NotHuong extends javax.swing.JPanel {
         initComponents();
         setUpTable();
         addIcon();
+        loadDataToTable();
     }
 
     /** This method is called from within the constructor to
@@ -168,6 +177,28 @@ public class NotHuong extends javax.swing.JPanel {
         btnThemNotHuong.setIcon(new FlatSVGIcon("./res/icon/add.svg"));
         btnSuaNotHuong.setIcon(new FlatSVGIcon("./res/icon/edit.svg"));
         btnXoaNotHuong.setIcon(new FlatSVGIcon("./res/icon/delete.svg"));
+    }
+
+    private void loadDataToTable() {
+        NotHuongBUS notHuongBUS = new NotHuongBUS();
+        ArrayList<NotHuongDTO> notHuongDTOArrayList = notHuongBUS.getAllNotHuongs();
+
+        DefaultTableModel model = (DefaultTableModel) tblNotHuong.getModel();
+        model.setRowCount(0);
+
+        for (NotHuongDTO notHuongDTO : notHuongDTOArrayList) {
+            model.addRow(new Object[]{
+                    notHuongDTO.getId(),
+                    notHuongDTO.getName()
+            });
+        }
+
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+        for (int i = 0; i < tblNotHuong.getColumnCount(); i++) {
+            tblNotHuong.getColumnModel().getColumn(i).setCellRenderer(renderer);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

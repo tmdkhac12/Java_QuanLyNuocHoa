@@ -5,7 +5,6 @@
 
 package GUI;
 
-import GUI.TTinh.NongDo;
 import GUI.TTinh.NotHuong;
 import GUI.TTinh.ThuongHieu;
 import GUI.TTinh.KhuyenMai;
@@ -16,7 +15,6 @@ import GUI.TTinh.KhuyenMai;
  */
 public class ThuocTinh extends javax.swing.JPanel {
     // Tabpane's Tabs
-    private NongDo nongDoTab;
     private NotHuong notHuongTab;
     private ThuongHieu thuongHieuTab;
     private KhuyenMai khuyenMaiTab;
@@ -54,14 +52,12 @@ public class ThuocTinh extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void initTabs() {
-        nongDoTab = new NongDo();
         notHuongTab = new NotHuong();
         thuongHieuTab = new ThuongHieu();
         khuyenMaiTab = new KhuyenMai();
     }
 
     private void addTabs() {
-        tabPaneThuocTinh.add("Nồng độ", nongDoTab);
         tabPaneThuocTinh.add("Nốt hương", notHuongTab);
         tabPaneThuocTinh.add("Thương hiệu", thuongHieuTab);
         tabPaneThuocTinh.add("Khuyến mãi", khuyenMaiTab);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 01, 2025 at 07:01 AM
+-- Generation Time: Apr 01, 2025 at 01:36 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -126,11 +126,11 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`id`, `rolegroup_id`, `name`, `username`, `password`, `status`) VALUES
-                                                                                            (1, 1, 'Nguyễn Văn An', 'annguyen', 'an123', 1),
-                                                                                            (2, 1, 'Trần Thị Bích', 'bichtran', 'bich456', 1),
-                                                                                            (3, 1, 'Lê Hoàng Nam', 'namle', 'nam789', 1),
-                                                                                            (4, 1, 'Phạm Hữu Phúc', 'phucpham', 'phuc321', 0),
-                                                                                            (5, 1, 'Đỗ Thanh Tâm', 'tamdo', 'tam654', 1);
+                                                                                            (1, 2, 'Nguyễn Văn An', 'annguyen', 'an123', 1),
+                                                                                            (2, 2, 'Trần Thị Bích', 'bichtran', 'bich456', 1),
+                                                                                            (3, 2, 'Lê Hoàng Nam', 'namle', 'nam789', 1),
+                                                                                            (4, 2, 'Phạm Hữu Phúc', 'phucpham', 'phuc321', 0),
+                                                                                            (5, 2, 'Đỗ Thanh Tâm', 'tamdo', 'tam654', 1);
 
 -- --------------------------------------------------------
 

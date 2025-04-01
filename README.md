@@ -1,0 +1,1 @@
+Nhớ tạo lại DB nếu commit message có "Update DB nhé", vì dữ liệu trong các row/column của table sẽ có thay đổi (thêm trạng thái để thực hiện chức năng xóa chứ không thêm thuộc tính cho Table)

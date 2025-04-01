@@ -5,7 +5,14 @@
 
 package GUI.TTinh;
 
+import BUS.ThuongHieuBUS;
+import DTO.ThuongHieuDTO;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,6 +25,7 @@ public class ThuongHieu extends javax.swing.JPanel {
         initComponents();
         setUpTable();
         addIcon();
+        loadDataToTable();
     }
 
     /** This method is called from within the constructor to
@@ -167,6 +175,28 @@ public class ThuongHieu extends javax.swing.JPanel {
         btnThemThuongHieu.setIcon(new FlatSVGIcon("./res/icon/add.svg"));
         btnSuaThuongHieu.setIcon(new FlatSVGIcon("./res/icon/edit.svg"));
         btnXoaThuongHieu.setIcon(new FlatSVGIcon("./res/icon/delete.svg"));
+    }
+
+    private void loadDataToTable() {
+        ThuongHieuBUS thuongHieuBUS = new ThuongHieuBUS();
+        ArrayList<ThuongHieuDTO> thuongHieuDTOArrayList = thuongHieuBUS.getAllThuongHieus();
+
+        DefaultTableModel model = (DefaultTableModel) tblThuongHieu.getModel();
+        model.setRowCount(0);
+
+        for (ThuongHieuDTO thuongHieuDTO : thuongHieuDTOArrayList) {
+            model.addRow(new Object[]{
+                    thuongHieuDTO.getId(),
+                    thuongHieuDTO.getName()
+            });
+        }
+
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+        for (int i = 0; i < tblThuongHieu.getColumnCount(); i++) {
+            tblThuongHieu.getColumnModel().getColumn(i).setCellRenderer(renderer);
+        }
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
