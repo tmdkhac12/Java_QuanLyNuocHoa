@@ -5,10 +5,17 @@
 
 package GUI;
 
+import BUS.KhachHangBUS;
+import DTO.KhachHangDTO;
 import GUI.KHang.ChiTietKHang;
 import GUI.KHang.SuaKHang;
 import GUI.KHang.ThemKHang;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 /**
  *
@@ -22,6 +29,7 @@ public class KhachHang extends javax.swing.JPanel {
         initComponents();
         addIcon();
         setUpTable();
+        loadKhachHangData();
     }
 
     /** This method is called from within the constructor to
@@ -203,7 +211,33 @@ public class KhachHang extends javax.swing.JPanel {
         // Set không cho cell có thể chỉnh sửa 
         tblKhachHang.setDefaultEditor(Object.class, null);
     }
-    
+
+    private void loadKhachHangData() {
+        KhachHangBUS khachHangBUS = new KhachHangBUS();
+        ArrayList<KhachHangDTO> khachHangDTOArrayList = khachHangBUS.getAllKhachHangs();
+
+        // Get Table Model and clear data
+        DefaultTableModel model = (DefaultTableModel) tblKhachHang.getModel();
+        model.setRowCount(0);
+
+        for (KhachHangDTO khachHangDTO : khachHangDTOArrayList) {
+            model.addRow(new Object[]{
+                    khachHangDTO.getId(),
+                    khachHangDTO.getName(),
+                    khachHangDTO.getPhone(),
+                    khachHangDTO.getEmail()
+            });
+        }
+
+        // Create renderer for table to align text center
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+        for (int i = 0; i < tblKhachHang.getColumnCount(); i++) {
+            tblKhachHang.getColumnModel().getColumn(i).setCellRenderer(renderer);
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChiTietKH;
     private javax.swing.JButton btnSuaKH;
