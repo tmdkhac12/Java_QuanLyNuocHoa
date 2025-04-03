@@ -5,7 +5,11 @@
 
 package GUI.KHang;
 
-import javax.swing.JFrame;
+import BUS.KhachHangBUS;
+import DTO.KhachHangDTO;
+import GUI.KhachHang;
+
+import javax.swing.*;
 
 /**
  *
@@ -13,12 +17,17 @@ import javax.swing.JFrame;
  */
 public class SuaKHang extends javax.swing.JFrame {
 
+    private KhachHangDTO khachHangDTO;
+    private KhachHang khachHangGUI;
+
     /** Creates new form SuaKHang */
-    public SuaKHang() {
+    public SuaKHang(KhachHang khachHang, KhachHangDTO selectedKhachHang) {
         initComponents();
+        initAtt(khachHang, selectedKhachHang);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        loadFormData(khachHangDTO);
     }
 
     /** This method is called from within the constructor to
@@ -160,11 +169,92 @@ public class SuaKHang extends javax.swing.JFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
+        int id = khachHangDTO.getId();
+        String name = txtTenKH.getText();
+        String phoneNumber = txtSoDT.getText();
+        String email = txtEmail.getText();
+
+        if (!this.isValidInput(name, phoneNumber, email)) {
+            return;
+        }
+
+        KhachHangBUS khachHangBUS = new KhachHangBUS();
+        KhachHangDTO changedKhachHang = new KhachHangDTO(id, name, phoneNumber, email);
+        int code = khachHangBUS.updateKhachHang(changedKhachHang);
+
+        if (code == 1) {
+//            khachHangGUI.updateTable(changedKhachHang, 2);
+            khachHangGUI.loadKhachHangData();
+        }
+        this.dbRespondHandler(code);
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void loadFormData(KhachHangDTO khachHangDTO) {
+        txtTenKH.setText(khachHangDTO.getName());
+        txtSoDT.setText(khachHangDTO.getPhone());
+        txtEmail.setText(khachHangDTO.getEmail());
+    }
+
+    public boolean isValidInput(String name, String phone, String email) {
+        // Kiểm tra trường rỗng
+        if (name.isEmpty() || phone.isEmpty() || email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin khách hàng", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // Kiểm tra độ dài của các trường
+        if (name.length() > 255) {
+            JOptionPane.showMessageDialog(this, "Tên khách hàng không được quá 255 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (phone.length() > 20) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại không được quá 20 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (email.length() > 255) {
+            JOptionPane.showMessageDialog(this, "Email không được quá 255 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // Regex kiểm tra số điện thoại: Chỉ chứa số, có thể bắt đầu bằng dấu +, tối thiểu 8 chữ số
+        String phoneRegex = "^(\\+?[0-9]{8,20})$";
+        if (!phone.matches(phoneRegex)) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ. Vui lòng nhập đúng định dạng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // Regex kiểm tra email hợp lệ
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+        if (!email.matches(emailRegex)) {
+            JOptionPane.showMessageDialog(this, "Email không hợp lệ. Vui lòng nhập đúng định dạng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true; // Nếu không có lỗi nào, dữ liệu hợp lệ
+    }
+
+    private void dbRespondHandler(int code) {
+        if (code == 1) {
+            JOptionPane.showMessageDialog(this, "Sửa khách hàng thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        } else if (code == -1) {
+            JOptionPane.showMessageDialog(this, "Lỗi! Số điện thoại trùng với khách hàng khác.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } else if (code == -2) {
+            JOptionPane.showMessageDialog(this, "Lỗi! Email trùng với khách hàng khác.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Sửa khách hàng thất bại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void initAtt(KhachHang khachHang, KhachHangDTO selectedKhachHang) {
+        this.khachHangGUI = khachHang;
+        this.khachHangDTO = selectedKhachHang;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;

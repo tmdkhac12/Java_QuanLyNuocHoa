@@ -15,6 +15,7 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import java.util.ArrayList;
 
 /**
@@ -23,13 +24,18 @@ import java.util.ArrayList;
  */
 public class KhachHang extends javax.swing.JPanel {
 
+    private KhachHangBUS khachHangBUS;
+
     /** Creates new form KhachHang */
     public KhachHang() {
         // Setup Panel's Components
         initComponents();
         addIcon();
         setUpTable();
+
+        initAtt();
         loadKhachHangData();
+        timKiemHandler();
     }
 
     /** This method is called from within the constructor to
@@ -163,21 +169,48 @@ public class KhachHang extends javax.swing.JPanel {
 
     private void btnThemKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKHActionPerformed
         // TODO add your handling code here:
-        new ThemKHang().setVisible(true);
+        new ThemKHang(this).setVisible(true);
     }//GEN-LAST:event_btnThemKHActionPerformed
 
     private void btnSuaKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaKHActionPerformed
         // TODO add your handling code here:
-        new SuaKHang().setVisible(true);
+        KhachHangDTO selectedKhachHang = this.getSelectedRowData();
+        if (selectedKhachHang != null) {
+            new SuaKHang(this, selectedKhachHang).setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn khách hàng muốn sửa thông tin");
+        }
     }//GEN-LAST:event_btnSuaKHActionPerformed
 
     private void btnXoaKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaKHActionPerformed
         // TODO add your handling code here:
+        KhachHangDTO selectedKhachHang = this.getSelectedRowData();
+        if (selectedKhachHang != null) {
+            int id = selectedKhachHang.getId();
+
+            int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa khách hàng này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                if(khachHangBUS.xoaKhachHang(id)) {
+                    JOptionPane.showMessageDialog(this, "Xóa khách hàng thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    updateTable(null, 3);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xóa khách hàng thất bại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn khách hàng muốn xóa");
+        }
     }//GEN-LAST:event_btnXoaKHActionPerformed
 
     private void btnChiTietKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChiTietKHActionPerformed
         // TODO add your handling code here:
-        new ChiTietKHang().setVisible(true);
+        KhachHangDTO selectedKhachHang = this.getSelectedRowData();
+        if (selectedKhachHang != null) {
+            new ChiTietKHang(selectedKhachHang).setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn khách hàng muốn xem chi tiết");
+        }
     }//GEN-LAST:event_btnChiTietKHActionPerformed
 
     private void btnXuatExcel1KHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatExcel1KHActionPerformed
@@ -196,6 +229,10 @@ public class KhachHang extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTimKiemKeyReleased
 
+    private void initAtt() {
+        khachHangBUS = new KhachHangBUS();
+    }
+
     private void addIcon() {
         btnThemKH.setIcon(new FlatSVGIcon("./res/icon/add.svg"));
         btnSuaKH.setIcon(new FlatSVGIcon("./res/icon/edit.svg"));
@@ -212,8 +249,7 @@ public class KhachHang extends javax.swing.JPanel {
         tblKhachHang.setDefaultEditor(Object.class, null);
     }
 
-    private void loadKhachHangData() {
-        KhachHangBUS khachHangBUS = new KhachHangBUS();
+    public void loadKhachHangData() {
         ArrayList<KhachHangDTO> khachHangDTOArrayList = khachHangBUS.getAllKhachHangs();
 
         // Get Table Model and clear data
@@ -236,6 +272,71 @@ public class KhachHang extends javax.swing.JPanel {
         for (int i = 0; i < tblKhachHang.getColumnCount(); i++) {
             tblKhachHang.getColumnModel().getColumn(i).setCellRenderer(renderer);
         }
+    }
+
+    private KhachHangDTO getSelectedRowData() {
+        int selectedRowIndex = tblKhachHang.getSelectedRow();
+
+        if (selectedRowIndex == -1) {
+            return null;
+        }
+
+        int id = (int) tblKhachHang.getValueAt(selectedRowIndex, 0);
+        return khachHangBUS.getKhachHang(id);
+    }
+
+    public void updateTable(KhachHangDTO khachHangDTO, int code) {
+        // 1: Them, 2: Sua, 3: Xoa
+        DefaultTableModel model = (DefaultTableModel) tblKhachHang.getModel();
+
+        if (code == 1) {
+            model.addRow(new Object[] {
+                    khachHangDTO.getId(),
+                    khachHangDTO.getName(),
+                    khachHangDTO.getPhone(),
+                    khachHangDTO.getEmail()
+            });
+        } else if (code == 2) {
+            int selectedRow = tblKhachHang.getSelectedRow();
+            model.setValueAt(khachHangDTO.getName(), selectedRow, 1);
+            model.setValueAt(khachHangDTO.getPhone(), selectedRow, 2);
+            model.setValueAt(khachHangDTO.getEmail(), selectedRow, 3);
+        } else if (code == 3) {
+            int selectedRow = tblKhachHang.getSelectedRow();
+            model.removeRow(selectedRow);
+        }
+    }
+
+    private void timKiemHandler() {
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>((DefaultTableModel) tblKhachHang.getModel());
+        tblKhachHang.setRowSorter(sorter);
+
+        // Ô nhập tìm kiếm
+        txtTimKiem.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                filter();
+            }
+
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                filter();
+            }
+
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                filter();
+            }
+
+            private void filter() {
+                String keyword = txtTimKiem.getText().trim();
+                if (keyword.isEmpty()) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + keyword));
+                }
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

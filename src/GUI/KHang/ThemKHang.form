@@ -86,12 +86,12 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="txtSoDT" alignment="1" max="32767" attributes="0"/>
                       <Component id="txtTenKH" alignment="1" max="32767" attributes="0"/>
-                      <Component id="txtDiaChi1" alignment="1" max="32767" attributes="0"/>
+                      <Component id="txtEmail" alignment="1" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="lblTenKH" min="-2" max="-2" attributes="0"/>
                               <Component id="lblSoDT" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblDiaChi1" min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="lblEmail" min="-2" pref="37" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
@@ -119,9 +119,9 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="txtSoDT" min="-2" pref="54" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="lblDiaChi1" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblEmail" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="txtDiaChi1" min="-2" pref="54" max="-2" attributes="0"/>
+                  <Component id="txtEmail" min="-2" pref="54" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnThemKH" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
@@ -181,15 +181,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblDiaChi1">
+        <Component class="javax.swing.JLabel" name="lblEmail">
           <Properties>
             <Property name="text" type="java.lang.String" value="Email"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtDiaChi1">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDiaChi1ActionPerformed"/>
-          </Events>
+        <Component class="javax.swing.JTextField" name="txtEmail">
         </Component>
       </SubComponents>
     </Container>

@@ -5,7 +5,11 @@
 
 package GUI.KHang;
 
-import javax.swing.JFrame;
+import BUS.KhachHangBUS;
+import DTO.KhachHangDTO;
+import GUI.KhachHang;
+
+import javax.swing.*;
 
 /**
  *
@@ -13,9 +17,12 @@ import javax.swing.JFrame;
  */
 public class ThemKHang extends javax.swing.JFrame {
 
+    private KhachHang khachHangGUI;
+
     /** Creates new form ThemKHang */
-    public ThemKHang() {
+    public ThemKHang(KhachHang khachHang) {
         initComponents();
+        initAtt(khachHang);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
@@ -38,8 +45,8 @@ public class ThemKHang extends javax.swing.JFrame {
         txtSoDT = new javax.swing.JTextField();
         btnThemKH = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
-        lblDiaChi1 = new javax.swing.JLabel();
-        txtDiaChi1 = new javax.swing.JTextField();
+        lblEmail = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -86,13 +93,7 @@ public class ThemKHang extends javax.swing.JFrame {
             }
         });
 
-        lblDiaChi1.setText("Email");
-
-        txtDiaChi1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDiaChi1ActionPerformed(evt);
-            }
-        });
+        lblEmail.setText("Email");
 
         javax.swing.GroupLayout pnlCenterLayout = new javax.swing.GroupLayout(pnlCenter);
         pnlCenter.setLayout(pnlCenterLayout);
@@ -103,12 +104,12 @@ public class ThemKHang extends javax.swing.JFrame {
                 .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtSoDT, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtTenKH, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtDiaChi1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlCenterLayout.createSequentialGroup()
                         .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblTenKH)
                             .addComponent(lblSoDT)
-                            .addComponent(lblDiaChi1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(pnlCenterLayout.createSequentialGroup()
@@ -130,9 +131,9 @@ public class ThemKHang extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSoDT, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblDiaChi1)
+                .addComponent(lblEmail)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtDiaChi1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(51, 51, 51)
                 .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThemKH, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -161,26 +162,96 @@ public class ThemKHang extends javax.swing.JFrame {
 
     private void btnThemKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKHActionPerformed
         // TODO add your handling code here:
+        int id = -1;
+        String name = txtTenKH.getText();
+        String phoneNumber = txtSoDT.getText();
+        String email = txtEmail.getText();
+
+        if (!this.isValidInput(name, phoneNumber, email)) {
+            return;
+        }
+
+        KhachHangBUS khachHangBUS = new KhachHangBUS();
+        KhachHangDTO khachHangDTO = new KhachHangDTO(id, name, phoneNumber, email);
+        int code = khachHangBUS.addKhachHang(khachHangDTO);
+
+        if (code == 1) {
+            // khachHangGUI.updateTable(khachHangDTO, 1);
+            khachHangGUI.loadKhachHangData();
+        }
+        dbRespondHandler(code);
     }//GEN-LAST:event_btnThemKHActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
-    private void txtDiaChi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDiaChi1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDiaChi1ActionPerformed
+    public boolean isValidInput(String name, String phone, String email) {
+        // Kiểm tra trường rỗng
+        if (name.isEmpty() || phone.isEmpty() || email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin khách hàng", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // Kiểm tra độ dài của các trường
+        if (name.length() > 255) {
+            JOptionPane.showMessageDialog(this, "Tên khách hàng không được quá 255 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (phone.length() > 20) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại không được quá 20 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (email.length() > 255) {
+            JOptionPane.showMessageDialog(this, "Email không được quá 255 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // Regex kiểm tra số điện thoại: Chỉ chứa số, có thể bắt đầu bằng dấu +, tối thiểu 8 chữ số
+        String phoneRegex = "^(\\+?[0-9]{8,20})$";
+        if (!phone.matches(phoneRegex)) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ. Vui lòng nhập đúng định dạng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // Regex kiểm tra email hợp lệ
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+        if (!email.matches(emailRegex)) {
+            JOptionPane.showMessageDialog(this, "Email không hợp lệ. Vui lòng nhập đúng định dạng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true; // Nếu không có lỗi nào, dữ liệu hợp lệ
+    }
+
+    private void dbRespondHandler(int code) {
+        if (code == 1) {
+            JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        } else if (code == -1) {
+            JOptionPane.showMessageDialog(this, "Lỗi! Số điện thoại đã được đăng ký trước đó.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } else if (code == -2) {
+            JOptionPane.showMessageDialog(this, "Lỗi! Email đã được đăng ký trước đó.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Thêm khách hàng thất bại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void initAtt(KhachHang khachHang) {
+        this.khachHangGUI = khachHang;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnThemKH;
-    private javax.swing.JLabel lblDiaChi1;
+    private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblSoDT;
     private javax.swing.JLabel lblTenKH;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JPanel pnlTop;
-    private javax.swing.JTextField txtDiaChi1;
+    private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtSoDT;
     private javax.swing.JTextField txtTenKH;
     // End of variables declaration//GEN-END:variables

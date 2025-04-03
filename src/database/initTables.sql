@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 01, 2025 at 01:36 PM
+-- Generation Time: Apr 03, 2025 at 01:06 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -82,29 +82,33 @@ CREATE TABLE `customer` (
                             `id` int(11) NOT NULL,
                             `name` varchar(255) DEFAULT NULL,
                             `phone` varchar(20) DEFAULT NULL,
-                            `email` varchar(255) DEFAULT NULL
+                            `email` varchar(255) DEFAULT NULL,
+                            `is_deleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `customer`
 --
 
-INSERT INTO `customer` (`id`, `name`, `phone`, `email`) VALUES
-                                                            (1, 'Nguyễn Văn An', '0905123456', 'annguyen@example.com'),
-                                                            (2, 'Trần Thị Bích', '0916234567', 'bichtran@example.com'),
-                                                            (3, 'Lê Hữu Cường', '0927345678', 'cuongle@example.com'),
-                                                            (4, 'Phạm Thị Dung', '0938456789', 'dungpham@example.com'),
-                                                            (5, 'Hoàng Văn Đông', '0949567890', 'donghoang@example.com'),
-                                                            (6, 'Đặng Thị Hoa', '0951678901', 'hoadang@example.com'),
-                                                            (7, 'Võ Minh Khang', '0962789012', 'khangvo@example.com'),
-                                                            (8, 'Bùi Thị Lan', '0973890123', 'lanbui@example.com'),
-                                                            (9, 'Dương Thành Nam', '0984901234', 'namduong@example.com'),
-                                                            (10, 'Lý Thị Oanh', '0995012345', 'oanhly@example.com'),
-                                                            (11, 'Phan Văn Phúc', '0906123456', 'phucphan@example.com'),
-                                                            (12, 'Tạ Thị Quỳnh', '0917234567', 'quynhta@example.com'),
-                                                            (13, 'Ngô Hoàng Sơn', '0928345678', 'sonngo@example.com'),
-                                                            (14, 'Hồ Thị Thanh', '0939456789', 'thanhho@example.com'),
-                                                            (15, 'Lâm Chí Vĩnh', '0940567890', 'vinhlam@example.com');
+INSERT INTO `customer` (`id`, `name`, `phone`, `email`, `is_deleted`) VALUES
+                                                                          (1, 'Nguyễn Văn An', '0905123456', 'annguyen@example.com', 0),
+                                                                          (2, 'Trần Thị Bích', '0916234567', 'bichtran@example.com', 0),
+                                                                          (3, 'Lê Hữu Cường', '0927345678', 'cuongle@example.com', 0),
+                                                                          (4, 'Phạm Thị Dung', '0938456789', 'dungpham@example.com', 0),
+                                                                          (5, 'Hoàng Văn Đông', '0949567890', 'donghoang@example.com', 0),
+                                                                          (6, 'Đặng Thị Hoa', '0951678901', 'hoadang@example.com', 0),
+                                                                          (7, 'Võ Minh Khang', '0962789012', 'khangvo@example.com', 0),
+                                                                          (8, 'Bùi Thị Lan', '0973890123', 'lanbui@example.com', 0),
+                                                                          (9, 'Dương Thành Nam', '0984901234', 'namduong@example.com', 0),
+                                                                          (10, 'Lý Thị Oanh', '0995012345', 'oanhly@example.com', 0),
+                                                                          (11, 'Phan Văn Phúc', '0906123456', 'phucphan@example.com', 0),
+                                                                          (12, 'Tạ Thị Quỳnh', '0917234567', 'quynhta@example.com', 0),
+                                                                          (13, 'Ngô Hoàng Sơn', '0928345678', 'sonngo@example.com', 0),
+                                                                          (14, 'Hồ Thị Thanh', '0939456789', 'thanhho@example.com', 0),
+                                                                          (15, 'Lâm Chí Vĩnh', '0940567890', 'vinhlam@example.com', 0),
+                                                                          (16, 'Phạm Tường Vy', '0564337862', 'vy123@gmail.com', 0),
+                                                                          (17, 'Lê Lý Lan Hương', '0933467531', 'huonglele@gmail.com', 0),
+                                                                          (18, 'Nguyễn Thị Hồng', '0909837632', 'longthihe@gmail.com', 0);
 
 -- --------------------------------------------------------
 
@@ -803,6 +807,22 @@ ALTER TABLE `supplier`
 --
 ALTER TABLE `volume`
     ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `brand`
+--
+ALTER TABLE `brand`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `customer`
+--
+ALTER TABLE `customer`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables

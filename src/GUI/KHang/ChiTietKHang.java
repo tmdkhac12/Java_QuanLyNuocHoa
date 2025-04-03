@@ -5,6 +5,8 @@
 
 package GUI.KHang;
 
+import DTO.KhachHangDTO;
+
 import javax.swing.JFrame;
 
 /**
@@ -14,11 +16,13 @@ import javax.swing.JFrame;
 public class ChiTietKHang extends javax.swing.JFrame {
 
     /** Creates new form ChiTietKHang */
-    public ChiTietKHang() {
+    public ChiTietKHang(KhachHangDTO khachHangDTO) {
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        setUpForm();
+        loadFormData(khachHangDTO);
     }
 
     /** This method is called from within the constructor to
@@ -141,7 +145,20 @@ public class ChiTietKHang extends javax.swing.JFrame {
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void setUpForm() {
+        txtTenKH.setEditable(false);
+        txtSoDT.setEditable(false);
+        txtEmail.setEditable(false);
+    }
+
+    private void loadFormData(KhachHangDTO khachHangDTO) {
+        txtTenKH.setText(khachHangDTO.getName());
+        txtSoDT.setText(khachHangDTO.getPhone());
+        txtEmail.setText(khachHangDTO.getEmail());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
