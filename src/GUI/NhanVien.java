@@ -9,6 +9,8 @@ import BUS.KhachHangBUS;
 import BUS.NhanVienBUS;
 import DTO.KhachHangDTO;
 import DTO.NhanVienDTO;
+import GUI.KHang.ChiTietKHang;
+import GUI.KHang.SuaKHang;
 import GUI.NVien.ChiTietNhanVien;
 import GUI.NVien.SuaNhanVien;
 import GUI.NVien.ThemNhanVien;
@@ -17,6 +19,7 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import java.util.ArrayList;
 
 /**
@@ -25,6 +28,8 @@ import java.util.ArrayList;
  */
 public class NhanVien extends javax.swing.JPanel {
 
+    private NhanVienBUS nhanVienBUS;
+
     /** Creates new form NhanVien */
     public NhanVien() {
         // Set up NhanVien Panel's Components 
@@ -32,6 +37,9 @@ public class NhanVien extends javax.swing.JPanel {
         addIcon();
         setUpTable();
         loadDataToTable();
+
+        initAtt();
+        timKiemHandler();
     }
 
     /** This method is called from within the constructor to
@@ -106,19 +114,6 @@ public class NhanVien extends javax.swing.JPanel {
 
         txtTimKiem.setMinimumSize(new java.awt.Dimension(200, 30));
         txtTimKiem.setPreferredSize(new java.awt.Dimension(200, 30));
-        txtTimKiem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTimKiemActionPerformed(evt);
-            }
-        });
-        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtTimKiemKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtTimKiemKeyReleased(evt);
-            }
-        });
         pnlTop.add(txtTimKiem);
 
         add(pnlTop, java.awt.BorderLayout.NORTH);
@@ -158,38 +153,57 @@ public class NhanVien extends javax.swing.JPanel {
 
     private void btnThemNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemNVActionPerformed
         // TODO add your handling code here:
-        new ThemNhanVien().setVisible(true);
+        new ThemNhanVien(this).setVisible(true);
     }//GEN-LAST:event_btnThemNVActionPerformed
 
     private void btnSuaNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaNVActionPerformed
         // TODO add your handling code here:
-        new SuaNhanVien().setVisible(true);
+        NhanVienDTO selectedNhanVien = this.getSelectedRowData();
+        if (selectedNhanVien != null) {
+            new SuaNhanVien(this, selectedNhanVien).setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn khách hàng muốn sửa thông tin");
+        }
     }//GEN-LAST:event_btnSuaNVActionPerformed
 
     private void btnXoaNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaNVActionPerformed
         // TODO add your handling code here:
+        NhanVienDTO selectedNhanVien = this.getSelectedRowData();
+        if (selectedNhanVien != null) {
+            int id = selectedNhanVien.getId();
+
+            int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa nhân viên này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                if(nhanVienBUS.xoaNhanVien(id)) {
+                    JOptionPane.showMessageDialog(this, "Xóa nhân viên thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    this.loadDataToTable();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xóa nhân viên thất bại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn nhân viên muốn xóa");
+        }
     }//GEN-LAST:event_btnXoaNVActionPerformed
 
     private void btnChiTietNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChiTietNVActionPerformed
         // TODO add your handling code here:
-        new ChiTietNhanVien().setVisible(true);
+        NhanVienDTO selectedNhanVien = this.getSelectedRowData();
+        if (selectedNhanVien != null) {
+            new ChiTietNhanVien(selectedNhanVien).setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn nhân viên muốn xem chi tiết");
+        }
     }//GEN-LAST:event_btnChiTietNVActionPerformed
 
     private void btnXuatExcelNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatExcelNVActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnXuatExcelNVActionPerformed
 
-    private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTimKiemActionPerformed
-
-    private void txtTimKiemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTimKiemKeyPressed
-
-    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTimKiemKeyReleased
+    private void initAtt() {
+        nhanVienBUS = new NhanVienBUS();
+    }
 
     private void addIcon() {
         btnThemNV.setIcon(new FlatSVGIcon("./res/icon/add.svg"));
@@ -207,7 +221,7 @@ public class NhanVien extends javax.swing.JPanel {
         tblNhanVien.setDefaultEditor(Object.class, null);
     }
 
-    private void loadDataToTable() {
+    public void loadDataToTable() {
         NhanVienBUS nhanVienBUS = new NhanVienBUS();
         ArrayList<NhanVienDTO> nhanVienDTOArrayList = nhanVienBUS.getAllNhanViens();
 
@@ -234,6 +248,49 @@ public class NhanVien extends javax.swing.JPanel {
         for (int i = 0; i < tblNhanVien.getColumnCount(); i++) {
             tblNhanVien.getColumnModel().getColumn(i).setCellRenderer(renderer);
         }
+    }
+
+    private NhanVienDTO getSelectedRowData() {
+        int selectedRowIndex = tblNhanVien.getSelectedRow();
+
+        if (selectedRowIndex == -1) {
+            return null;
+        }
+
+        int id = (int) tblNhanVien.getValueAt(selectedRowIndex, 0);
+        return nhanVienBUS.getNhanVien(id);
+    }
+
+    private void timKiemHandler() {
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>((DefaultTableModel) tblNhanVien.getModel());
+        tblNhanVien.setRowSorter(sorter);
+
+        // Ô nhập tìm kiếm
+        txtTimKiem.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                filter();
+            }
+
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                filter();
+            }
+
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                filter();
+            }
+
+            private void filter() {
+                String keyword = txtTimKiem.getText().trim();
+                if (keyword.isEmpty()) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + keyword));
+                }
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

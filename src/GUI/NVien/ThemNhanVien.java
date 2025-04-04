@@ -5,7 +5,15 @@
 
 package GUI.NVien;
 
+import BUS.NhanVienBUS;
+import BUS.NhomQuyenBUS;
+import DTO.NhanVienDTO;
+import DTO.NhomQuyenDTO;
+import GUI.NhanVien;
+
 import javax.swing.JFrame;
+import java.util.ArrayList;
+import javax.swing.*;
 
 /**
  *
@@ -13,11 +21,16 @@ import javax.swing.JFrame;
  */
 public class ThemNhanVien extends javax.swing.JFrame {
 
+    private NhanVien nhanVienGUI;
+
     /** Creates new form ThemNhanVien */
-    public ThemNhanVien() {
+    public ThemNhanVien(NhanVien nhanVien) {
         initComponents();
+        loadNhomQuyenData();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        initAtt(nhanVien);
     }
 
     /** This method is called from within the constructor to
@@ -104,7 +117,7 @@ public class ThemNhanVien extends javax.swing.JFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Nhân viên bán hàng", " " }));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hoạt động", "Ngưng hoạt động " }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ngưng hoạt động", "Hoạt động" }));
 
         javax.swing.GroupLayout pnlCenterLayout = new javax.swing.GroupLayout(pnlCenter);
         pnlCenter.setLayout(pnlCenterLayout);
@@ -183,11 +196,93 @@ public class ThemNhanVien extends javax.swing.JFrame {
 
     private void btnThemNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemNVActionPerformed
         // TODO add your handling code here:
+        int id = -1;
+        int rolegroup_id = jComboBox1.getSelectedIndex() + 1;
+        String name = txtTenNV.getText();
+        String username = txtUsername.getText();
+        String password = txtPassword.getText();
+        int status = jComboBox2.getSelectedIndex();
+
+        if (!this.isValidInput(name, username, password)) {
+            return;
+        }
+
+        NhanVienBUS nhanVienBUS = new NhanVienBUS();
+        NhanVienDTO nhanVienDTO = new NhanVienDTO(id, rolegroup_id, name, username, password, null, (status == 0 ? false : true));
+        int code = nhanVienBUS.addNhanVien(nhanVienDTO);
+
+        if (code == 1) {
+            // khachHangGUI.updateTable(khachHangDTO, 1);
+            nhanVienGUI.loadDataToTable();
+        }
+        dbRespondHandler(code);
     }//GEN-LAST:event_btnThemNVActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void initAtt(NhanVien nhanVienGUI) {
+        this.nhanVienGUI = nhanVienGUI;
+    }
+
+    private void loadNhomQuyenData() {
+        NhomQuyenBUS nhomQuyenBUS = new NhomQuyenBUS();
+        ArrayList<NhomQuyenDTO> nhomQuyenDTOArrayList = nhomQuyenBUS.getAllNhomQuyens();
+
+        jComboBox1.removeAllItems();
+        for (NhomQuyenDTO nhomQuyenDTO : nhomQuyenDTOArrayList) {
+            jComboBox1.addItem(nhomQuyenDTO.getName());
+        }
+    }
+
+    private boolean isValidInput(String name, String username, String password) {
+        // Kiểm tra trường rỗng
+        if (name.isEmpty() || username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // Kiểm tra độ dài của các trường
+        if (name.length() > 255) {
+            JOptionPane.showMessageDialog(this, "Tên khách hàng không được quá 255 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (username.length() > 255) {
+            JOptionPane.showMessageDialog(this, "Username không được quá 255 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (password.length() > 255) {
+            JOptionPane.showMessageDialog(this, "Password không được quá 255 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // Regex kiểm tra username: chỉ chứa chữ cái, số, dấu gạch dưới
+        if (!username.matches("^[a-zA-Z0-9_]{3,255}$")) {
+            JOptionPane.showMessageDialog(null, "Tên đăng nhập không hợp lệ! Chỉ được chứa chữ, số, dấu gạch dưới, ít nhất 3 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // Regex kiểm tra password: tối thiểu 6 ký tự, có ít nhất 1 chữ và 1 số
+        if (!password.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,255}$")) {
+            JOptionPane.showMessageDialog(null, "Mật khẩu phải có ít nhất 6 ký tự, bao gồm cả chữ và số", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
+
+    private void dbRespondHandler(int code) {
+        if (code == 1) {
+            JOptionPane.showMessageDialog(this, "Thêm nhân viên mới thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        } else if (code == -1) {
+            JOptionPane.showMessageDialog(this, "Lỗi! Username này đã tồn tại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Thêm khách hàng thất bại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;

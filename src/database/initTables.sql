@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 03, 2025 at 01:06 PM
+-- Generation Time: Apr 04, 2025 at 11:14 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -122,19 +122,21 @@ CREATE TABLE `employee` (
                             `name` varchar(255) DEFAULT NULL,
                             `username` varchar(255) DEFAULT NULL,
                             `password` varchar(255) DEFAULT NULL,
-                            `status` tinyint(1) DEFAULT NULL
+                            `status` tinyint(1) DEFAULT NULL,
+                            `is_deleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `employee`
 --
 
-INSERT INTO `employee` (`id`, `rolegroup_id`, `name`, `username`, `password`, `status`) VALUES
-                                                                                            (1, 2, 'Nguyễn Văn An', 'annguyen', 'an123', 1),
-                                                                                            (2, 2, 'Trần Thị Bích', 'bichtran', 'bich456', 1),
-                                                                                            (3, 2, 'Lê Hoàng Nam', 'namle', 'nam789', 1),
-                                                                                            (4, 2, 'Phạm Hữu Phúc', 'phucpham', 'phuc321', 0),
-                                                                                            (5, 2, 'Đỗ Thanh Tâm', 'tamdo', 'tam654', 1);
+INSERT INTO `employee` (`id`, `rolegroup_id`, `name`, `username`, `password`, `status`, `is_deleted`) VALUES
+                                                                                                          (1, 2, 'Nguyễn Văn An', 'annguyen', 'an123', 1, 0),
+                                                                                                          (2, 2, 'Trần Thị Bích', 'bichtran', 'bich456', 1, 0),
+                                                                                                          (3, 2, 'Lê Hoàng Nam', 'namle', 'nam789', 1, 0),
+                                                                                                          (4, 2, 'Phạm Hữu Phúc', 'phucpham', 'phuc321', 0, 0),
+                                                                                                          (5, 2, 'Đỗ Thanh Tâm', 'tamdo', 'tam654', 1, 0),
+                                                                                                          (6, 2, 'Lê Huỳnh Thái Vy', 'vyvymoon', 'vyh135', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -823,6 +825,12 @@ ALTER TABLE `brand`
 --
 ALTER TABLE `customer`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `employee`
+--
+ALTER TABLE `employee`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables

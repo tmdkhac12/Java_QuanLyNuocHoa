@@ -5,7 +5,16 @@
 
 package GUI.NVien;
 
-import javax.swing.JFrame;
+import BUS.NhanVienBUS;
+import BUS.NhomQuyenBUS;
+import DTO.KhachHangDTO;
+import DTO.NhanVienDTO;
+import DTO.NhomQuyenDTO;
+import GUI.KhachHang;
+import GUI.NhanVien;
+
+import javax.swing.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,11 +22,18 @@ import javax.swing.JFrame;
  */
 public class SuaNhanVien extends javax.swing.JFrame {
 
+    private NhanVienDTO nhanVienDTO;
+    private NhanVien nhanVienGUI;
+
     /** Creates new form SuaNhanVien */
-    public SuaNhanVien() {
+    public SuaNhanVien(NhanVien nhanVien, NhanVienDTO nhanVienDTO) {
         initComponents();
+        loadNhomQuyenData();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        initAtt(nhanVien, nhanVienDTO);
+        loadFormData(nhanVienDTO);
     }
 
     /** This method is called from within the constructor to
@@ -93,7 +109,7 @@ public class SuaNhanVien extends javax.swing.JFrame {
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ngưng hoạt động ", "Hoạt động" }));
 
         javax.swing.GroupLayout pnlCenterLayout = new javax.swing.GroupLayout(pnlCenter);
         pnlCenter.setLayout(pnlCenterLayout);
@@ -183,16 +199,106 @@ public class SuaNhanVien extends javax.swing.JFrame {
 
     private void btnThemNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemNVActionPerformed
         // TODO add your handling code here:
+        int id = nhanVienDTO.getId();
+        int rolegroup_id = jComboBox1.getSelectedIndex() + 1;
+        String name = txtTenNV.getText();
+        String username = txtUsername.getText();
+        String password = txtPassword.getText();
+        int status = jComboBox2.getSelectedIndex();
+
+        if (!this.isValidInput(name, username, password)) {
+            return;
+        }
+
+        NhanVienBUS nhanVienBUS = new NhanVienBUS();
+        NhanVienDTO nhanVienDTO = new NhanVienDTO(id, rolegroup_id, name, username, password, null, (status == 0 ? false : true));
+        int code = nhanVienBUS.suaNhanVien(nhanVienDTO);
+
+        if (code == 1) {
+            // khachHangGUI.updateTable(khachHangDTO, 1);
+            nhanVienGUI.loadDataToTable();
+        }
+        dbRespondHandler(code);
     }//GEN-LAST:event_btnThemNVActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void initAtt(NhanVien nhanVien, NhanVienDTO selectedNhanVien) {
+        this.nhanVienGUI = nhanVien;
+        this.nhanVienDTO = selectedNhanVien;
+    }
+
+    private void loadNhomQuyenData() {
+        NhomQuyenBUS nhomQuyenBUS = new NhomQuyenBUS();
+        ArrayList<NhomQuyenDTO> nhomQuyenDTOArrayList = nhomQuyenBUS.getAllNhomQuyens();
+
+        jComboBox1.removeAllItems();
+        for (NhomQuyenDTO nhomQuyenDTO : nhomQuyenDTOArrayList) {
+            jComboBox1.addItem(nhomQuyenDTO.getName());
+        }
+    }
+
+    private boolean isValidInput(String name, String username, String password) {
+        // Kiểm tra trường rỗng
+        if (name.isEmpty() || username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // Kiểm tra độ dài của các trường
+        if (name.length() > 255) {
+            JOptionPane.showMessageDialog(this, "Tên khách hàng không được quá 255 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (username.length() > 255) {
+            JOptionPane.showMessageDialog(this, "Username không được quá 255 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (password.length() > 255) {
+            JOptionPane.showMessageDialog(this, "Password không được quá 255 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // Regex kiểm tra username: chỉ chứa chữ cái, số, dấu gạch dưới
+        if (!username.matches("^[a-zA-Z0-9_]{3,255}$")) {
+            JOptionPane.showMessageDialog(null, "Tên đăng nhập không hợp lệ! Chỉ được chứa chữ, số, dấu gạch dưới, ít nhất 3 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // Regex kiểm tra password: tối thiểu 6 ký tự, có ít nhất 1 chữ và 1 số
+        if (!password.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,255}$")) {
+            JOptionPane.showMessageDialog(null, "Mật khẩu phải có ít nhất 6 ký tự, bao gồm cả chữ và số", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
+
+    private void dbRespondHandler(int code) {
+        if (code == 1) {
+            JOptionPane.showMessageDialog(this, "Sửa thông tin nhân viên thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        } else if (code == -1) {
+            JOptionPane.showMessageDialog(this, "Lỗi! Username này đã tồn tại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Sửa nhân viên thất bại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void loadFormData(NhanVienDTO nhanVienDTO) {
+        txtTenNV.setText(nhanVienDTO.getName());
+        txtUsername.setText(nhanVienDTO.getUsername());
+        txtPassword.setText(nhanVienDTO.getPassword());
+        jComboBox1.setSelectedIndex(nhanVienDTO.getRoleGroupId() - 1);
+        jComboBox2.setSelectedIndex((nhanVienDTO.isStatus() == true ? 1 : 0));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;

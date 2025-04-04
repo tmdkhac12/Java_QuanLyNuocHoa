@@ -1,12 +1,11 @@
 package DAO;
 
+import DTO.KhachHangDTO;
 import DTO.NhanVienDTO;
 import DTO.NotHuongDTO;
 import util.DBConnection;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class NhanVienDAO {
@@ -14,7 +13,7 @@ public class NhanVienDAO {
         ArrayList<NhanVienDTO> nhanVienDTOArrayList = new ArrayList<>();
 
         Connection connection = DBConnection.getConnection();
-        String sql = "SELECT * FROM employee inner join rolegroup on employee.rolegroup_id = rolegroup.id;";
+        String sql = "SELECT * FROM employee inner join rolegroup on employee.rolegroup_id = rolegroup.id WHERE is_deleted = 0;";
 
         try {
             Statement statement = connection.createStatement();
@@ -39,5 +38,148 @@ public class NhanVienDAO {
         }
 
         return null;
+    }
+
+    public boolean insertNhanVien(NhanVienDTO nhanVienDTO) {
+        Connection connection = DBConnection.getConnection();
+        String sql = "INSERT INTO employee (rolegroup_id, name, username, password, status) VALUES (?, ?, ?, ?, ?)";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, nhanVienDTO.getRoleGroupId());
+            preparedStatement.setString(2, nhanVienDTO.getName());
+            preparedStatement.setString(3, nhanVienDTO.getUsername());
+            preparedStatement.setString(4, nhanVienDTO.getPassword());
+            preparedStatement.setBoolean(5, nhanVienDTO.isStatus());
+
+            int rowAffected = preparedStatement.executeUpdate();
+            if (rowAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.close(connection);
+        }
+
+        return false;
+    }
+
+    public boolean isExistNhanVienUsername(String username) {
+        Connection connection = DBConnection.getConnection();
+        String sql = "select * from employee where employee.username = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, username);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.close(connection);
+        }
+
+        return false;
+    }
+
+    public boolean isExistNhanVienUsernameExcept(String username, int id) {
+        Connection connection = DBConnection.getConnection();
+        String sql = "select * from employee where employee.username = ? and id <> ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, username);
+            preparedStatement.setInt(2, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.close(connection);
+        }
+
+        return false;
+    }
+
+    public NhanVienDTO getNhanVienById(int id) {
+        Connection connection = DBConnection.getConnection();
+        String sql = "select * from employee where id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int rolegroup_id = resultSet.getInt("rolegroup_id");
+                String name = resultSet.getString("name");
+                String username = resultSet.getString("username");
+                String password = resultSet.getString("password");
+                boolean status = resultSet.getBoolean("status");
+
+                NhanVienDTO nhanVienDTO = new NhanVienDTO(id, rolegroup_id, name, username, password, null, status);
+                return nhanVienDTO;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.close(connection);
+        }
+
+        return null;
+    }
+
+    public boolean updateNhanVien(NhanVienDTO nhanVienDTO) {
+        Connection connection = DBConnection.getConnection();
+        String sql = "update employee set rolegroup_id = ?, name = ?, username = ?, password = ?, status = ? where id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, nhanVienDTO.getRoleGroupId());
+            preparedStatement.setString(2, nhanVienDTO.getName());
+            preparedStatement.setString(3, nhanVienDTO.getUsername());
+            preparedStatement.setString(4, nhanVienDTO.getPassword());
+            preparedStatement.setBoolean(5, nhanVienDTO.isStatus());
+            preparedStatement.setInt(6, nhanVienDTO.getId());
+
+            int rowAffected = preparedStatement.executeUpdate();
+            if (rowAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.close(connection);
+        }
+
+        return false;
+    }
+
+    public boolean softDeleteNhanVien(int id) {
+        Connection connection = DBConnection.getConnection();
+        String sql = "update employee set is_deleted = 1 where id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+
+            int rowAffected = preparedStatement.executeUpdate();
+            if (rowAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.close(connection);
+        }
+
+        return false;
     }
 }

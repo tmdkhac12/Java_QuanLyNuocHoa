@@ -113,19 +113,6 @@ public class KhachHang extends javax.swing.JPanel {
         pnlTop.add(jLabel1);
 
         txtTimKiem.setPreferredSize(new java.awt.Dimension(150, 30));
-        txtTimKiem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTimKiemActionPerformed(evt);
-            }
-        });
-        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtTimKiemKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtTimKiemKeyReleased(evt);
-            }
-        });
         pnlTop.add(txtTimKiem);
 
         add(pnlTop, java.awt.BorderLayout.NORTH);
@@ -216,18 +203,6 @@ public class KhachHang extends javax.swing.JPanel {
     private void btnXuatExcel1KHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatExcel1KHActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnXuatExcel1KHActionPerformed
-
-    private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTimKiemActionPerformed
-
-    private void txtTimKiemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTimKiemKeyPressed
-
-    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTimKiemKeyReleased
 
     private void initAtt() {
         khachHangBUS = new KhachHangBUS();

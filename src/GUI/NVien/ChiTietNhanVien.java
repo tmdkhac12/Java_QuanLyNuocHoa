@@ -5,6 +5,9 @@
 
 package GUI.NVien;
 
+import DTO.KhachHangDTO;
+import DTO.NhanVienDTO;
+
 import javax.swing.JFrame;
 
 /**
@@ -14,10 +17,13 @@ import javax.swing.JFrame;
 public class ChiTietNhanVien extends javax.swing.JFrame {
 
     /** Creates new form ChiTietNhanVien */
-    public ChiTietNhanVien() {
+    public ChiTietNhanVien(NhanVienDTO nhanVienDTO) {
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        setUpForm();
+        loadFormData(nhanVienDTO);
     }
 
     /** This method is called from within the constructor to
@@ -91,9 +97,9 @@ public class ChiTietNhanVien extends javax.swing.JFrame {
 
         lblTrangThai.setText("Trạng thái tài khoản");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Nhân viên bán hàng", " " }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Nhân viên bán hàng" }));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hoạt động", "Ngưng hoạt động " }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ngưng hoạt động ", "Hoạt động" }));
 
         javax.swing.GroupLayout pnlCenterLayout = new javax.swing.GroupLayout(pnlCenter);
         pnlCenter.setLayout(pnlCenterLayout);
@@ -172,6 +178,22 @@ public class ChiTietNhanVien extends javax.swing.JFrame {
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void setUpForm() {
+        txtTenNV.setEditable(false);
+        txtUsername.setEditable(false);
+        txtPassword.setEditable(false);
+        jComboBox1.setEnabled(false);
+        jComboBox2.setEnabled(false);
+    }
+
+    private void loadFormData(NhanVienDTO nhanVienDTO) {
+        txtTenNV.setText(nhanVienDTO.getName());
+        txtUsername.setText(nhanVienDTO.getUsername());
+        txtPassword.setText(nhanVienDTO.getPassword());
+        jComboBox1.setSelectedIndex(nhanVienDTO.getRoleGroupId() - 1);
+        jComboBox2.setSelectedIndex((nhanVienDTO.isStatus() == true ? 1 : 0));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;

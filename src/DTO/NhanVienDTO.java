@@ -73,6 +73,6 @@ public class NhanVienDTO {
 
     @Override
     public String toString() {
-        return String.format("ID: %d, RoleGroup: %d, Name: %s, Username: %s, Password: %s, RoleGroupName: %s, Status: %d", id, roleGroupId, name, username, password, roleGroupName, status);
+        return String.format("ID: %d, RoleGroup: %d, Name: %s, Username: %s, Password: %s, RoleGroupName: %s, Status: %b", id, roleGroupId, name, username, password, roleGroupName, status);
     }
 }
