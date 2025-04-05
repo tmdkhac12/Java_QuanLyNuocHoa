@@ -1,8 +1,6 @@
 package DAO;
 
-import DTO.KhachHangDTO;
 import DTO.NhanVienDTO;
-import DTO.NotHuongDTO;
 import util.DBConnection;
 
 import java.sql.*;
@@ -35,6 +33,8 @@ public class NhanVienDAO {
             return nhanVienDTOArrayList;
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            DBConnection.close(connection);
         }
 
         return null;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 04, 2025 at 11:14 AM
+-- Generation Time: Apr 05, 2025 at 04:48 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,24 +29,27 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `brand` (
                          `id` int(11) NOT NULL,
-                         `name` varchar(255) DEFAULT NULL
+                         `name` varchar(255) DEFAULT NULL,
+                         `is_deleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `brand`
 --
 
-INSERT INTO `brand` (`id`, `name`) VALUES
-                                       (1, 'Chanel'),
-                                       (2, 'Dior'),
-                                       (3, 'Gucci'),
-                                       (4, 'Yves Saint Laurent'),
-                                       (5, 'Versace'),
-                                       (6, 'Tom Ford'),
-                                       (7, 'Burberry'),
-                                       (8, 'Calvin Klein'),
-                                       (9, 'Givenchy'),
-                                       (10, 'Hugo Boss');
+INSERT INTO `brand` (`id`, `name`, `is_deleted`) VALUES
+                                                     (1, 'Chanel', 0),
+                                                     (2, 'Dior', 0),
+                                                     (3, 'Gucci', 0),
+                                                     (4, 'Yves Saint Laurent', 0),
+                                                     (5, 'Versace', 0),
+                                                     (6, 'Tom Ford', 0),
+                                                     (7, 'Burberry', 0),
+                                                     (8, 'Calvin Klein', 0),
+                                                     (9, 'Givenchy', 0),
+                                                     (10, 'Hugo Boss', 0),
+                                                     (11, 'Lelabo', 0),
+                                                     (12, 'Dolge & Gabana', 0);
 
 -- --------------------------------------------------------
 
@@ -251,64 +254,65 @@ INSERT INTO `invoicedetail` (`invoice_id`, `perfume_id`, `quantity`) VALUES
 
 CREATE TABLE `notes` (
                          `id` int(11) NOT NULL,
-                         `note_name` varchar(50) DEFAULT NULL
+                         `note_name` varchar(50) DEFAULT NULL,
+                         `is_deleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `notes`
 --
 
-INSERT INTO `notes` (`id`, `note_name`) VALUES
-                                            (1, 'Hoa Hồng'),
-                                            (2, 'Hoa Nhài'),
-                                            (3, 'Hoa Oải Hương'),
-                                            (4, 'Hoa Ly'),
-                                            (5, 'Hoa Violet'),
-                                            (6, 'Hoa Mẫu Đơn'),
-                                            (7, 'Hoa Lan'),
-                                            (8, 'Hoa Dành Dành'),
-                                            (9, 'Hoa Mộc Lan'),
-                                            (10, 'Hoa Lan Nam Phi'),
-                                            (11, 'Táo'),
-                                            (12, 'Lê'),
-                                            (13, 'Đào'),
-                                            (14, 'Mâm Xôi Đen'),
-                                            (15, 'Mâm Xôi Đỏ'),
-                                            (16, 'Dâu Tây'),
-                                            (17, 'Anh Đào'),
-                                            (18, 'Dứa'),
-                                            (19, 'Dừa'),
-                                            (20, 'Dưa Gang'),
-                                            (21, 'Chanh'),
-                                            (22, 'Cam'),
-                                            (23, 'Cam Bergamot'),
-                                            (24, 'Bưởi'),
-                                            (25, 'Quýt'),
-                                            (26, 'Gỗ Đàn Hương'),
-                                            (27, 'Gỗ Tuyết Tùng'),
-                                            (28, 'Hoắc Hương'),
-                                            (29, 'Cỏ Hương Bài'),
-                                            (30, 'Trầm Hương'),
-                                            (31, 'Quế'),
-                                            (32, 'Đinh Hương'),
-                                            (33, 'Bạch Đậu Khấu'),
-                                            (34, 'Gừng'),
-                                            (35, 'Nhục Đậu Khấu'),
-                                            (36, 'Vani'),
-                                            (37, 'Đậu Tonka'),
-                                            (38, 'Muối Biển'),
-                                            (39, 'Hương Biển'),
-                                            (40, 'Hương Ozone'),
-                                            (41, 'Hương Aldehyde'),
-                                            (42, 'Xạ Hương'),
-                                            (43, 'Long Diên Hương'),
-                                            (44, 'Cầy Hương'),
-                                            (45, 'Da Thuộc'),
-                                            (46, 'Rêu Sồi'),
-                                            (47, 'Húng Quế'),
-                                            (48, 'Xô Thơm'),
-                                            (49, 'Cỏ Xạ Hương'),
-                                            (50, 'Bạc Hà');
+INSERT INTO `notes` (`id`, `note_name`, `is_deleted`) VALUES
+                                                          (1, 'Hoa Hồng', 0),
+                                                          (2, 'Hoa Nhài', 0),
+                                                          (3, 'Hoa Oải Hương', 0),
+                                                          (4, 'Hoa Ly', 0),
+                                                          (5, 'Hoa Violet', 0),
+                                                          (6, 'Hoa Mẫu Đơn', 0),
+                                                          (7, 'Hoa Lan', 0),
+                                                          (8, 'Hoa Dành Dành', 0),
+                                                          (9, 'Hoa Mộc Lan', 0),
+                                                          (10, 'Hoa Lan Nam Phi', 0),
+                                                          (11, 'Táo', 0),
+                                                          (12, 'Lê', 0),
+                                                          (13, 'Đào', 0),
+                                                          (14, 'Mâm Xôi Đen', 0),
+                                                          (15, 'Mâm Xôi Đỏ', 0),
+                                                          (16, 'Dâu Tây', 0),
+                                                          (17, 'Anh Đào', 0),
+                                                          (18, 'Dứa', 0),
+                                                          (19, 'Dừa', 0),
+                                                          (20, 'Dưa Gang', 0),
+                                                          (21, 'Chanh', 0),
+                                                          (22, 'Cam', 0),
+                                                          (23, 'Cam Bergamot', 0),
+                                                          (24, 'Bưởi', 0),
+                                                          (25, 'Quýt', 0),
+                                                          (26, 'Gỗ Đàn Hương', 0),
+                                                          (27, 'Gỗ Tuyết Tùng', 0),
+                                                          (28, 'Hoắc Hương', 0),
+                                                          (29, 'Cỏ Hương Bài', 0),
+                                                          (30, 'Trầm Hương', 0),
+                                                          (31, 'Quế', 0),
+                                                          (32, 'Đinh Hương', 0),
+                                                          (33, 'Bạch Đậu Khấu', 0),
+                                                          (34, 'Gừng', 0),
+                                                          (35, 'Nhục Đậu Khấu', 0),
+                                                          (36, 'Vani', 0),
+                                                          (37, 'Đậu Tonka', 0),
+                                                          (38, 'Muối Biển', 0),
+                                                          (39, 'Hương Biển', 0),
+                                                          (40, 'Hương Ozone', 0),
+                                                          (41, 'Hương Aldehyde', 0),
+                                                          (42, 'Xạ Hương', 0),
+                                                          (43, 'Long Diên Hương', 0),
+                                                          (44, 'Cầy Hương', 0),
+                                                          (45, 'Da Thuộc', 0),
+                                                          (46, 'Rêu Sồi', 0),
+                                                          (47, 'Húng Quế', 0),
+                                                          (48, 'Xô Thơm', 0),
+                                                          (49, 'Cỏ Xạ Hương', 0),
+                                                          (50, 'Bạc Hà', 0);
 
 -- --------------------------------------------------------
 
@@ -491,19 +495,21 @@ CREATE TABLE `promotion` (
                              `name` varchar(255) DEFAULT NULL,
                              `discount_percent` double DEFAULT NULL,
                              `start_date` datetime DEFAULT NULL,
-                             `end_date` datetime DEFAULT NULL
+                             `end_date` datetime DEFAULT NULL,
+                             `is_deleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `promotion`
 --
 
-INSERT INTO `promotion` (`id`, `name`, `discount_percent`, `start_date`, `end_date`) VALUES
-                                                                                         (1, 'Giảm giá mùa hè', 15, '2025-06-01 00:00:00', '2025-06-30 23:59:59'),
-                                                                                         (2, 'Khuyến mãi ngày Quốc tế Phụ nữ', 20, '2025-03-08 00:00:00', '2025-03-08 23:59:59'),
-                                                                                         (3, 'Giảm giá Black Friday', 50, '2025-11-27 00:00:00', '2025-11-27 23:59:59'),
-                                                                                         (4, 'Khuyến mãi sinh nhật cửa hàng', 10, '2025-05-01 00:00:00', '2025-05-10 23:59:59'),
-                                                                                         (5, 'Giảm giá lễ Tết Nguyên Đán', 25, '2025-01-01 00:00:00', '2025-01-15 23:59:59');
+INSERT INTO `promotion` (`id`, `name`, `discount_percent`, `start_date`, `end_date`, `is_deleted`) VALUES
+                                                                                                       (1, 'Giảm giá mùa hè', 15, '2025-06-01 00:00:00', '2025-06-30 23:59:59', 0),
+                                                                                                       (2, 'Khuyến mãi ngày Quốc tế Phụ nữ', 20, '2025-03-08 00:00:00', '2025-03-08 23:59:59', 0),
+                                                                                                       (3, 'Giảm giá Black Friday', 50, '2025-11-27 00:00:00', '2025-11-27 23:59:59', 0),
+                                                                                                       (4, 'Khuyến mãi sinh nhật cửa hàng', 10, '2025-05-01 00:00:00', '2025-05-10 23:59:59', 0),
+                                                                                                       (5, 'Giảm giá lễ Tết Nguyên Đán', 25, '2025-01-01 00:00:00', '2025-01-15 23:59:59', 0),
+                                                                                                       (10, 'Christmas', 15, '2025-04-08 00:00:00', '2025-04-10 23:59:59', 0);
 
 -- --------------------------------------------------------
 
@@ -818,7 +824,7 @@ ALTER TABLE `volume`
 -- AUTO_INCREMENT for table `brand`
 --
 ALTER TABLE `brand`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -831,6 +837,12 @@ ALTER TABLE `customer`
 --
 ALTER TABLE `employee`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `promotion`
+--
+ALTER TABLE `promotion`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables

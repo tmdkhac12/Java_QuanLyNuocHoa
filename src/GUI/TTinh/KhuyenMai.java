@@ -6,15 +6,21 @@
 package GUI.TTinh;
 
 import BUS.KhuyenMaiBUS;
-import BUS.NotHuongBUS;
+import BUS.KhuyenMaiBUS;
+import BUS.KhuyenMaiBUS;
 import DTO.KhuyenMaiDTO;
-import DTO.NotHuongDTO;
+import DTO.KhuyenMaiDTO;
+import DTO.KhuyenMaiDTO;
+import DTO.KhuyenMaiDTO;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import util.DateFormatter;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -22,11 +28,15 @@ import java.util.ArrayList;
  */
 public class KhuyenMai extends javax.swing.JPanel {
 
+    private KhuyenMaiBUS khuyenMaiBUS;
+
     /** Creates new form KhuyenMai */
     public KhuyenMai() {
         initComponents();
         setUpTable();
         addIcon();
+
+        initAtt();
         loadDataToTable();
     }
 
@@ -46,17 +56,18 @@ public class KhuyenMai extends javax.swing.JPanel {
         lblThuongHieu = new javax.swing.JLabel();
         tenThuongHieu = new javax.swing.JPanel();
         lblTenThuongHieu = new javax.swing.JLabel();
-        txtTenThuongHieu = new javax.swing.JTextField();
+        txtTenKhuyenMai = new javax.swing.JTextField();
         lblTenThuongHieu1 = new javax.swing.JLabel();
-        txtTenThuongHieu1 = new javax.swing.JTextField();
+        txtPhanTram = new javax.swing.JTextField();
         lblTenThuongHieu2 = new javax.swing.JLabel();
-        txtTenThuongHieu2 = new javax.swing.JTextField();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         lblTenThuongHieu3 = new javax.swing.JLabel();
-        txtTenThuongHieu3 = new javax.swing.JTextField();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
         pnlLeft = new javax.swing.JPanel();
         btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -68,6 +79,11 @@ public class KhuyenMai extends javax.swing.JPanel {
                 "Mã khuyến mãi", "Tên khuyến mãi", "Phần trăm", "Ngày bắt đầu", "Ngày kết thúc"
             }
         ));
+        tblKhuyenMai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblKhuyenMaiMouseClicked(evt);
+            }
+        });
         scrollThuongHieu.setViewportView(tblKhuyenMai);
         if (tblKhuyenMai.getColumnModel().getColumnCount() > 0) {
             tblKhuyenMai.getColumnModel().getColumn(0).setResizable(false);
@@ -93,30 +109,32 @@ public class KhuyenMai extends javax.swing.JPanel {
         lblTenThuongHieu.setText("Tên khuyến mãi :");
         tenThuongHieu.add(lblTenThuongHieu);
 
-        txtTenThuongHieu.setMinimumSize(new java.awt.Dimension(150, 30));
-        txtTenThuongHieu.setPreferredSize(new java.awt.Dimension(150, 30));
-        tenThuongHieu.add(txtTenThuongHieu);
+        txtTenKhuyenMai.setMinimumSize(new java.awt.Dimension(150, 30));
+        txtTenKhuyenMai.setPreferredSize(new java.awt.Dimension(150, 30));
+        tenThuongHieu.add(txtTenKhuyenMai);
 
         lblTenThuongHieu1.setText("Phần trăm:");
         tenThuongHieu.add(lblTenThuongHieu1);
 
-        txtTenThuongHieu1.setMinimumSize(new java.awt.Dimension(150, 30));
-        txtTenThuongHieu1.setPreferredSize(new java.awt.Dimension(150, 30));
-        tenThuongHieu.add(txtTenThuongHieu1);
+        txtPhanTram.setMinimumSize(new java.awt.Dimension(150, 30));
+        txtPhanTram.setPreferredSize(new java.awt.Dimension(150, 30));
+        tenThuongHieu.add(txtPhanTram);
 
         lblTenThuongHieu2.setText("Ngày bắt đầu:");
         tenThuongHieu.add(lblTenThuongHieu2);
 
-        txtTenThuongHieu2.setMinimumSize(new java.awt.Dimension(150, 30));
-        txtTenThuongHieu2.setPreferredSize(new java.awt.Dimension(150, 30));
-        tenThuongHieu.add(txtTenThuongHieu2);
+        jDateChooser1.setDateFormatString("yyyy-MM-dd");
+        jDateChooser1.setMinimumSize(new java.awt.Dimension(82, 32));
+        jDateChooser1.setPreferredSize(new java.awt.Dimension(150, 30));
+        tenThuongHieu.add(jDateChooser1);
+        jDateChooser1.getAccessibleContext().setAccessibleDescription("");
 
         lblTenThuongHieu3.setText("Ngày kết thúc:");
         tenThuongHieu.add(lblTenThuongHieu3);
 
-        txtTenThuongHieu3.setMinimumSize(new java.awt.Dimension(150, 30));
-        txtTenThuongHieu3.setPreferredSize(new java.awt.Dimension(150, 30));
-        tenThuongHieu.add(txtTenThuongHieu3);
+        jDateChooser2.setDateFormatString("yyyy-MM-dd");
+        jDateChooser2.setPreferredSize(new java.awt.Dimension(150, 30));
+        tenThuongHieu.add(jDateChooser2);
 
         javax.swing.GroupLayout pnlTopLayout = new javax.swing.GroupLayout(pnlTop);
         pnlTop.setLayout(pnlTopLayout);
@@ -160,6 +178,13 @@ public class KhuyenMai extends javax.swing.JPanel {
             }
         });
 
+        btnRefresh.setText("Làm mới");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlLeftLayout = new javax.swing.GroupLayout(pnlLeft);
         pnlLeft.setLayout(pnlLeftLayout);
         pnlLeftLayout.setHorizontalGroup(
@@ -167,6 +192,7 @@ public class KhuyenMai extends javax.swing.JPanel {
             .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
             .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnXoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlLeftLayout.setVerticalGroup(
             pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,7 +203,9 @@ public class KhuyenMai extends javax.swing.JPanel {
                 .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(318, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(237, Short.MAX_VALUE))
         );
 
         add(pnlLeft, java.awt.BorderLayout.WEST);
@@ -185,15 +213,118 @@ public class KhuyenMai extends javax.swing.JPanel {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
+        if (!this.isValidInput(txtTenKhuyenMai.getText(), txtPhanTram.getText(), jDateChooser1.getDate(), jDateChooser2.getDate())) {
+            return;
+        }
+
+        int id = -1;
+        String tenKhuyenMai = txtTenKhuyenMai.getText();
+        double percent = Double.parseDouble(txtPhanTram.getText());
+        Timestamp startDate = DateFormatter.toStartOfDay(jDateChooser1.getDate());
+        Timestamp endDate = DateFormatter.toEndOfDay(jDateChooser2.getDate());
+
+        KhuyenMaiDTO khuyenMaiDTO = new KhuyenMaiDTO(id, tenKhuyenMai, percent, startDate, endDate);
+        int code = khuyenMaiBUS.themKhuyenMai(khuyenMaiDTO);
+
+        if (code == 1) {
+            // khachHangGUI.updateTable(khachHangDTO, 1);
+            loadDataToTable();
+            txtTenKhuyenMai.setText("");
+            txtPhanTram.setText("");
+            jDateChooser1.setDate(null);
+            jDateChooser2.setDate(null);
+        }
+        dbRespondHandler(code, 1);
+
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
+        KhuyenMaiDTO selectedKhuyenMai = this.getSelectedRowData();
+        if (selectedKhuyenMai != null) {
+            int id = selectedKhuyenMai.getId();
+
+            int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa khuyến mãi này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                if(khuyenMaiBUS.xoaKhuyenMai(id)) {
+                    JOptionPane.showMessageDialog(this, "Xóa khuyến mãi thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    loadDataToTable();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xóa khuyến mãi thất bại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn khuyến mãi muốn xóa");
+        }
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
+        if (!this.isValidInput(txtTenKhuyenMai.getText(), txtPhanTram.getText(), jDateChooser1.getDate(), jDateChooser2.getDate())) {
+            return;
+        }
+
+        KhuyenMaiDTO selectedKhuyenMai = this.getSelectedRowData();
+
+        if (selectedKhuyenMai == null) {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn khuyến mãi muốn sửa");
+            return;
+        }
+
+        int id = selectedKhuyenMai.getId();
+        String tenKhuyenMai = txtTenKhuyenMai.getText();
+        double percent = Double.parseDouble(txtPhanTram.getText());
+        Timestamp startDate = DateFormatter.toStartOfDay(jDateChooser1.getDate());
+        Timestamp endDate = DateFormatter.toEndOfDay(jDateChooser2.getDate());
+
+        KhuyenMaiDTO khuyenMaiDTO = new KhuyenMaiDTO(id, tenKhuyenMai, percent, startDate, endDate);
+        int code = khuyenMaiBUS.suaKhuyenMai(khuyenMaiDTO);
+
+        if (code == 1) {
+            // khachHangGUI.updateTable(khachHangDTO, 1);
+            loadDataToTable();
+            txtTenKhuyenMai.setText("");
+            txtPhanTram.setText("");
+            jDateChooser1.setDate(null);
+            jDateChooser2.setDate(null);
+        }
+        dbRespondHandler(code, 2);
+
     }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void tblKhuyenMaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKhuyenMaiMouseClicked
+        // TODO add your handling code here:
+        int selectedRow = tblKhuyenMai.getSelectedRow();
+        if (selectedRow != -1) {
+            String name = tblKhuyenMai.getValueAt(selectedRow, 1).toString();
+            int discount = (int) tblKhuyenMai.getValueAt(selectedRow, 2);
+
+            Timestamp startTimestamp = (Timestamp) tblKhuyenMai.getValueAt(selectedRow, 3);
+            Timestamp endTimestamp = (Timestamp) tblKhuyenMai.getValueAt(selectedRow, 4);
+            Date startDate = new Date(startTimestamp.getTime());
+            Date endDate = new Date(endTimestamp.getTime());
+
+            txtTenKhuyenMai.setText(name);
+            txtPhanTram.setText(Integer.toString(discount));
+            jDateChooser1.setDate(startDate);
+            jDateChooser2.setDate(endDate);
+        }
+    }//GEN-LAST:event_tblKhuyenMaiMouseClicked
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // TODO add your handling code here:
+        txtTenKhuyenMai.setText("");
+        txtPhanTram.setText("");
+        jDateChooser1.setDate(null);
+        jDateChooser2.setDate(null);
+
+        tblKhuyenMai.clearSelection();
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void initAtt() {
+        this.khuyenMaiBUS = new KhuyenMaiBUS();
+    }
 
     private void setUpTable() {
         // Set ẩn hiển thị ô vuông khi bấm vào cell 
@@ -207,6 +338,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         btnThem.setIcon(new FlatSVGIcon("./res/icon/add.svg"));
         btnSua.setIcon(new FlatSVGIcon("./res/icon/edit.svg"));
         btnXoa.setIcon(new FlatSVGIcon("./res/icon/delete.svg"));
+        btnRefresh.setIcon(new FlatSVGIcon("./res/icon/refresh.svg"));
     }
 
     private void loadDataToTable() {
@@ -234,10 +366,82 @@ public class KhuyenMai extends javax.swing.JPanel {
         }
     }
 
+    private boolean isValidInput(String tenKhuyenMai, String txtPercent, Date startDateRaw, Date endDateRaw) {
+        // 1. Kiểm tra tên không được để trống
+        if (tenKhuyenMai == null || tenKhuyenMai.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên khuyến mãi không được để trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // 2. Kiểm tra phần trăm hợp lệ (số thực, trong khoảng 0-100)
+        double percent;
+        try {
+            percent = Double.parseDouble(txtPercent);
+            if (percent < 0 || percent > 100) {
+                JOptionPane.showMessageDialog(this, "Phần trăm khuyến mãi phải nằm trong khoảng từ 0 đến 100!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Phần trăm khuyến mãi phải là số hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // 3. Kiểm tra ngày không được null
+        if (startDateRaw == null || endDateRaw == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn đầy đủ ngày bắt đầu và ngày kết thúc!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // 4. Ép ngày về Timestamp để so sánh chính xác hơn
+        Timestamp startDate = DateFormatter.toStartOfDay(startDateRaw);
+        Timestamp endDate = DateFormatter.toEndOfDay(endDateRaw);
+
+        // 5. Kiểm tra ngày bắt đầu không sau ngày kết thúc
+        if (startDate.after(endDate)) {
+            JOptionPane.showMessageDialog(this, "Ngày bắt đầu phải trước hoặc bằng ngày kết thúc!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true; // Hợp lệ
+    }
+
+    private void dbRespondHandler(int code, int _case) {
+        if (_case == 1) {
+            if (code == 1) {
+                JOptionPane.showMessageDialog(this, "Thêm khuyến mãi thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            } else if (code == -1) {
+                JOptionPane.showMessageDialog(this, "Lỗi! Tên khuyến mãi này đã tồn tại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Thêm khuyến mãi thất bại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        } else if (_case == 2) {
+            if (code == 1) {
+                JOptionPane.showMessageDialog(this, "Sửa khuyến mãi thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            } else if (code == -1) {
+                JOptionPane.showMessageDialog(this, "Lỗi! Tên khuyến mãi này đã tồn tại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Sửa khuyến mãi thất bại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private KhuyenMaiDTO getSelectedRowData() {
+        int selectedRowIndex = tblKhuyenMai.getSelectedRow();
+
+        if (selectedRowIndex == -1) {
+            return null;
+        }
+
+        int id = (int) tblKhuyenMai.getValueAt(selectedRowIndex, 0);
+        return khuyenMaiBUS.getKhuyenMai(id);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnXoa;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel lblTenThuongHieu;
     private javax.swing.JLabel lblTenThuongHieu1;
     private javax.swing.JLabel lblTenThuongHieu2;
@@ -249,10 +453,8 @@ public class KhuyenMai extends javax.swing.JPanel {
     private javax.swing.JTable tblKhuyenMai;
     private javax.swing.JPanel tenThuongHieu;
     private javax.swing.JPanel title;
-    private javax.swing.JTextField txtTenThuongHieu;
-    private javax.swing.JTextField txtTenThuongHieu1;
-    private javax.swing.JTextField txtTenThuongHieu2;
-    private javax.swing.JTextField txtTenThuongHieu3;
+    private javax.swing.JTextField txtPhanTram;
+    private javax.swing.JTextField txtTenKhuyenMai;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -6,6 +6,7 @@
 package GUI.TTinh;
 
 import BUS.ThuongHieuBUS;
+import DTO.KhachHangDTO;
 import DTO.ThuongHieuDTO;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
@@ -20,11 +21,15 @@ import java.util.ArrayList;
  */
 public class ThuongHieu extends javax.swing.JPanel {
 
+    private ThuongHieuBUS thuongHieuBUS;
+
     /** Creates new form ThuongHieu */
     public ThuongHieu() {
         initComponents();
         setUpTable();
         addIcon();
+
+        initAtt();
         loadDataToTable();
     }
 
@@ -49,6 +54,7 @@ public class ThuongHieu extends javax.swing.JPanel {
         btnThemThuongHieu = new javax.swing.JButton();
         btnSuaThuongHieu = new javax.swing.JButton();
         btnXoaThuongHieu = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -61,6 +67,11 @@ public class ThuongHieu extends javax.swing.JPanel {
                 "Mã thương hiệu", "Tên thương hiệu"
             }
         ));
+        tblThuongHieu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblThuongHieuMouseClicked(evt);
+            }
+        });
         scrollThuongHieu.setViewportView(tblThuongHieu);
         if (tblThuongHieu.getColumnModel().getColumnCount() > 0) {
             tblThuongHieu.getColumnModel().getColumn(0).setResizable(false);
@@ -128,6 +139,14 @@ public class ThuongHieu extends javax.swing.JPanel {
             }
         });
 
+        btnRefresh.setText("Làm mới");
+        btnRefresh.setActionCommand("mới");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlLeftLayout = new javax.swing.GroupLayout(pnlLeft);
         pnlLeft.setLayout(pnlLeftLayout);
         pnlLeftLayout.setHorizontalGroup(
@@ -135,6 +154,7 @@ public class ThuongHieu extends javax.swing.JPanel {
             .addComponent(btnThemThuongHieu, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
             .addComponent(btnSuaThuongHieu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnXoaThuongHieu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlLeftLayout.setVerticalGroup(
             pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,7 +165,9 @@ public class ThuongHieu extends javax.swing.JPanel {
                 .addComponent(btnSuaThuongHieu, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnXoaThuongHieu, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(310, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(229, Short.MAX_VALUE))
         );
 
         add(pnlLeft, java.awt.BorderLayout.WEST);
@@ -153,15 +175,87 @@ public class ThuongHieu extends javax.swing.JPanel {
 
     private void btnThemThuongHieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemThuongHieuActionPerformed
         // TODO add your handling code here:
+        int id = -1;
+        String newTenThuongHieu = txtTenThuongHieu.getText();
+
+        if (!this.isValidInput(newTenThuongHieu)) {
+            return;
+        }
+
+        ThuongHieuDTO thuongHieuDTO = new ThuongHieuDTO(id, newTenThuongHieu);
+        int code = thuongHieuBUS.themThuongHieu(thuongHieuDTO);
+
+        if (code == 1) {
+            // khachHangGUI.updateTable(khachHangDTO, 1);
+            loadDataToTable();
+            txtTenThuongHieu.setText("");
+        }
+        dbRespondHandler(code, 1);
     }//GEN-LAST:event_btnThemThuongHieuActionPerformed
 
     private void btnSuaThuongHieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaThuongHieuActionPerformed
         // TODO add your handling code here:
+        ThuongHieuDTO selectedThuongHieu = this.getSelectedRowData();
+
+        if (selectedThuongHieu == null) {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn thương hiệu muốn sửa");
+            return;
+        }
+
+        int id = selectedThuongHieu.getId();
+        String newTenThuongHieu = txtTenThuongHieu.getText();
+
+        if (!this.isValidInput(newTenThuongHieu)) {
+            return;
+        }
+
+        ThuongHieuDTO thuongHieuDTO = new ThuongHieuDTO(id, newTenThuongHieu);
+        int code = thuongHieuBUS.suaThuongHieu(thuongHieuDTO);
+
+        if (code == 1) {
+            // khachHangGUI.updateTable(khachHangDTO, 1);
+            loadDataToTable();
+            txtTenThuongHieu.setText("");
+        }
+        dbRespondHandler(code, 2);
     }//GEN-LAST:event_btnSuaThuongHieuActionPerformed
 
     private void btnXoaThuongHieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaThuongHieuActionPerformed
         // TODO add your handling code here:
+        ThuongHieuDTO selectedThuongHieu = this.getSelectedRowData();
+        if (selectedThuongHieu != null) {
+            int id = selectedThuongHieu.getId();
+
+            int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa thương hiệu này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                if(thuongHieuBUS.xoaThuongHieu(id)) {
+                    JOptionPane.showMessageDialog(this, "Xóa thương hiệu thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    loadDataToTable();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xóa thương hiệu thất bại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn thương hiệu muốn xóa");
+        }
     }//GEN-LAST:event_btnXoaThuongHieuActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // TODO add your handling code here:
+        txtTenThuongHieu.setText("");
+
+        tblThuongHieu.clearSelection();
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void tblThuongHieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblThuongHieuMouseClicked
+        // TODO add your handling code here:
+        int selectedRow = tblThuongHieu.getSelectedRow();
+        if (selectedRow != -1) {
+            String name = tblThuongHieu.getValueAt(selectedRow, 1).toString();
+            txtTenThuongHieu.setText(name);
+        }
+    }//GEN-LAST:event_tblThuongHieuMouseClicked
 
     private void setUpTable() {
         // Set ẩn hiển thị ô vuông khi bấm vào cell 
@@ -175,6 +269,7 @@ public class ThuongHieu extends javax.swing.JPanel {
         btnThemThuongHieu.setIcon(new FlatSVGIcon("./res/icon/add.svg"));
         btnSuaThuongHieu.setIcon(new FlatSVGIcon("./res/icon/edit.svg"));
         btnXoaThuongHieu.setIcon(new FlatSVGIcon("./res/icon/delete.svg"));
+        btnRefresh.setIcon(new FlatSVGIcon("./res/icon/refresh.svg"));
     }
 
     private void loadDataToTable() {
@@ -198,8 +293,61 @@ public class ThuongHieu extends javax.swing.JPanel {
             tblThuongHieu.getColumnModel().getColumn(i).setCellRenderer(renderer);
         }
     }
-    
+
+    public boolean isValidInput(String name) {
+        // Kiểm tra trường rỗng
+        if (name.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên thương hiệu trước khi thêm", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // Kiểm tra độ dài của các trường
+        if (name.length() > 255) {
+            JOptionPane.showMessageDialog(this, "Tên thương hiệu không được quá 255 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
+
+    private void dbRespondHandler(int code, int _case) {
+        if (_case == 1) {
+            if (code == 1) {
+                JOptionPane.showMessageDialog(this, "Thêm thương hiệu thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            } else if (code == -1) {
+                JOptionPane.showMessageDialog(this, "Lỗi! Tên thương hiệu này đã tồn tại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Thêm thương hiệu thất bại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        } else if (_case == 2) {
+            if (code == 1) {
+                JOptionPane.showMessageDialog(this, "Sửa thương hiệu thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            } else if (code == -1) {
+                JOptionPane.showMessageDialog(this, "Lỗi! Tên thương hiệu này đã tồn tại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Sửa thương hiệu thất bại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private ThuongHieuDTO getSelectedRowData() {
+        int selectedRowIndex = tblThuongHieu.getSelectedRow();
+
+        if (selectedRowIndex == -1) {
+            return null;
+        }
+
+        int id = (int) tblThuongHieu.getValueAt(selectedRowIndex, 0);
+        String name = tblThuongHieu.getValueAt(selectedRowIndex, 1).toString();
+        return new ThuongHieuDTO(id, name);
+    }
+
+    private void initAtt() {
+        thuongHieuBUS = new ThuongHieuBUS();
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnSuaThuongHieu;
     private javax.swing.JButton btnThemThuongHieu;
     private javax.swing.JButton btnXoaThuongHieu;

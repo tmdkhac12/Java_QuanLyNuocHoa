@@ -6,8 +6,12 @@
 package GUI.TTinh;
 
 import BUS.NotHuongBUS;
+import BUS.NotHuongBUS;
+import BUS.NotHuongBUS;
 import DTO.NotHuongDTO;
-import DTO.ThuongHieuDTO;
+import DTO.NotHuongDTO;
+import DTO.NotHuongDTO;
+import DTO.NotHuongDTO;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import javax.swing.*;
@@ -21,11 +25,15 @@ import java.util.ArrayList;
  */
 public class NotHuong extends javax.swing.JPanel {
 
+    private NotHuongBUS notHuongBUS;
+
     /** Creates new form NotHuong */
     public NotHuong() {
         initComponents();
         setUpTable();
         addIcon();
+
+        initAtt();
         loadDataToTable();
     }
 
@@ -38,18 +46,19 @@ public class NotHuong extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        scrollThuongHieu = new javax.swing.JScrollPane();
+        scrollNotHuong = new javax.swing.JScrollPane();
         tblNotHuong = new javax.swing.JTable();
         pnlTop = new javax.swing.JPanel();
         title = new javax.swing.JPanel();
-        lblThuongHieu = new javax.swing.JLabel();
-        tenThuongHieu = new javax.swing.JPanel();
-        lblTenThuongHieu = new javax.swing.JLabel();
-        txtTenThuongHieu = new javax.swing.JTextField();
+        lblNotHuong = new javax.swing.JLabel();
+        tenNotHuong = new javax.swing.JPanel();
+        lblTenNotHuong = new javax.swing.JLabel();
+        txtTenNotHuong = new javax.swing.JTextField();
         pnlLeft = new javax.swing.JPanel();
         btnThemNotHuong = new javax.swing.JButton();
         btnSuaNotHuong = new javax.swing.JButton();
         btnXoaNotHuong = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -64,43 +73,48 @@ public class NotHuong extends javax.swing.JPanel {
                 "Mã nốt hương", "Tên nốt hương"
             }
         ));
-        scrollThuongHieu.setViewportView(tblNotHuong);
+        tblNotHuong.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblNotHuongMouseClicked(evt);
+            }
+        });
+        scrollNotHuong.setViewportView(tblNotHuong);
         if (tblNotHuong.getColumnModel().getColumnCount() > 0) {
             tblNotHuong.getColumnModel().getColumn(1).setResizable(false);
         }
 
-        add(scrollThuongHieu, java.awt.BorderLayout.CENTER);
+        add(scrollNotHuong, java.awt.BorderLayout.CENTER);
 
         title.setBackground(new java.awt.Color(255, 51, 0));
         title.setForeground(new java.awt.Color(255, 255, 255));
 
-        lblThuongHieu.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        lblThuongHieu.setForeground(new java.awt.Color(255, 255, 255));
-        lblThuongHieu.setText("NỐT HƯƠNG NƯỚC HOA");
-        title.add(lblThuongHieu);
+        lblNotHuong.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        lblNotHuong.setForeground(new java.awt.Color(255, 255, 255));
+        lblNotHuong.setText("NỐT HƯƠNG NƯỚC HOA");
+        title.add(lblNotHuong);
 
-        tenThuongHieu.setBackground(new java.awt.Color(255, 255, 255));
+        tenNotHuong.setBackground(new java.awt.Color(255, 255, 255));
 
-        lblTenThuongHieu.setText("Tên nốt hương:");
-        tenThuongHieu.add(lblTenThuongHieu);
+        lblTenNotHuong.setText("Tên nốt hương:");
+        tenNotHuong.add(lblTenNotHuong);
 
-        txtTenThuongHieu.setMinimumSize(new java.awt.Dimension(150, 30));
-        txtTenThuongHieu.setPreferredSize(new java.awt.Dimension(150, 30));
-        tenThuongHieu.add(txtTenThuongHieu);
+        txtTenNotHuong.setMinimumSize(new java.awt.Dimension(150, 30));
+        txtTenNotHuong.setPreferredSize(new java.awt.Dimension(150, 30));
+        tenNotHuong.add(txtTenNotHuong);
 
         javax.swing.GroupLayout pnlTopLayout = new javax.swing.GroupLayout(pnlTop);
         pnlTop.setLayout(pnlTopLayout);
         pnlTopLayout.setHorizontalGroup(
             pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(tenThuongHieu, javax.swing.GroupLayout.DEFAULT_SIZE, 882, Short.MAX_VALUE)
+            .addComponent(tenNotHuong, javax.swing.GroupLayout.DEFAULT_SIZE, 882, Short.MAX_VALUE)
         );
         pnlTopLayout.setVerticalGroup(
             pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTopLayout.createSequentialGroup()
                 .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(tenThuongHieu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tenNotHuong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
@@ -130,6 +144,14 @@ public class NotHuong extends javax.swing.JPanel {
             }
         });
 
+        btnRefresh.setText("Làm mới");
+        btnRefresh.setToolTipText("");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlLeftLayout = new javax.swing.GroupLayout(pnlLeft);
         pnlLeft.setLayout(pnlLeftLayout);
         pnlLeftLayout.setHorizontalGroup(
@@ -137,6 +159,7 @@ public class NotHuong extends javax.swing.JPanel {
             .addComponent(btnThemNotHuong, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
             .addComponent(btnSuaNotHuong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnXoaNotHuong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlLeftLayout.setVerticalGroup(
             pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,7 +170,9 @@ public class NotHuong extends javax.swing.JPanel {
                 .addComponent(btnSuaNotHuong, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnXoaNotHuong, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(310, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(229, Short.MAX_VALUE))
         );
 
         add(pnlLeft, java.awt.BorderLayout.WEST);
@@ -155,15 +180,87 @@ public class NotHuong extends javax.swing.JPanel {
 
     private void btnThemNotHuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemNotHuongActionPerformed
         // TODO add your handling code here:
+        int id = -1;
+        String newTenNotHuong = txtTenNotHuong.getText();
+
+        if (!this.isValidInput(newTenNotHuong)) {
+            return;
+        }
+
+        NotHuongDTO notHuongDTO = new NotHuongDTO(id, newTenNotHuong);
+        int code = notHuongBUS.themNotHuong(notHuongDTO);
+
+        if (code == 1) {
+            // khachHangGUI.updateTable(khachHangDTO, 1);
+            loadDataToTable();
+            txtTenNotHuong.setText("");
+        }
+        dbRespondHandler(code, 1);
     }//GEN-LAST:event_btnThemNotHuongActionPerformed
 
     private void btnSuaNotHuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaNotHuongActionPerformed
         // TODO add your handling code here:
+        NotHuongDTO selectedNotHuong = this.getSelectedRowData();
+
+        if (selectedNotHuong == null) {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn nốt hương muốn sửa");
+            return;
+        }
+
+        int id = selectedNotHuong.getId();
+        String newTenNotHuong = txtTenNotHuong.getText();
+
+        if (!this.isValidInput(newTenNotHuong)) {
+            return;
+        }
+
+        NotHuongDTO notHuongDTO = new NotHuongDTO(id, newTenNotHuong);
+        int code = notHuongBUS.suaNotHuong(notHuongDTO);
+
+        if (code == 1) {
+            // khachHangGUI.updateTable(khachHangDTO, 1);
+            loadDataToTable();
+            txtTenNotHuong.setText("");
+        }
+        dbRespondHandler(code, 2);
     }//GEN-LAST:event_btnSuaNotHuongActionPerformed
 
     private void btnXoaNotHuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaNotHuongActionPerformed
         // TODO add your handling code here:
+        NotHuongDTO selectedNotHuong = this.getSelectedRowData();
+        if (selectedNotHuong != null) {
+            int id = selectedNotHuong.getId();
+
+            int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa nốt hương này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                if(notHuongBUS.xoaNotHuong(id)) {
+                    JOptionPane.showMessageDialog(this, "Xóa nốt hương thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    loadDataToTable();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xóa nốt hương thất bại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn nốt hương muốn xóa");
+        }
     }//GEN-LAST:event_btnXoaNotHuongActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // TODO add your handling code here:
+        txtTenNotHuong.setText("");
+
+        tblNotHuong.clearSelection();
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void tblNotHuongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNotHuongMouseClicked
+        // TODO add your handling code here:
+        int selectedRow = tblNotHuong.getSelectedRow();
+        if (selectedRow != -1) {
+            String name = tblNotHuong.getValueAt(selectedRow, 1).toString();
+            txtTenNotHuong.setText(name);
+        }
+    }//GEN-LAST:event_tblNotHuongMouseClicked
 
     private void setUpTable() {
         // Set ẩn hiển thị ô vuông khi bấm vào cell 
@@ -177,6 +274,7 @@ public class NotHuong extends javax.swing.JPanel {
         btnThemNotHuong.setIcon(new FlatSVGIcon("./res/icon/add.svg"));
         btnSuaNotHuong.setIcon(new FlatSVGIcon("./res/icon/edit.svg"));
         btnXoaNotHuong.setIcon(new FlatSVGIcon("./res/icon/delete.svg"));
+        btnRefresh.setIcon(new FlatSVGIcon("./res/icon/refresh.svg"));
     }
 
     private void loadDataToTable() {
@@ -201,19 +299,72 @@ public class NotHuong extends javax.swing.JPanel {
         }
     }
 
+    public boolean isValidInput(String name) {
+        // Kiểm tra trường rỗng
+        if (name.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên nốt hương trước khi thêm", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // Kiểm tra độ dài của các trường
+        if (name.length() > 255) {
+            JOptionPane.showMessageDialog(this, "Tên nốt hương không được quá 255 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
+
+    private void dbRespondHandler(int code, int _case) {
+        if (_case == 1) {
+            if (code == 1) {
+                JOptionPane.showMessageDialog(this, "Thêm nốt hương thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            } else if (code == -1) {
+                JOptionPane.showMessageDialog(this, "Lỗi! Tên nốt hương này đã tồn tại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Thêm nốt hương thất bại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        } else if (_case == 2) {
+            if (code == 1) {
+                JOptionPane.showMessageDialog(this, "Sửa nốt hương thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            } else if (code == -1) {
+                JOptionPane.showMessageDialog(this, "Lỗi! Tên nốt hương này đã tồn tại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Sửa nốt hương thất bại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private NotHuongDTO getSelectedRowData() {
+        int selectedRowIndex = tblNotHuong.getSelectedRow();
+
+        if (selectedRowIndex == -1) {
+            return null;
+        }
+
+        int id = (int) tblNotHuong.getValueAt(selectedRowIndex, 0);
+        String name = tblNotHuong.getValueAt(selectedRowIndex, 1).toString();
+        return new NotHuongDTO(id, name);
+    }
+
+    private void initAtt() {
+        notHuongBUS = new NotHuongBUS();
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnSuaNotHuong;
     private javax.swing.JButton btnThemNotHuong;
     private javax.swing.JButton btnXoaNotHuong;
-    private javax.swing.JLabel lblTenThuongHieu;
-    private javax.swing.JLabel lblThuongHieu;
+    private javax.swing.JLabel lblNotHuong;
+    private javax.swing.JLabel lblTenNotHuong;
     private javax.swing.JPanel pnlLeft;
     private javax.swing.JPanel pnlTop;
-    private javax.swing.JScrollPane scrollThuongHieu;
+    private javax.swing.JScrollPane scrollNotHuong;
     private javax.swing.JTable tblNotHuong;
-    private javax.swing.JPanel tenThuongHieu;
+    private javax.swing.JPanel tenNotHuong;
     private javax.swing.JPanel title;
-    private javax.swing.JTextField txtTenThuongHieu;
+    private javax.swing.JTextField txtTenNotHuong;
     // End of variables declaration//GEN-END:variables
 
 }
