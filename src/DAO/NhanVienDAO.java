@@ -39,6 +39,38 @@ public class NhanVienDAO {
 
         return null;
     }
+    // Kiểm tra thông tin đăng nhập
+    public NhanVienDTO checkLogin(String username, String password) {
+        String sql = "SELECT employee.*, rolegroup.name AS roleGroupName " +
+                     "FROM employee " +
+                     "INNER JOIN rolegroup ON employee.rolegroup_id = rolegroup.id " +
+                     "WHERE employee.username = ? AND employee.password = ? " +
+                     "AND employee.status = 1 AND employee.is_deleted = 0";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+
+            pst.setString(1, username);
+            pst.setString(2, password);
+
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    int id = rs.getInt("id");
+                    int roleGroupId = rs.getInt("rolegroup_id");
+                    String name = rs.getString("name");
+                    String roleGroupName = rs.getString("roleGroupName");
+                    boolean status = rs.getBoolean("status");
+
+                    return new NhanVienDTO(id, roleGroupId, name, username, password, roleGroupName, status);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     public boolean insertNhanVien(NhanVienDTO nhanVienDTO) {
         Connection connection = DBConnection.getConnection();

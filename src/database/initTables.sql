@@ -151,19 +151,20 @@ CREATE TABLE `importreceipt` (
                                  `id` int(11) NOT NULL,
                                  `supplier_id` int(11) DEFAULT NULL,
                                  `import_date` datetime DEFAULT NULL,
-                                 `total_cost` double DEFAULT NULL
+                                 `total_cost` double DEFAULT NULL,
+                                 `is_deleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `importreceipt`
 --
 
-INSERT INTO `importreceipt` (`id`, `supplier_id`, `import_date`, `total_cost`) VALUES
-                                                                                   (1, 1, '2025-04-01 08:00:00', 1400),
-                                                                                   (2, 2, '2025-04-02 09:00:00', 1240),
-                                                                                   (3, 3, '2025-04-03 10:15:00', 1050),
-                                                                                   (4, 4, '2025-04-04 11:30:00', 1460),
-                                                                                   (5, 5, '2025-04-05 14:45:00', 780);
+INSERT INTO `importreceipt` (`id`, `supplier_id`, `import_date`, `total_cost`, `is_deleted`) VALUES
+                                                                                   (1, 1, '2025-04-01 08:00:00', 1400, 0),
+                                                                                   (2, 2, '2025-04-02 09:00:00', 1240, 0),
+                                                                                   (3, 3, '2025-04-03 10:15:00', 1050, 0),
+                                                                                   (4, 4, '2025-04-04 11:30:00', 1460, 0),
+                                                                                   (5, 5, '2025-04-05 14:45:00', 780, 0);
 
 -- --------------------------------------------------------
 

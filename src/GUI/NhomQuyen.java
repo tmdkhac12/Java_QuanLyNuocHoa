@@ -5,10 +5,16 @@
 
 package GUI;
 
+import BUS.NhomQuyenBUS;
 import GUI.NQuyen.ChiTietNQuyen;
 import GUI.NQuyen.SuaNQuyen;
 import GUI.NQuyen.ThemNQuyen;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+import util.DialogUtil;
 
 
 /**
@@ -16,11 +22,13 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
  * @author hoang
  */
 public class NhomQuyen extends javax.swing.JPanel {
+    private int selectedGroupId = -1;
 
     /** Creates new form NhomQuyen */
     public NhomQuyen() {
         initComponents();
         addIcon();
+        loadData();
     }
 
     /** This method is called from within the constructor to
@@ -115,29 +123,70 @@ public class NhomQuyen extends javax.swing.JPanel {
 
         add(pnlCenter, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+    
+    private void loadData() {
+    DefaultTableModel model = (DefaultTableModel) tblNhomQuyen.getModel();
+    model.setRowCount(0);
+
+    NhomQuyenBUS bus = new NhomQuyenBUS();
+    for (Object[] row : bus.getAllNhomQuyenThongTin()) {
+        model.addRow(row);
+    }
+}
+
+
+
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        // TODO add your handling code here:
-        new ThemNQuyen().setVisible(true);
+    
+    JFrame parent = (JFrame) SwingUtilities.getWindowAncestor(this);
+    DialogUtil.showPanelInDialog(new ThemNQuyen(), "Thêm nhóm quyền", parent);
+    loadData();
+
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        // TODO add your handling code here:
-        new SuaNQuyen().setVisible(true);
+    if (selectedGroupId != -1) {
+        JFrame parent = (JFrame) SwingUtilities.getWindowAncestor(this);
+        DialogUtil.showPanelInDialog(new SuaNQuyen(selectedGroupId), "Sửa nhóm quyền", parent);
+        loadData();
+    } else {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn nhóm quyền cần sửa!");
+    }
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        // TODO add your handling code here:
-        
+    if (selectedGroupId != -1) {
+        int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            NhomQuyenBUS bus = new NhomQuyenBUS();
+            if (bus.delete(selectedGroupId)) {
+                JOptionPane.showMessageDialog(this, "Xóa thành công!");
+                loadData();
+                selectedGroupId = -1;
+            } else {
+                JOptionPane.showMessageDialog(this, "Xóa thất bại!");
+            }
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn nhóm quyền cần xóa!");
+    }
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnChiTietActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChiTietActionPerformed
-        // TODO add your handling code here:
-        new ChiTietNQuyen().setVisible(true);
+    if (selectedGroupId != -1) {
+        JFrame parent = (JFrame) SwingUtilities.getWindowAncestor(this);
+        DialogUtil.showPanelInDialog(new ChiTietNQuyen(selectedGroupId), "Chi tiết nhóm quyền", parent);
+    } else {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn nhóm quyền để xem chi tiết!");
+    }
     }//GEN-LAST:event_btnChiTietActionPerformed
 
     private void tblNhomQuyenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhomQuyenMouseClicked
-        // TODO add your handling code here:
+       int row = tblNhomQuyen.getSelectedRow();
+    if (row != -1) {
+        selectedGroupId = Integer.parseInt(tblNhomQuyen.getValueAt(row, 0).toString());
+    }
     }//GEN-LAST:event_tblNhomQuyenMouseClicked
 
     private void addIcon() {

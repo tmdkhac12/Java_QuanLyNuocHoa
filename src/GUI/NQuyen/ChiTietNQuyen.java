@@ -5,6 +5,13 @@
 
 package GUI.NQuyen;
 
+import BUS.NhomQuyenBUS;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+import javax.swing.JCheckBox;
+
 /**
  *
  * @author hoang
@@ -12,8 +19,10 @@ package GUI.NQuyen;
 public class ChiTietNQuyen extends javax.swing.JPanel {
 
     /** Creates new form ChiTietNQuyen */
-    public ChiTietNQuyen() {
+    public ChiTietNQuyen(int selectedGroupId) {
         initComponents();
+         loadQuyenDaGan(selectedGroupId);
+        
     }
 
     /** This method is called from within the constructor to
@@ -1258,7 +1267,43 @@ public class ChiTietNQuyen extends javax.swing.JPanel {
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnHuyActionPerformed
+    private void loadQuyenDaGan(int groupId) {
+        for (Object[] r : new NhomQuyenBUS().getAllNhomQuyenThongTin()) {
+            if (((Integer)r[0]) == groupId) {
+                tfTenNhomQuyen.setText((String)r[1]);
+                break;
+            }
+        }
 
+        Set<Integer> ids = new NhomQuyenBUS().getRoleIdsByGroup(groupId);
+        Map<JCheckBox,Integer> m = new LinkedHashMap<>();
+        m.put(cbSPthem,    1); m.put(cbSPsua,     1);
+        m.put(cbSPxoa,     1); m.put(cbSPchitiet, 1);
+        m.put(cbKHthem,    3); m.put(cbKHsua,     3);
+        m.put(cbKHxoa,     3); m.put(cbKHchitiet, 3);
+        m.put(cbNVthem,    4); m.put(cbNVsua,     4);
+        m.put(cbNVxoa,     4); m.put(cbNVchitiet, 4);
+        m.put(cbPNthem,    5); m.put(cbPNsua,     5);
+        m.put(cbPNxoa,     5); m.put(cbPNchitiet, 5);
+        m.put(cbPXthem,    2); m.put(cbPXsua,     2);
+        m.put(cbPXxoa,     2); m.put(cbPXchitiet, 2);
+        m.put(cbTHthem,    6); m.put(cbTHsua,     6);
+        m.put(cbTHxoa,     6); m.put(cbTHchitiet, 6);
+        m.put(cbNCCthem,   7); m.put(cbNCCsua,    7);
+        m.put(cbNCCxoa,    7); m.put(cbNCCchitiet,7);
+        m.put(cbTKthem,    8); m.put(cbTKsua,     8);
+        m.put(cbTKxoa,     8); m.put(cbTKchitiet, 8);
+        m.put(cbPQthem,    9); m.put(cbPQsua,     9);
+        m.put(cbPQxoa,     9); m.put(cbPQchitiet, 9);
+        m.put(cbGYthem,   10); m.put(cbGNGYsua,  10);
+        m.put(cbTKethem,  11); m.put(cbTKesua,   11);
+        m.put(cbTKexoa,   11); m.put(cbTKechitiet,11);
+
+        for (var e : m.entrySet()) {
+            e.getKey().setSelected(ids.contains(e.getValue()));
+            e.getKey().setEnabled(false);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHuy;

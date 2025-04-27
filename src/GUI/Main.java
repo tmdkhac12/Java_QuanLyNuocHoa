@@ -1,5 +1,6 @@
 package GUI;
 
+import DTO.NhanVienDTO;
 import javax.swing.*;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
@@ -30,9 +31,12 @@ public class Main extends javax.swing.JFrame {
     private HoaDon hoaDonPanel;
     private ThongKe thongKePanel;
     private NhomQuyen nhomQuyenPanel;
-    
-    /** Creates new form Main */
-    public Main() {
+    private final NhanVienDTO nhanVien; // lưu lại nhân viên đăng nhập
+
+    /** Creates new form Main
+     * @param nhanVien */
+    public Main(NhanVienDTO nhanVien) {
+        this.nhanVien = nhanVien;
         // Setup Frame Attributes
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Hệ thống quản lý cửa hàng nước hoa");
@@ -42,6 +46,13 @@ public class Main extends javax.swing.JFrame {
         setUT();
         initComponents();
         addIconTaskbar();
+        
+        
+        // ✅ Gán tên và chức vụ
+    lblTenNhanVien.setText(nhanVien.getName());
+    lblChucVu.setText(nhanVien.getRoleGroupName());
+    
+    phanQuyenTheoVaiTro();
     }
 
     /** This method is called from within the constructor to
@@ -378,7 +389,11 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNhomQuyenActionPerformed
 
     private void btnDangXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangXuatActionPerformed
-        // TODO add your handling code here:
+    int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn đăng xuất?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+    if (confirm == JOptionPane.YES_OPTION) {
+        this.dispose(); // đóng form hiện tại
+        new Login().setVisible(true); // mở lại form login
+    }        // TODO add your handling code here:
     }//GEN-LAST:event_btnDangXuatActionPerformed
 
     private void addIconTaskbar() {
@@ -473,6 +488,27 @@ public class Main extends javax.swing.JFrame {
         mainContent.revalidate();
         mainContent.repaint();
     }
+    private void phanQuyenTheoVaiTro() {
+    int role = nhanVien.getRoleGroupId();
+
+    if (role == 1) return; // Admin: full quyền
+    if (role == 2) {
+        btnNhanVien.setVisible(false);
+        btnNhomQuyen.setVisible(false);
+        btnThongKe.setVisible(false);
+        btnPhieuNhap.setVisible(false);
+        btnThuocTinh.setVisible(false);
+        btnNhaCungCap.setVisible(false);
+        btnKhachHang.setVisible(false);
+    }
+    if (role == 3) {
+        btnNhanVien.setVisible(false);
+        btnNhomQuyen.setVisible(false);
+    }
+
+    
+}
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bar;

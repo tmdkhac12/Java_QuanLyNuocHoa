@@ -5,15 +5,35 @@
 
 package GUI.NQuyen;
 
+import BUS.NhomQuyenBUS;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+import javax.swing.JCheckBox;
+import util.DBConnection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
+
 /**
  *
  * @author hoang
  */
 public class SuaNQuyen extends javax.swing.JPanel {
+    private final int selectedGroupId;
 
     /** Creates new form SuaNQuyen */
-    public SuaNQuyen() {
+    public SuaNQuyen(int selectedGroupId) {
+        this.selectedGroupId = selectedGroupId;
         initComponents();
+        loadQuyenDaGan(selectedGroupId);
     }
 
     /** This method is called from within the constructor to
@@ -1039,7 +1059,7 @@ public class SuaNQuyen extends javax.swing.JPanel {
             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void cbNCCthemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNCCthemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbNCCthemActionPerformed
@@ -1204,9 +1224,7 @@ public class SuaNQuyen extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbTKexoaActionPerformed
 
-    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLuuActionPerformed
+                                          
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
         // TODO add your handling code here:
@@ -1215,7 +1233,109 @@ public class SuaNQuyen extends javax.swing.JPanel {
     private void tfTenNhomQuyenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTenNhomQuyenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfTenNhomQuyenActionPerformed
+    private void loadQuyenDaGan(int groupId) {
+        // Lấy tên nhóm
+        for (Object[] r : new NhomQuyenBUS().getAllNhomQuyenThongTin()) {
+            if (((Integer)r[0]) == groupId) {
+                tfTenNhomQuyen.setText((String)r[1]);
+                break;
+            }
+        }
+        // Lấy quyền đã gán
+        Set<Integer> ids = new NhomQuyenBUS().getRoleIdsByGroup(groupId);
+        Map<JCheckBox,Integer> m = new LinkedHashMap<>();
+        m.put(cbSPthem,    1); m.put(cbSPsua,     1); m.put(cbSPxoa,     1); m.put(cbSPchitiet, 1);
+        m.put(cbKHthem,    3); m.put(cbKHsua,     3); m.put(cbKHxoa,     3); m.put(cbKHchitiet, 3);
+        m.put(cbNVthem,    4); m.put(cbNVsua,     4); m.put(cbNVxoa,     4); m.put(cbNVchitiet, 4);
+        m.put(cbPNthem,    5); m.put(cbPNsua,     5); m.put(cbPNxoa,     5); m.put(cbPNchitiet, 5);
+        m.put(cbPXthem,    2); m.put(cbPXsua,     2); m.put(cbPXxoa,     2); m.put(cbPXchitiet, 2);
+        m.put(cbTHthem,    6); m.put(cbTHsua,     6); m.put(cbTHxoa,     6); m.put(cbTHchitiet, 6);
+        m.put(cbNCCthem,   7); m.put(cbNCCsua,    7); m.put(cbNCCxoa,    7); m.put(cbNCCchitiet,7);
+        m.put(cbTKthem,    8); m.put(cbTKsua,     8); m.put(cbTKxoa,     8); m.put(cbTKchitiet, 8);
+        m.put(cbPQthem,    9); m.put(cbPQsua,     9); m.put(cbPQxoa,     9); m.put(cbPQchitiet, 9);
+        m.put(cbGYthem,   10); m.put(cbGNGYsua,  10);
+        m.put(cbTKethem,  11); m.put(cbTKesua,   11); m.put(cbTKexoa,   11); m.put(cbTKechitiet,11);
 
+        for (var e : m.entrySet()) {
+            e.getKey().setSelected(ids.contains(e.getValue()));
+        }
+    }
+
+    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {
+    String tenNhom = tfTenNhomQuyen.getText().trim();
+    if (tenNhom.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Vui lòng nhập tên nhóm quyền!");
+        return;
+    }
+
+    // 1. Cập nhật tên nhóm quyền
+    try (Connection conn = DBConnection.getConnection()) {
+        String updateGroup = "UPDATE rolegroup SET name = ? WHERE id = ?";
+        PreparedStatement pst = conn.prepareStatement(updateGroup);
+        pst.setString(1, tenNhom);
+        pst.setInt(2, selectedGroupId);
+        pst.executeUpdate();
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Lỗi khi cập nhật tên nhóm quyền!");
+        return;
+    }
+
+    // 2. Chuẩn bị danh sách checkbox → moduleId
+    Map<JCheckBox, Integer> checkboxes = new LinkedHashMap<>();
+    checkboxes.put(cbSPthem, 1);   checkboxes.put(cbSPsua, 1);   checkboxes.put(cbSPxoa, 1);   checkboxes.put(cbSPchitiet, 1);
+    checkboxes.put(cbKHthem, 3);   checkboxes.put(cbKHsua, 3);   checkboxes.put(cbKHxoa, 3);   checkboxes.put(cbKHchitiet, 3);
+    checkboxes.put(cbNVthem, 4);   checkboxes.put(cbNVsua, 4);   checkboxes.put(cbNVxoa, 4);   checkboxes.put(cbNVchitiet, 4);
+    checkboxes.put(cbPNthem, 5);   checkboxes.put(cbPNsua, 5);   checkboxes.put(cbPNxoa, 5);   checkboxes.put(cbPNchitiet, 5);
+    checkboxes.put(cbPXthem, 2);   checkboxes.put(cbPXsua, 2);   checkboxes.put(cbPXxoa, 2);   checkboxes.put(cbPXchitiet, 2);
+    checkboxes.put(cbTHthem, 6);   checkboxes.put(cbTHsua, 6);   checkboxes.put(cbTHxoa, 6);   checkboxes.put(cbTHchitiet, 6);
+    checkboxes.put(cbNCCthem,7);   checkboxes.put(cbNCCsua,7);   checkboxes.put(cbNCCxoa,7);   checkboxes.put(cbNCCchitiet,7);
+    checkboxes.put(cbTKthem, 8);   checkboxes.put(cbTKsua, 8);   checkboxes.put(cbTKxoa, 8);   checkboxes.put(cbTKchitiet, 8);
+    checkboxes.put(cbPQthem, 9);   checkboxes.put(cbPQsua, 9);   checkboxes.put(cbPQxoa, 9);   checkboxes.put(cbPQchitiet, 9);
+    checkboxes.put(cbGYthem,10);   checkboxes.put(cbGNGYsua,10);
+    checkboxes.put(cbTKethem,11);  checkboxes.put(cbTKesua,11);  checkboxes.put(cbTKexoa,11);  checkboxes.put(cbTKechitiet,11);
+
+    // 3. Lấy các quyền đang được tích
+    Set<Integer> selectedRoleIds = new HashSet<>();
+    for (var e : checkboxes.entrySet()) {
+        if (e.getKey().isSelected()) {
+            selectedRoleIds.add(e.getValue());
+        }
+    }
+
+    // 4. Cập nhật bảng role_rolegroup: xóa quyền cũ, thêm quyền mới
+    try (Connection conn = DBConnection.getConnection()) {
+        conn.setAutoCommit(false);
+
+        // Xóa quyền cũ
+        String deleteSQL = "DELETE FROM role_rolegroup WHERE rolegroup_id = ?";
+        PreparedStatement del = conn.prepareStatement(deleteSQL);
+        del.setInt(1, selectedGroupId);
+        del.executeUpdate();
+
+        // Thêm quyền mới
+        String insertSQL = "INSERT INTO role_rolegroup(role_id, rolegroup_id, status) VALUES (?, ?, 1)";
+        PreparedStatement ins = conn.prepareStatement(insertSQL);
+        for (Integer roleId : selectedRoleIds) {
+            ins.setInt(1, roleId);
+            ins.setInt(2, selectedGroupId);
+            ins.addBatch();
+        }
+        ins.executeBatch();
+
+        conn.commit();
+
+        JOptionPane.showMessageDialog(this, "Cập nhật nhóm quyền thành công!");
+        SwingUtilities.getWindowAncestor(this).dispose();
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Lỗi khi cập nhật quyền cho nhóm!");
+    }
+}
+
+
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHuy;

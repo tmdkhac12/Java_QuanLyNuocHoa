@@ -50,4 +50,8 @@ public class NhanVienBUS {
     public boolean xoaNhanVien(int id) {
         return nhanVienDAO.softDeleteNhanVien(id);
     }
+    public NhanVienDTO login(String username, String password) {
+    return nhanVienDAO.checkLogin(username, password);
+}
+
 }

@@ -5,6 +5,24 @@
 
 package GUI.NQuyen;
 
+
+import java.sql.Statement;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+
+import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
+
+import util.DBConnection;
+
 /**
  *
  * @author hoang
@@ -1207,10 +1225,102 @@ public class ThemNQuyen extends javax.swing.JPanel {
     private void cbTKexoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTKexoaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbTKexoaActionPerformed
+    
 
-    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLuuActionPerformed
+    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {
+    String tenNhom = tfTenNhomQuyen.getText().trim();
+    if (tenNhom.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Vui lòng nhập tên nhóm quyền!");
+        return;
+    }
+
+    // 1. Tạo nhóm quyền mới và lấy về generated groupId
+    int groupId = -1;
+    try (java.sql.Connection conn = DBConnection.getConnection()) {
+        String insertGroup = "INSERT INTO rolegroup(name) VALUES (?)";
+        java.sql.PreparedStatement pst = conn.prepareStatement(insertGroup, java.sql.Statement.RETURN_GENERATED_KEYS);
+        pst.setString(1, tenNhom);
+        pst.executeUpdate();
+        java.sql.ResultSet rs = pst.getGeneratedKeys();
+        if (rs.next()) {
+            groupId = rs.getInt(1);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Lỗi khi tạo nhóm quyền!");
+        return;
+    }
+
+    // 2. Chuẩn bị map từ mỗi JCheckBox → moduleId
+    Map<JCheckBox,Integer> checkboxes = new LinkedHashMap<>();
+    checkboxes.put(cbSPthem,      1);
+    checkboxes.put(cbSPsua,       1);
+    checkboxes.put(cbSPxoa,       1);
+    checkboxes.put(cbSPchitiet,   1);
+    checkboxes.put(cbKHthem,      3);
+    checkboxes.put(cbKHsua,       3);
+    checkboxes.put(cbKHxoa,       3);
+    checkboxes.put(cbKHchitiet,   3);
+    checkboxes.put(cbNVthem,      4);
+    checkboxes.put(cbNVsua,       4);
+    checkboxes.put(cbNVxoa,       4);
+    checkboxes.put(cbNVchitiet,   4);
+    checkboxes.put(cbPNthem,      5);
+    checkboxes.put(cbPNsua,       5);
+    checkboxes.put(cbPNxoa,       5);
+    checkboxes.put(cbPNchitiet,   5);
+    checkboxes.put(cbTHthem,      6);
+    checkboxes.put(cbTHsua,       6);
+    checkboxes.put(cbTHxoa,       6);
+    checkboxes.put(cbTHchitiet,   6);
+    checkboxes.put(cbNCCthem,     7);
+    checkboxes.put(cbNCCsua,      7);
+    checkboxes.put(cbNCCxoa,      7);
+    checkboxes.put(cbNCCchitiet,  7);
+    checkboxes.put(cbTKthem,      8);
+    checkboxes.put(cbTKsua,       8);
+    checkboxes.put(cbTKxoa,       8);
+    checkboxes.put(cbTKchitiet,   8);
+    checkboxes.put(cbPQthem,      9);
+    checkboxes.put(cbPQsua,       9);
+    checkboxes.put(cbPQxoa,       9);
+    checkboxes.put(cbPQchitiet,   9);
+    checkboxes.put(cbGYthem,     10);
+    checkboxes.put(cbGNGYsua,    10);
+    checkboxes.put(cbTKethem,    11);
+    checkboxes.put(cbTKesua,     11);
+    checkboxes.put(cbTKexoa,     11);
+    checkboxes.put(cbTKechitiet, 11);
+
+    // 3. Tập hợp các moduleId cần lưu (nếu ít nhất 1 trong 4 isSelected)
+    Set<Integer> selectedRoleIds = new HashSet<>();
+    for (var e : checkboxes.entrySet()) {
+        if (e.getKey().isSelected()) {
+            selectedRoleIds.add(e.getValue());
+        }
+    }
+
+    // 4. Lưu vào role_rolegroup
+    try (java.sql.Connection conn = DBConnection.getConnection()) {
+        String insertRR = "INSERT INTO role_rolegroup(role_id, rolegroup_id, status) VALUES (?, ?, 1)";
+        java.sql.PreparedStatement pst = conn.prepareStatement(insertRR);
+
+        for (Integer roleId : selectedRoleIds) {
+            pst.setInt(1, roleId);
+            pst.setInt(2, groupId);
+            pst.addBatch();
+        }
+        pst.executeBatch();
+
+        JOptionPane.showMessageDialog(this, "Thêm nhóm quyền thành công!");
+        javax.swing.SwingUtilities.getWindowAncestor(this).dispose();
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Lỗi khi thêm quyền cho nhóm!");
+    }
+}
+
+                                      
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
         // TODO add your handling code here:
