@@ -5,7 +5,18 @@
 
 package GUI;
 
+import BUS.NhaCungCapBUS;
+import DTO.NhaCungCapDTO;
+import GUI.NCC.ChiTietNCC;
+import GUI.NCC.SuaNCC;
+import GUI.NCC.ThemNCC;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,11 +24,17 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
  */
 public class NhaCungCap extends javax.swing.JPanel {
 
+    private NhaCungCapBUS nhaCungCapBUS;
+
     /** Creates new form NhaCungCap */
     public NhaCungCap() {
         initComponents();
         addIcon();
         setUpTable();
+
+        initAtt();
+        loadNCCData();
+        timKiemHandler();
     }
 
     /** This method is called from within the constructor to
@@ -30,10 +47,10 @@ public class NhaCungCap extends javax.swing.JPanel {
     private void initComponents() {
 
         pnlTop = new javax.swing.JPanel();
-        btnChiTietNCC = new javax.swing.JButton();
         btnThemNhaCC = new javax.swing.JButton();
         btnSuaNhaCC = new javax.swing.JButton();
         btnXoaNhaCC = new javax.swing.JButton();
+        btnChiTietNCC = new javax.swing.JButton();
         btnXuatExcelNCC = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txtTimKiem = new javax.swing.JTextField();
@@ -47,24 +64,49 @@ public class NhaCungCap extends javax.swing.JPanel {
         pnlTop.setBackground(new java.awt.Color(255, 255, 255));
         pnlTop.setPreferredSize(new java.awt.Dimension(1200, 70));
 
-        btnChiTietNCC.setText("Chi tiết");
-        btnChiTietNCC.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnlTop.add(btnChiTietNCC);
-
         btnThemNhaCC.setText("Thêm");
         btnThemNhaCC.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnThemNhaCC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemNhaCCActionPerformed(evt);
+            }
+        });
         pnlTop.add(btnThemNhaCC);
 
         btnSuaNhaCC.setText("Sửa");
         btnSuaNhaCC.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSuaNhaCC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaNhaCCActionPerformed(evt);
+            }
+        });
         pnlTop.add(btnSuaNhaCC);
 
         btnXoaNhaCC.setText("Xóa");
         btnXoaNhaCC.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnXoaNhaCC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaNhaCCActionPerformed(evt);
+            }
+        });
         pnlTop.add(btnXoaNhaCC);
+
+        btnChiTietNCC.setText("Chi tiết");
+        btnChiTietNCC.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnChiTietNCC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChiTietNCCActionPerformed(evt);
+            }
+        });
+        pnlTop.add(btnChiTietNCC);
 
         btnXuatExcelNCC.setText("Xuất excel");
         btnXuatExcelNCC.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnXuatExcelNCC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXuatExcelNCCActionPerformed(evt);
+            }
+        });
         pnlTop.add(btnXuatExcelNCC);
 
         jLabel1.setText("Tìm kiếm :");
@@ -80,13 +122,13 @@ public class NhaCungCap extends javax.swing.JPanel {
 
         tblNhaCC.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
+                {"1", "Alex Supplier", "0933486531", "alex12@gmail.com"},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
-                "Mã NCC", "Tên nhà cung cấp", "Email", "Điện thoại"
+                "Mã NCC", "Tên nhà cung cấp", "Điện thoại", "Email"
             }
         ));
         asd.setViewportView(tblNhaCC);
@@ -105,6 +147,56 @@ public class NhaCungCap extends javax.swing.JPanel {
         add(pnlCenter, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnThemNhaCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemNhaCCActionPerformed
+        // TODO add your handling code here:
+        new ThemNCC(this).setVisible(true);
+    }//GEN-LAST:event_btnThemNhaCCActionPerformed
+
+    private void btnSuaNhaCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaNhaCCActionPerformed
+        // TODO add your handling code here:
+        NhaCungCapDTO selectedNCC = this.getSelectedRowData();
+        if (selectedNCC != null) {
+            new SuaNCC(this, selectedNCC).setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn nhà cung cấp muốn sửa thông tin");
+        }
+    }//GEN-LAST:event_btnSuaNhaCCActionPerformed
+
+    private void btnXoaNhaCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaNhaCCActionPerformed
+        // TODO add your handling code here:
+        NhaCungCapDTO selectedNhaCungCap = this.getSelectedRowData();
+        if (selectedNhaCungCap != null) {
+            int id = selectedNhaCungCap.getId();
+
+            int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa nhà cung cấp này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                if(nhaCungCapBUS.xoaNhaCungCap(id)) {
+                    JOptionPane.showMessageDialog(this, "Xóa nhà cung cấp thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    loadNCCData();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xóa nhà cung cấp thất bại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn nhà cung cấp muốn xóa");
+        }
+    }//GEN-LAST:event_btnXoaNhaCCActionPerformed
+
+    private void btnChiTietNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChiTietNCCActionPerformed
+        // TODO add your handling code here:
+        NhaCungCapDTO selectedNCC = this.getSelectedRowData();
+        if (selectedNCC != null) {
+            new ChiTietNCC(selectedNCC).setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn nhà cung cấp muốn xem chi tiết");
+        }
+    }//GEN-LAST:event_btnChiTietNCCActionPerformed
+
+    private void btnXuatExcelNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatExcelNCCActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnXuatExcelNCCActionPerformed
+
     private void addIcon() {
         btnThemNhaCC.setIcon(new FlatSVGIcon("./res/icon/add.svg"));
         btnSuaNhaCC.setIcon(new FlatSVGIcon("./res/icon/edit.svg"));
@@ -119,6 +211,78 @@ public class NhaCungCap extends javax.swing.JPanel {
         
         // Set không cho cell có thể chỉnh sửa 
         tblNhaCC.setDefaultEditor(Object.class, null);
+    }
+
+    private void initAtt() {
+        nhaCungCapBUS = new NhaCungCapBUS();
+    }
+
+    public void loadNCCData() {
+        ArrayList<NhaCungCapDTO> nhaCungCapDTOArrayList = nhaCungCapBUS.getAllNhaCungCaps();
+
+        // Get Table Model and clear data
+        DefaultTableModel model = (DefaultTableModel) tblNhaCC.getModel();
+        model.setRowCount(0);
+
+        for (NhaCungCapDTO nhaCungCapDTO : nhaCungCapDTOArrayList) {
+            model.addRow(new Object[]{
+                    nhaCungCapDTO.getId(),
+                    nhaCungCapDTO.getName(),
+                    nhaCungCapDTO.getPhone(),
+                    nhaCungCapDTO.getEmail()
+            });
+        }
+
+        // Create renderer for table to align text center
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+        for (int i = 0; i < tblNhaCC.getColumnCount(); i++) {
+            tblNhaCC.getColumnModel().getColumn(i).setCellRenderer(renderer);
+        }
+    }
+
+    private NhaCungCapDTO getSelectedRowData() {
+        int selectedRowIndex = tblNhaCC.getSelectedRow();
+
+        if (selectedRowIndex == -1) {
+            return null;
+        }
+
+        int id = (int) tblNhaCC.getValueAt(selectedRowIndex, 0);
+        return nhaCungCapBUS.getNCC(id);
+    }
+
+    private void timKiemHandler() {
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>((DefaultTableModel) tblNhaCC.getModel());
+        tblNhaCC.setRowSorter(sorter);
+
+        // Ô nhập tìm kiếm
+        txtTimKiem.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                filter();
+            }
+
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                filter();
+            }
+
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                filter();
+            }
+
+            private void filter() {
+                String keyword = txtTimKiem.getText().trim();
+                if (keyword.isEmpty()) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + keyword));
+                }
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

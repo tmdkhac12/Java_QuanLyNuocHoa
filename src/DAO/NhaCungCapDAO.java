@@ -4,14 +4,17 @@
  */
 package DAO;
 
+import DTO.KhachHangDTO;
 import DTO.NhaCungCapDTO;
+import DTO.NhaCungCapDTO;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
+
 import util.DBConnection;
 
 /**
- *
  * @author hoang
  */
 public class NhaCungCapDAO {
@@ -36,10 +39,220 @@ public class NhaCungCapDAO {
 
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            DBConnection.close(connection);
         }
 
         return list;
     }
 
+    public ArrayList<NhaCungCapDTO> getAllNCCs() {
+        ArrayList<NhaCungCapDTO> nccs = new ArrayList<>();
 
+        Connection connection = DBConnection.getConnection();
+        String sql = "SELECT * FROM supplier WHERE is_deleted = 0";
+
+        try {
+            Statement statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String phone = resultSet.getString("phone");
+                String email = resultSet.getString("email");
+
+                NhaCungCapDTO nhaCungCapDTO = new NhaCungCapDTO(id, name, phone, email);
+                nccs.add(nhaCungCapDTO);
+            }
+
+            return nccs;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.close(connection);
+        }
+
+        return null;
+    }
+
+    public boolean insertNhaCungCap(NhaCungCapDTO nhaCungCapDTO) {
+        Connection connection = DBConnection.getConnection();
+        String sql = "insert into supplier (name, phone, email) values (?, ?, ?)";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, nhaCungCapDTO.getName());
+            preparedStatement.setString(2, nhaCungCapDTO.getPhone());
+            preparedStatement.setString(3, nhaCungCapDTO.getEmail());
+
+            int rowAffected = preparedStatement.executeUpdate();
+            if (rowAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.close(connection);
+        }
+
+        return false;
+    }
+
+    public boolean isExistNCCPhoneNumber(String phoneNumber) {
+        Connection connection = DBConnection.getConnection();
+        String sql = "select * from supplier where phone = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, phoneNumber);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.close(connection);
+        }
+
+        return false;
+    }
+
+    public boolean isExistNCCEmail(String email) {
+        Connection connection = DBConnection.getConnection();
+        String sql = "select * from supplier where email = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, email);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.close(connection);
+        }
+
+        return false;
+    }
+
+    public NhaCungCapDTO getNCCById(int id) {
+        Connection connection = DBConnection.getConnection();
+        String sql = "select * from supplier where id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String name = resultSet.getString("name");
+                String phone = resultSet.getString("phone");
+                String email = resultSet.getString("email");
+
+                NhaCungCapDTO nhaCungCapDTO = new NhaCungCapDTO(id, name, phone, email);
+                return nhaCungCapDTO;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.close(connection);
+        }
+
+        return null;
+    }
+
+    public boolean isExistNCCEmailExcept(String email, int id) {
+        Connection connection = DBConnection.getConnection();
+        String sql = "select * from supplier where email = ? and id <> ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, email);
+            preparedStatement.setInt(2, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.close(connection);
+        }
+
+        return false;
+    }
+
+    public boolean isExistNCCPhoneNumberExcept(String phoneNumber, int id) {
+        Connection connection = DBConnection.getConnection();
+        String sql = "select * from supplier where phone = ? and id <> ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, phoneNumber);
+            preparedStatement.setInt(2, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.close(connection);
+        }
+
+        return false;
+    }
+
+    public boolean updateNCC(NhaCungCapDTO nhaCungCapDTO) {
+        Connection connection = DBConnection.getConnection();
+        String sql = "update supplier set name = ?, phone = ?, email = ? where id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, nhaCungCapDTO.getName());
+            preparedStatement.setString(2, nhaCungCapDTO.getPhone());
+            preparedStatement.setString(3, nhaCungCapDTO.getEmail());
+            preparedStatement.setInt(4, nhaCungCapDTO.getId());
+
+            int rowAffected = preparedStatement.executeUpdate();
+            if (rowAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.close(connection);
+        }
+
+        return false;
+    }
+
+    public boolean softDeleteNhaCungCap(int id) {
+        Connection connection = DBConnection.getConnection();
+        String sql = "update supplier set is_deleted = 1 where id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+
+            int rowAffected = preparedStatement.executeUpdate();
+            if (rowAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.close(connection);
+        }
+
+        return false;
+    }
 }
