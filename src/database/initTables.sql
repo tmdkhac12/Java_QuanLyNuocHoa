@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 05, 2025 at 04:48 PM
+-- Generation Time: Apr 29, 2025 at 02:55 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -134,7 +134,7 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`id`, `rolegroup_id`, `name`, `username`, `password`, `status`, `is_deleted`) VALUES
-                                                                                                          (1, 2, 'Nguyễn Văn An', 'annguyen', 'an123', 1, 0),
+                                                                                                          (1, 1, 'Nguyễn Văn An', 'annguyen', 'an123', 1, 0),
                                                                                                           (2, 2, 'Trần Thị Bích', 'bichtran', 'bich456', 1, 0),
                                                                                                           (3, 2, 'Lê Hoàng Nam', 'namle', 'nam789', 1, 0),
                                                                                                           (4, 2, 'Phạm Hữu Phúc', 'phucpham', 'phuc321', 0, 0),
@@ -160,11 +160,11 @@ CREATE TABLE `importreceipt` (
 --
 
 INSERT INTO `importreceipt` (`id`, `supplier_id`, `import_date`, `total_cost`, `is_deleted`) VALUES
-                                                                                   (1, 1, '2025-04-01 08:00:00', 1400, 0),
-                                                                                   (2, 2, '2025-04-02 09:00:00', 1240, 0),
-                                                                                   (3, 3, '2025-04-03 10:15:00', 1050, 0),
-                                                                                   (4, 4, '2025-04-04 11:30:00', 1460, 0),
-                                                                                   (5, 5, '2025-04-05 14:45:00', 780, 0);
+                                                                                                 (1, 1, '2025-04-01 08:00:00', 1400, 0),
+                                                                                                 (2, 2, '2025-04-02 09:00:00', 1240, 0),
+                                                                                                 (3, 3, '2025-04-03 10:15:00', 1050, 0),
+                                                                                                 (4, 4, '2025-04-04 11:30:00', 1460, 0),
+                                                                                                 (5, 5, '2025-04-05 14:45:00', 780, 0);
 
 -- --------------------------------------------------------
 
@@ -637,19 +637,21 @@ CREATE TABLE `supplier` (
                             `id` int(11) NOT NULL,
                             `name` varchar(255) DEFAULT NULL,
                             `phone` varchar(20) DEFAULT NULL,
-                            `email` varchar(255) DEFAULT NULL
+                            `email` varchar(255) DEFAULT NULL,
+                            `is_deleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `supplier`
 --
 
-INSERT INTO `supplier` (`id`, `name`, `phone`, `email`) VALUES
-                                                            (1, 'Luxury Fragrance Co.', '0901234567', 'contact@luxuryfragrance.com'),
-                                                            (2, 'Elite Perfume Distributors', '0912345678', 'info@eliteperfume.com'),
-                                                            (3, 'Prestige Aroma', '0923456789', 'support@prestigearoma.com'),
-                                                            (4, 'Exclusive Scents Ltd.', '0934567890', 'service@exclusivescents.com'),
-                                                            (5, 'Premium Essence Supply', '0945678901', 'sales@premiumessence.com');
+INSERT INTO `supplier` (`id`, `name`, `phone`, `email`, `is_deleted`) VALUES
+                                                                          (1, 'Luxury Fragrance Co.', '0901234567', 'contact@luxuryfragrance.com', 0),
+                                                                          (2, 'Elite Perfume Distributors', '0912345678', 'info@eliteperfume.com', 0),
+                                                                          (3, 'Prestige Aroma', '0923456789', 'support@prestigearoma.com', 0),
+                                                                          (4, 'Exclusive Scents Ltd.', '0934567890', 'service@exclusivescents.com', 0),
+                                                                          (5, 'Premium Essence Supply', '0945678901', 'sales@premiumessence.com', 0),
+                                                                          (6, 'Alex 123', '0909876543', 'alex12@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -844,6 +846,12 @@ ALTER TABLE `employee`
 --
 ALTER TABLE `promotion`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `supplier`
+--
+ALTER TABLE `supplier`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
