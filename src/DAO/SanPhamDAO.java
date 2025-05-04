@@ -5,6 +5,7 @@ import util.DBConnection;
 
 import java.sql.*;
 import java.util.*;
+import javax.swing.JOptionPane;
 
 public class SanPhamDAO {
 
@@ -173,7 +174,20 @@ public class SanPhamDAO {
                 return -1;
             }
 
-            // 2. Insert perfume_volume
+            // 2. Kiểm tra trùng perfume_volume
+            String checkSql = "SELECT COUNT(*) FROM perfume_volume WHERE perfume_id = ? AND volume_id = ?";
+            try (PreparedStatement psCheck = conn.prepareStatement(checkSql)) {
+                psCheck.setInt(1, perfumeId);
+                psCheck.setInt(2, sp.getVolumeId());
+                ResultSet rsCheck = psCheck.executeQuery();
+                if (rsCheck.next() && rsCheck.getInt(1) > 0) {
+                    JOptionPane.showMessageDialog(null, "Sản phẩm với dung tích này đã tồn tại!");
+                    conn.rollback();
+                    return -1;
+                }
+            }
+
+            // 3. Insert perfume_volume
             String sqlVolume = "INSERT INTO perfume_volume (perfume_id, volume_id, price, stock, cost) VALUES (?, ?, ?, ?, ?)";
             psVolume = conn.prepareStatement(sqlVolume);
             psVolume.setInt(1, perfumeId);
@@ -183,16 +197,16 @@ public class SanPhamDAO {
             psVolume.setDouble(5, sp.getCost());
             psVolume.executeUpdate();
 
-            // 3. Insert perfume_notes
+            // 4. Insert perfume_notes
             String sqlNotes = "INSERT INTO perfume_notes (perfume_id, note_id, type) VALUES (?, ?, ?)";
             psNotes = conn.prepareStatement(sqlNotes);
-
             insertNotesBatch(psNotes, perfumeId, sp.getTopNotes(), "top");
             insertNotesBatch(psNotes, perfumeId, sp.getHeartNotes(), "heart");
             insertNotesBatch(psNotes, perfumeId, sp.getBaseNotes(), "base");
 
             conn.commit();
             return perfumeId;
+
         } catch (Exception e) {
             e.printStackTrace();
             try {

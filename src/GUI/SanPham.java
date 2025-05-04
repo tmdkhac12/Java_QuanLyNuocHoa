@@ -14,6 +14,9 @@ import GUI.SPham.ChiTietSanPham;
 import GUI.SPham.SuaSanPham;
 import GUI.SPham.ThemSanPham;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -113,6 +116,11 @@ public class SanPham extends javax.swing.JPanel {
         pnlTop.add(jLabel1);
 
         txtTimKiem.setPreferredSize(new java.awt.Dimension(100, 30));
+        txtTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTimKiemActionPerformed(evt);
+            }
+        });
         pnlTop.add(txtTimKiem);
 
         add(pnlTop, java.awt.BorderLayout.NORTH);
@@ -177,6 +185,12 @@ public class SanPham extends javax.swing.JPanel {
         frame.pack();
         frame.setLocationRelativeTo(null);
 
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                loadTableSanPham();
+            }
+        });
         // ===== Load thương hiệu =====
         ThuongHieuBUS thuongHieuBUS = new ThuongHieuBUS();
         ArrayList<String> brandNames = thuongHieuBUS.getAllBrandNames();
@@ -228,7 +242,6 @@ public class SanPham extends javax.swing.JPanel {
         panel.setSanPhamData(sp);
         panel.setOldVolumeId((int) sp.get("volume_id"));
 
-
         JFrame frame = new JFrame("Sửa sản phẩm");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setContentPane(panel);
@@ -266,6 +279,10 @@ public class SanPham extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnXoaSPActionPerformed
 
+    private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
+        timKiemSanPham();
+    }//GEN-LAST:event_txtTimKiemActionPerformed
+
     private void addIcon() {
         btnThemSP.setIcon(new FlatSVGIcon("./res/icon/add.svg"));
         btnSuaSP.setIcon(new FlatSVGIcon("./res/icon/edit.svg"));
@@ -292,12 +309,28 @@ public class SanPham extends javax.swing.JPanel {
         }
     }
 
+    private void formatCurrencyField(javax.swing.JTextField textField) {
+        String text = textField.getText().replace(",", "").trim();
+        if (text.isEmpty()) {
+            return;
+        }
+
+        try {
+            double value = Double.parseDouble(text);
+            textField.setText(String.format("%,d", (long) value));
+        } catch (NumberFormatException e) {
+            // Nếu nhập ký tự không hợp lệ thì bỏ qua không định dạng
+        }
+    }
+
     private void loadTableSanPham() {
         DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel();
         model.setRowCount(0); // Clear table
 
         SanPhamBUS bus = new SanPhamBUS();
         List<SanPhamDTO> list = bus.getAllPerfumeViews(); // gọi từ BUS đã sửa
+
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0");
 
         for (SanPhamDTO p : list) {
             model.addRow(new Object[]{
@@ -308,9 +341,72 @@ public class SanPham extends javax.swing.JPanel {
                 p.getSex(),
                 p.getConcentration(),
                 p.getBrandName(), // giả sử bạn đã thêm brandName vào DTO
-                p.getCost(),
-                p.getPrice()
+                decimalFormat.format(p.getCost()),
+                decimalFormat.format(p.getPrice())
             });
+        }
+    }
+
+    private void timKiemSanPham() {
+        String keyword = txtTimKiem.getText().trim(); // Ô tìm kiếm
+
+        SanPhamBUS sanPhamBUS = SanPhamBUS.getInstance();
+        ArrayList<SanPhamDTO> danhSach = (ArrayList<SanPhamDTO>) sanPhamBUS.getAllPerfumeViews(); // Lấy toàn bộ
+
+        DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel();
+        model.setRowCount(0); // Xóa dữ liệu bảng cũ
+
+        if (keyword.isEmpty()) {
+            // Nếu không nhập gì thì hiển thị toàn bộ
+            for (SanPhamDTO sp : danhSach) {
+                model.addRow(new Object[]{
+                    sp.getId(),
+                    sp.getName(),
+                    sp.getVolumeSize(),
+                    sp.getStock(),
+                    sp.getSex(),
+                    sp.getConcentration(),
+                    sp.getBrandName(),
+                    String.format("%,.0f", sp.getCost()),
+                    String.format("%,.0f", sp.getPrice())
+                });
+            }
+            return;
+        }
+
+        try {
+            int maTimKiem = Integer.parseInt(keyword);
+            for (SanPhamDTO sp : danhSach) {
+                if (sp.getId() == maTimKiem) {
+                    model.addRow(new Object[]{
+                        sp.getId(),
+                        sp.getName(),
+                        sp.getVolumeSize(),
+                        sp.getStock(),
+                        sp.getSex(),
+                        sp.getConcentration(),
+                        sp.getBrandName(),
+                        String.format("%,.0f", sp.getCost()),
+                        String.format("%,.0f", sp.getPrice())
+                    });
+                }
+            }
+        } catch (NumberFormatException e) {
+            for (SanPhamDTO sp : danhSach) {
+                if (sp.getName().toLowerCase().contains(keyword.toLowerCase())) {
+                    model.addRow(new Object[]{
+                        sp.getId(),
+                        sp.getName(),
+                        sp.getVolumeSize(),
+                        sp.getStock(),
+                        sp.getSex(),
+                        sp.getConcentration(),
+                        sp.getBrandName(),
+                        String.format("%,.0f", sp.getCost()),
+                        String.format("%,.0f", sp.getPrice())
+                    });
+                }
+            }
         }
     }
 
