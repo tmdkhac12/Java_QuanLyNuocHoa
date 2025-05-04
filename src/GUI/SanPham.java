@@ -14,6 +14,7 @@ import GUI.SPham.ChiTietSanPham;
 import GUI.SPham.SuaSanPham;
 import GUI.SPham.ThemSanPham;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -203,7 +204,8 @@ public class SanPham extends javax.swing.JPanel {
 
         // ===== Hiển thị form =====
         frame.setVisible(true);           // Sau đó mới hiển thị
-
+        
+        loadTableSanPham();
     }//GEN-LAST:event_btnThemSPActionPerformed
 
 
@@ -235,7 +237,8 @@ public class SanPham extends javax.swing.JPanel {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-
+        
+        loadTableSanPham();
     }//GEN-LAST:event_btnSuaSPActionPerformed
 
     private void btnXoaSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaSPActionPerformed
@@ -264,6 +267,7 @@ public class SanPham extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(this, "Xóa thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
+        loadTableSanPham();
     }//GEN-LAST:event_btnXoaSPActionPerformed
 
     private void addIcon() {
@@ -291,6 +295,20 @@ public class SanPham extends javax.swing.JPanel {
             columnModel.getColumn(i).setCellRenderer(centerRenderer);
         }
     }
+    
+    private void formatCurrencyField(javax.swing.JTextField textField) {
+        String text = textField.getText().replace(",", "").trim();
+        if (text.isEmpty()) {
+            return;
+        }
+
+        try {
+            double value = Double.parseDouble(text);
+            textField.setText(String.format("%,d", (long) value));
+        } catch (NumberFormatException e) {
+            // Nếu nhập ký tự không hợp lệ thì bỏ qua không định dạng
+        }
+    }
 
     private void loadTableSanPham() {
         DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel();
@@ -299,6 +317,8 @@ public class SanPham extends javax.swing.JPanel {
         SanPhamBUS bus = new SanPhamBUS();
         List<SanPhamDTO> list = bus.getAllPerfumeViews(); // gọi từ BUS đã sửa
 
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0");
+        
         for (SanPhamDTO p : list) {
             model.addRow(new Object[]{
                 p.getId(),
@@ -308,8 +328,8 @@ public class SanPham extends javax.swing.JPanel {
                 p.getSex(),
                 p.getConcentration(),
                 p.getBrandName(), // giả sử bạn đã thêm brandName vào DTO
-                p.getCost(),
-                p.getPrice()
+                decimalFormat.format(p.getCost()),
+                decimalFormat.format(p.getPrice())
             });
         }
     }

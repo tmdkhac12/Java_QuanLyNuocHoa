@@ -157,7 +157,8 @@ public class ThemSanPham extends javax.swing.JPanel {
             }
         });
 
-        cbbgioitinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ", "Unisex" }));
+        cbbgioitinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female", "Unisex" }));
+        cbbgioitinh.setToolTipText("");
 
         cbbnongdo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Parfum", "EDP", "EDT", "EDC", "Eau Fraiche", "Aftershave" }));
 

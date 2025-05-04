@@ -161,7 +161,7 @@ public class HoaDon extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã hóa đơn", "Khách hàng", "Nhân viên", "Thời gian", "Tổng tiền"
+                "Mã hóa đơn", "Khách hàng", "Nhân viên", "Thời gian", "Tổng tiền (VNĐ)"
             }
         ));
         tblHoaDon.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);

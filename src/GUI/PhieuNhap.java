@@ -164,7 +164,7 @@ public class PhieuNhap extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã phiếu nhập", "Nhà cung cấp", "Thời gian", "Tổng tiền"
+                "Mã phiếu nhập", "Nhà cung cấp", "Thời gian", "Tổng tiền (VNĐ)"
             }
         ));
         scpnlshow.setViewportView(tblPhieuNhap);
@@ -318,8 +318,9 @@ public class PhieuNhap extends javax.swing.JPanel {
             pnlBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBottomLayout.createSequentialGroup()
                 .addComponent(pnlLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scpnlshow, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(scpnlshow, javax.swing.GroupLayout.DEFAULT_SIZE, 828, Short.MAX_VALUE)
+                .addContainerGap())
         );
         pnlBottomLayout.setVerticalGroup(
             pnlBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
