@@ -5,13 +5,13 @@
 package GUI.Panel;
 
 import GUI.PhieuNhap;
-import BUS.NuocHoaBUS;
+import BUS.SanPhamBUS;
 import DAO.ChiTietPhieuNhapDAO;
 import DAO.NhaCungCapDAO;
 import DAO.PhieuNhapDAO;
 import DTO.ChiTietPhieuNhapDTO;
 import DTO.NhaCungCapDTO;
-import DTO.NuocHoaDTO;
+import DTO.SanPhamDTO;
 import java.sql.Timestamp;
 import java.sql.*;
 import java.util.ArrayList;
@@ -30,8 +30,7 @@ import util.DBConnection;
  */
 public class ThemPhieuNhap extends javax.swing.JPanel {
 
-    private ArrayList<NuocHoaDTO> listNuocHoa;
-    private static int soThuTuPhieuNhap = 1;
+    private ArrayList<SanPhamDTO> listNuocHoa;
     private List<NhaCungCapDTO> danhSachNCC;
 
     /**
@@ -42,16 +41,23 @@ public class ThemPhieuNhap extends javax.swing.JPanel {
         loadDanhSachSanPham();
         setUpTable();
         centerTableData(tblsoluongsanpham);
+        setupSanPhamSelectionListener();
         centerTableData(tblthongtinspdathem);
 
-        listNuocHoa = new NuocHoaBUS().getAllNuocHoa();
+        listNuocHoa = new SanPhamBUS().getAllSanPhamTonKho();
         txtmaphieunhap.setText(taoMaPhieuNhapTuDong());
         txtmaphieunhap.setEditable(false);
         loadNhaCungCapToComboBox();
     }
 
-    public ThemPhieuNhap(PhieuNhap aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private void setupSanPhamSelectionListener() {
+        tblsoluongsanpham.getSelectionModel().addListSelectionListener(e -> {
+            int row = tblsoluongsanpham.getSelectedRow();
+            if (row != -1 && row < listNuocHoa.size()) {
+                SanPhamDTO sp = listNuocHoa.get(row);
+                txtgianhap.setText(String.valueOf(sp.getCost()));
+            }
+        });
     }
 
     /**
@@ -95,15 +101,21 @@ public class ThemPhieuNhap extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã SP", "Tên sản phẩm", "Số lượng tồn"
+                "Mã SP", "Tên sản phẩm", "Dung tích", "Số lượng tồn"
             }
         ));
         tblsoluongsanpham.setFocusTraversalPolicyProvider(true);
         tblsoluongsanpham.setRequestFocusEnabled(false);
         tblsoluongsanpham.setRowHeight(40);
         jScrollPane3.setViewportView(tblsoluongsanpham);
+        if (tblsoluongsanpham.getColumnModel().getColumnCount() > 0) {
+            tblsoluongsanpham.getColumnModel().getColumn(0).setMaxWidth(75);
+        }
 
         containernhap.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        txtgianhap.setEditable(false);
+        txtgianhap.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel4.setText("Giá nhập");
 
@@ -171,11 +183,16 @@ public class ThemPhieuNhap extends javax.swing.JPanel {
 
             },
             new String [] {
-                "STT", "Mã nước hoa", "Tên ", "Giới tính", "Loại hương", "Thương hiệu", "Giá nhập", "Số lượng"
+                "Mã SP", "Tên SP", "Dung tích", "Giới tính", "Nồng độ", "Thương hiệu", "Giá nhập", "Số lượng"
             }
         ));
         tblthongtinspdathem.setRowHeight(30);
         jScrollPane2.setViewportView(tblthongtinspdathem);
+        if (tblthongtinspdathem.getColumnModel().getColumnCount() > 0) {
+            tblthongtinspdathem.getColumnModel().getColumn(0).setMaxWidth(60);
+            tblthongtinspdathem.getColumnModel().getColumn(3).setMaxWidth(75);
+            tblthongtinspdathem.getColumnModel().getColumn(7).setMaxWidth(70);
+        }
 
         javax.swing.GroupLayout leftcontentLayout = new javax.swing.GroupLayout(leftcontent);
         leftcontent.setLayout(leftcontentLayout);
@@ -288,115 +305,95 @@ public class ThemPhieuNhap extends javax.swing.JPanel {
     private void btnthemsanphamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthemsanphamActionPerformed
         int selectedRow = tblsoluongsanpham.getSelectedRow();
         if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm");
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm.");
             return;
         }
 
-        String giaNhapStr = txtgianhap.getText().trim();
         String soLuongStr = txtsoluong.getText().trim();
-
-        if (giaNhapStr.isEmpty() || soLuongStr.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập và số lượng");
+        if (soLuongStr.isEmpty() || !soLuongStr.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập số lượng hợp lệ (số nguyên dương).");
             return;
         }
 
-        try {
-            // Kiểm tra regex: chỉ chứa chữ số và tối đa 1 dấu chấm (cho giá nhập)
-            if (!giaNhapStr.matches("\\d+(\\.\\d+)?") || !soLuongStr.matches("\\d+")) {
-                JOptionPane.showMessageDialog(this, "Giá nhập và số lượng phải là số hợp lệ.");
-                return;
-            }
-
-            double giaNhap = Double.parseDouble(giaNhapStr);
-            int soLuong = Integer.parseInt(soLuongStr);
-
-            if (giaNhap <= 0 || soLuong <= 0) {
-                JOptionPane.showMessageDialog(this, "Giá nhập và số lượng phải lớn hơn 0.");
-                return;
-            }
-
-            int maSP = Integer.parseInt(tblsoluongsanpham.getValueAt(selectedRow, 0).toString());
-
-            // Lấy sản phẩm tương ứng từ list
-            NuocHoaDTO selectedPerfume = null;
-            for (NuocHoaDTO sp : listNuocHoa) {
-                if (sp.getId() == maSP) {
-                    selectedPerfume = sp;
-                    break;
-                }
-            }
-
-            if (selectedPerfume == null) {
-                JOptionPane.showMessageDialog(this, "Không tìm thấy sản phẩm!");
-                return;
-            }
-
-            DefaultTableModel modelChiTiet = (DefaultTableModel) tblthongtinspdathem.getModel();
-
-            for (int i = 0; i < modelChiTiet.getRowCount(); i++) {
-                int existingId = Integer.parseInt(modelChiTiet.getValueAt(i, 1).toString());
-                if (existingId == selectedPerfume.getId()) {
-                    JOptionPane.showMessageDialog(this, "Sản phẩm đã được thêm vào phiếu. Vui lòng chỉnh sửa thay vì thêm lại.");
-                    return;
-                }
-            }
-
-            modelChiTiet.addRow(new Object[]{
-                modelChiTiet.getRowCount() + 1, // STT
-                selectedPerfume.getId(), // Mã nước hoa
-                selectedPerfume.getName(), // Tên
-                selectedPerfume.getSex(), // Giới tính
-                selectedPerfume.getScentName(), // Loại hương
-                selectedPerfume.getBrandName(), // Thương hiệu
-                giaNhap, // Giá nhập
-                soLuong // Số lượng
-            });
-
-            // Reset ô nhập
-            txtgianhap.setText("");
-            txtsoluong.setText("");
-
-            double currentTotal = 0;
-            DefaultTableModel model = (DefaultTableModel) tblthongtinspdathem.getModel();
-            for (int i = 0; i < model.getRowCount(); i++) {
-                double cost = Double.parseDouble(model.getValueAt(i, 6).toString());
-                int quantity = Integer.parseInt(model.getValueAt(i, 7).toString());
-                currentTotal += cost * quantity;
-            }
-            txttongtien.setText(String.format("%.0fđ", currentTotal));
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Giá nhập hoặc số lượng không hợp lệ");
+        int soLuong = Integer.parseInt(soLuongStr);
+        if (soLuong <= 0) {
+            JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn 0.");
+            return;
         }
 
+        int maSP = Integer.parseInt(tblsoluongsanpham.getValueAt(selectedRow, 0).toString());
+        SanPhamDTO selectedPerfume = null;
+        for (SanPhamDTO sp : listNuocHoa) {
+            if (sp.getId() == maSP) {
+                selectedPerfume = sp;
+                break;
+            }
+        }
+
+        if (selectedPerfume == null) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy sản phẩm.");
+            return;
+        }
+
+        DefaultTableModel modelChiTiet = (DefaultTableModel) tblthongtinspdathem.getModel();
+
+        // Kiểm tra sản phẩm đã tồn tại (cùng ID và dung tích)
+        for (int i = 0; i < modelChiTiet.getRowCount(); i++) {
+            int existingId = Integer.parseInt(modelChiTiet.getValueAt(i, 0).toString()); // cột Mã SP
+            String existingVolume = modelChiTiet.getValueAt(i, 2).toString(); // cột Dung tích
+
+            if (existingId == selectedPerfume.getId() && existingVolume.equals(selectedPerfume.getVolumeSize() + "ml")) {
+                JOptionPane.showMessageDialog(this, "Sản phẩm đã được thêm vào phiếu.");
+                return;
+            }
+        }
+
+        modelChiTiet.addRow(new Object[]{
+            selectedPerfume.getId(), // Mã SP
+            selectedPerfume.getName(), // Tên SP
+            selectedPerfume.getVolumeSize() + "ml", // Dung tích
+            selectedPerfume.getSex(), // Giới tính
+            selectedPerfume.getConcentration(),// Nồng độ
+            selectedPerfume.getBrandName(), // Thương hiệu
+            selectedPerfume.getCost(), // Giá nhập
+            soLuong // Số lượng
+        });
+
+        txtsoluong.setText("");
+
+        // Tính lại tổng tiền
+        double tongTien = 0;
+        for (int i = 0; i < modelChiTiet.getRowCount(); i++) {
+            double cost = Double.parseDouble(modelChiTiet.getValueAt(i, 6).toString());
+            int quantity = Integer.parseInt(modelChiTiet.getValueAt(i, 7).toString());
+            tongTien += cost * quantity;
+        }
+        txttongtien.setText(String.format("%.0fđ", tongTien));
     }//GEN-LAST:event_btnthemsanphamActionPerformed
 
     private void btnxoasanphamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxoasanphamActionPerformed
         int selectedRow = tblthongtinspdathem.getSelectedRow();
-
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm cần xóa.");
             return;
         }
 
-        int confirm = JOptionPane.showConfirmDialog(
-                this,
-                "Bạn có chắc chắn muốn xóa sản phẩm này?",
-                "Xác nhận xóa",
-                JOptionPane.YES_NO_OPTION
-        );
-
+        int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa sản phẩm này?", "Xác nhận", JOptionPane.YES_NO_OPTION);
         if (confirm != JOptionPane.YES_OPTION) {
-            return; // Không xóa nếu người dùng chọn "Không"
+            return;
         }
 
         DefaultTableModel model = (DefaultTableModel) tblthongtinspdathem.getModel();
         model.removeRow(selectedRow);
 
-        // Cập nhật lại STT sau khi xóa
+        // Cập nhật tổng tiền sau khi xóa
+        double tongTien = 0;
         for (int i = 0; i < model.getRowCount(); i++) {
-            model.setValueAt(i + 1, i, 0); // Cột 0 là STT
+            double cost = Double.parseDouble(model.getValueAt(i, 6).toString());
+            int quantity = Integer.parseInt(model.getValueAt(i, 7).toString());
+            tongTien += cost * quantity;
         }
+        txttongtien.setText(String.format("%.0fđ", tongTien));
     }//GEN-LAST:event_btnxoasanphamActionPerformed
 
     private void cbbnhaccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbnhaccActionPerformed
@@ -405,7 +402,10 @@ public class ThemPhieuNhap extends javax.swing.JPanel {
 
     private void btnnhaphangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnhaphangActionPerformed
         try {
-            // 1. Lấy nhà cung cấp
+            // 1. Lấy mã phiếu nhập từ ô nhập (txtmaphieunhap có sẵn mã)
+            int maPhieuNhap = Integer.parseInt(txtmaphieunhap.getText().trim());
+
+            // 2. Lấy nhà cung cấp
             int selectedIndex = cbbnhacc.getSelectedIndex();
             if (selectedIndex == -1) {
                 JOptionPane.showMessageDialog(this, "Vui lòng chọn nhà cung cấp.");
@@ -413,57 +413,56 @@ public class ThemPhieuNhap extends javax.swing.JPanel {
             }
             int supplierId = danhSachNCC.get(selectedIndex).getId();
 
-            // 2. Lấy dữ liệu từ bảng sản phẩm
+            // 3. Kiểm tra bảng sản phẩm đã thêm
             DefaultTableModel model = (DefaultTableModel) tblthongtinspdathem.getModel();
             if (model.getRowCount() == 0) {
                 JOptionPane.showMessageDialog(this, "Chưa có sản phẩm nào trong phiếu.");
                 return;
             }
 
+            // 4. Tính tổng tiền + tạo danh sách chi tiết
             double totalCost = 0;
             List<ChiTietPhieuNhapDTO> chiTietList = new ArrayList<>();
 
             for (int i = 0; i < model.getRowCount(); i++) {
-                int perfumeId = Integer.parseInt(model.getValueAt(i, 1).toString());
+                int perfumeId = Integer.parseInt(model.getValueAt(i, 0).toString());
+                String volumeText = model.getValueAt(i, 2).toString(); // Ví dụ: "50ml"
+                int volumeSize = Integer.parseInt(volumeText.replace("ml", "").trim());
                 double cost = Double.parseDouble(model.getValueAt(i, 6).toString());
                 int quantity = Integer.parseInt(model.getValueAt(i, 7).toString());
 
+                int volumeId = SanPhamBUS.getInstance().getVolumeIdBySize(volumeSize);
                 totalCost += cost * quantity;
 
                 ChiTietPhieuNhapDTO chiTiet = new ChiTietPhieuNhapDTO(
-                        0, // import_receipt_id sẽ cập nhật sau khi insert phiếu
-                        perfumeId,
-                        quantity,
-                        cost,
-                        null, null, null, null // các thông tin phụ không cần thiết khi insert
+                        maPhieuNhap, perfumeId, volumeId, quantity, cost,
+                        null, null, null, null, null
                 );
-
                 chiTietList.add(chiTiet);
             }
 
-            // 3. Insert phiếu nhập
+            // 5. Lưu phiếu nhập
             Timestamp now = new Timestamp(System.currentTimeMillis());
             PhieuNhapDAO phieuNhapDAO = new PhieuNhapDAO();
-            int newPhieuNhapId = phieuNhapDAO.insertPhieuNhap(supplierId, now, totalCost);
+            int insertedId = phieuNhapDAO.insertPhieuNhap(maPhieuNhap, supplierId, now, totalCost);
 
-            if (newPhieuNhapId == -1) {
+            if (insertedId == -1) {
                 JOptionPane.showMessageDialog(this, "Lưu phiếu nhập thất bại!");
                 return;
             }
 
-            // 4. Gán lại `import_receipt_id` cho từng dòng chi tiết
-            for (ChiTietPhieuNhapDTO ct : chiTietList) {
-                ct.setImportReceiptId(newPhieuNhapId);
-            }
-
-            // 5. Insert chi tiết phiếu nhập
+            // 6. Lưu chi tiết phiếu nhập
             ChiTietPhieuNhapDAO chiTietDAO = new ChiTietPhieuNhapDAO();
             boolean ok = chiTietDAO.insertChiTietPhieuNhap(chiTietList);
 
+            // 7. Cộng dồn tồn kho
+            for (ChiTietPhieuNhapDTO ct : chiTietList) {
+                SanPhamBUS.getInstance().congDonSoLuongTon(ct.getPerfumeId(), ct.getVolumeId(), ct.getQuantity());
+            }
+
+            // 8. Giao diện & thông báo
             if (ok) {
                 JOptionPane.showMessageDialog(this, "Nhập hàng thành công!");
-
-                // Gợi ý: reset bảng và các ô nhập nếu cần
                 model.setRowCount(0);
                 txtgianhap.setText("");
                 txtsoluong.setText("");
@@ -503,19 +502,19 @@ public class ThemPhieuNhap extends javax.swing.JPanel {
     }
 
     private void loadDanhSachSanPham() {
-        NuocHoaBUS nuocHoaBUS = new NuocHoaBUS();
-        ArrayList<NuocHoaDTO> danhSach = nuocHoaBUS.getAllNuocHoa();
+        SanPhamBUS bus = new SanPhamBUS();
+        ArrayList<SanPhamDTO> danhSach = bus.getAllSanPhamTonKho();
 
-        DefaultTableModel model = (DefaultTableModel) tblsoluongsanpham.getModel();
-        model.setRowCount(0); // Xoá dòng cũ
+        DefaultTableModel model = (DefaultTableModel) tblsoluongsanpham.getModel(); // Bảng bên trái
+        model.setRowCount(0);
 
-        for (NuocHoaDTO sp : danhSach) {
-            Object[] row = new Object[]{
+        for (SanPhamDTO sp : danhSach) {
+            model.addRow(new Object[]{
                 sp.getId(),
                 sp.getName(),
+                sp.getVolumeSize(),
                 sp.getStock()
-            };
-            model.addRow(row);
+            });
         }
     }
 
@@ -552,7 +551,6 @@ public class ThemPhieuNhap extends javax.swing.JPanel {
             cbbnhacc.addItem(ncc.getName()); // chỉ add tên thôi
         }
     }
-    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -578,6 +576,5 @@ public class ThemPhieuNhap extends javax.swing.JPanel {
     private javax.swing.JTextField txtsoluong;
     private javax.swing.JLabel txttongtien;
     // End of variables declaration//GEN-END:variables
-
 
 }

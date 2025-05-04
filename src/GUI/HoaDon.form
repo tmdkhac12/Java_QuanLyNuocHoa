@@ -74,6 +74,7 @@
             <Component class="javax.swing.JButton" name="btnXoaHD">
               <Properties>
                 <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="H&#x1ee7;y"/>

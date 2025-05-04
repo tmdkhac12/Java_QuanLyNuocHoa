@@ -6,6 +6,7 @@ import DTO.ThuongHieuDTO;
 import java.util.ArrayList;
 
 public class ThuongHieuBUS {
+
     private ThuongHieuDAO thuongHieuDAO;
 
     public ThuongHieuBUS() {
@@ -45,4 +46,29 @@ public class ThuongHieuBUS {
     public boolean xoaThuongHieu(int id) {
         return thuongHieuDAO.softDeleteThuongHieu(id);
     }
+
+    public ArrayList<String> getAllBrandNames() {
+        ArrayList<String> names = new ArrayList<>();
+        ArrayList<ThuongHieuDTO> brands = thuongHieuDAO.getAllThuongHieus();
+        for (ThuongHieuDTO brand : brands) {
+            names.add(brand.getName());
+        }
+        return names;
+    }
+
+    public int getIdByName(String name) {
+        for (ThuongHieuDTO th : thuongHieuDAO.getAllThuongHieus()) {
+            if (th.getName().equals(name)) {
+                return th.getId();
+            }
+        }
+        return -1;
+    }
+    
+    private static final ThuongHieuBUS instance = new ThuongHieuBUS();
+
+    public static ThuongHieuBUS getInstance() {
+        return instance;
+    }
+
 }

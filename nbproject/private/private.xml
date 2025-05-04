@@ -10,32 +10,37 @@
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/PhieuNhap.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/DTO/PhieuNhapDTO.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/NhanVien.java</file>
-            <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/ThongKeHeThong/ThongKeDoanhThuTungThang.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/BUS/NhanVienBUS.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/NQuyen/ChiTietNQuyen.java</file>
+            <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/SPham/ThemSanPham.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/HDon/ChiTietHoaDon.java</file>
-            <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/DAO/NuocHoaDAO.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/BUS/PhieuNhapBUS.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/DTO/ChiTietHoaDonDTO.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/NhomQuyen.java</file>
+            <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/BUS/ThuongHieuBUS.java</file>
+            <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/DAO/DungTichDAO.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/DAO/NhaCungCapDAO.java</file>
+            <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/KHang/SuaKHang.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/Login.java</file>
+            <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/KHang/ThemKHang.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/ThongKeHeThong/ThongKeKhachHang.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/DAO/NhomQuyenDAO.java</file>
-            <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/DTO/NuocHoaDTO.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/DAO/NotHuongDAO.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/DAO/ChiTietHoaDonDAO.java</file>
-            <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/BUS/NuocHoaBUS.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/NQuyen/ThemNQuyen.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/BUS/NotHuongBUS.java</file>
+            <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/HDon/ChonKhachHang.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/ThongKeHeThong/ThongKeDoanhThu.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/HoaDon.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/DAO/PhieuNhapDAO.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/KhachHang.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/database/initTables.sql</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/ThongKeHeThong/ThongKeSanPhamBanChay.java</file>
+            <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/SPham/SuaSanPham.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/DAO/HoaDonDAO.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/DAO/ChiTietPhieuNhapDAO.java</file>
+            <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/DTO/SanPhamDTO.java</file>
+            <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/DAO/ThuongHieuDAO.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/DTO/ChiTietPhieuNhapDTO.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/DAO/NhanVienDAO.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/BUS/KhachHangBUS.java</file>
@@ -50,15 +55,19 @@
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/DTO/NhaCungCapDTO.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/DTO/NotHuongDTO.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/DTO/KhuyenMaiDTO.java</file>
+            <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/KHang/ChiTietKHang.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/ThongKe.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/NQuyen/SuaNQuyen.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/DTO/KhachHangDTO.java</file>
+            <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/DAO/SanPhamDAO.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/SanPham.java</file>
+            <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/BUS/SanPhamBUS.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/DTO/NhanVienDTO.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/Main.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/ThongKeHeThong/ThongKeDoanhThuTungNam.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/BUS/KhuyenMaiBUS.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/NhaCungCap.java</file>
+            <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/SPham/ChiTietSanPham.java</file>
             <file>file:/D:/Java_QuanLyNuocHoa/Java_QuanLyNuocHoa/src/GUI/Panel/ThemHoaDon.java</file>
         </group>
     </open-files>

@@ -15,12 +15,14 @@ public class ChiTietPhieuNhapDAO {
         Connection connection = DBConnection.getConnection();
 
         try {
-            String sql = "SELECT ird.import_receipt_id, ird.perfume_id, ird.quantity, ird.cost, "
-                    + "p.name AS perfume_name, p.sex, st.type_name AS scent_type, b.name AS brand "
+            String sql = "SELECT ird.import_receipt_id, ird.perfume_id, ird.volume_id, ird.quantity, "
+                    + "pv.price AS cost, "
+                    + "p.name AS perfume_name, p.sex, p.concentration, b.name AS brand, v.size AS volume_size "
                     + "FROM importreceiptdetail ird "
                     + "JOIN perfume p ON ird.perfume_id = p.id "
-                    + "JOIN scenttype st ON p.scent_type_id = st.id "
                     + "JOIN brand b ON p.brand_id = b.id "
+                    + "JOIN perfume_volume pv ON ird.perfume_id = pv.perfume_id AND ird.volume_id = pv.volume_id "
+                    + "JOIN volume v ON pv.volume_id = v.id "
                     + "WHERE ird.import_receipt_id = ?";
 
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -31,13 +33,16 @@ public class ChiTietPhieuNhapDAO {
                 ChiTietPhieuNhapDTO detail = new ChiTietPhieuNhapDTO(
                         rs.getInt("import_receipt_id"),
                         rs.getInt("perfume_id"),
+                        rs.getInt("volume_id"),
                         rs.getInt("quantity"),
                         rs.getDouble("cost"),
                         rs.getString("perfume_name"),
+                        rs.getString("volume_size") + "ml",
                         rs.getString("sex"),
-                        rs.getString("scent_type"),
+                        rs.getString("concentration"),
                         rs.getString("brand")
                 );
+
                 list.add(detail);
             }
 
@@ -53,7 +58,7 @@ public class ChiTietPhieuNhapDAO {
 
     public boolean insertChiTietPhieuNhap(List<ChiTietPhieuNhapDTO> details) {
         Connection conn = DBConnection.getConnection();
-        String sql = "INSERT INTO importreceiptdetail (import_receipt_id, perfume_id, quantity, cost) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO importreceiptdetail (import_receipt_id, perfume_id, volume_id, quantity) VALUES (?, ?, ?, ?)";
 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -61,8 +66,9 @@ public class ChiTietPhieuNhapDAO {
             for (ChiTietPhieuNhapDTO detail : details) {
                 ps.setInt(1, detail.getImportReceiptId());
                 ps.setInt(2, detail.getPerfumeId());
-                ps.setInt(3, detail.getQuantity());
-                ps.setDouble(4, detail.getCost());
+                ps.setInt(3, detail.getVolumeId());
+                ps.setInt(4, detail.getQuantity());
+
                 ps.addBatch();
             }
 
@@ -76,5 +82,4 @@ public class ChiTietPhieuNhapDAO {
 
         return false;
     }
-
 }

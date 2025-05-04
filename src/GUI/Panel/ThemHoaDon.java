@@ -4,9 +4,14 @@
  */
 package GUI.Panel;
 
-import DAO.NuocHoaDAO;
+import BUS.SanPhamBUS;
+import DAO.ChiTietHoaDonDAO;
+import DAO.DungTichDAO;
+import DAO.HoaDonDAO;
+import DAO.SanPhamDAO;
+import DTO.ChiTietHoaDonDTO;
 import DTO.NhanVienDTO;
-import DTO.NuocHoaDTO;
+import DTO.SanPhamDTO;
 import GUI.HDon.ChonKhachHang;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +29,7 @@ import util.DBConnection;
  */
 public class ThemHoaDon extends javax.swing.JPanel {
 
-    private ArrayList<NuocHoaDTO> listNuocHoa = new ArrayList<>();
+    private ArrayList<SanPhamDTO> listNuocHoa = new ArrayList<>();
     private static int loggedInEmployeeId;
     private static String loggedInEmployeeName;
     private int selectedCustomerId = -1;
@@ -107,19 +112,17 @@ public class ThemHoaDon extends javax.swing.JPanel {
         containernhapLayout.setHorizontalGroup(
             containernhapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(containernhapLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnthem, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnxoasanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69))
+            .addGroup(containernhapLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(containernhapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(containernhapLayout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 363, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, containernhapLayout.createSequentialGroup()
-                        .addGroup(containernhapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtsoluong, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(containernhapLayout.createSequentialGroup()
-                                .addComponent(btnthem, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnxoasanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(29, 29, 29))))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtsoluong, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         containernhapLayout.setVerticalGroup(
             containernhapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,20 +143,23 @@ public class ThemHoaDon extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã SP", "Tên sản phẩm", "Số lượng tồn", "Giá bán"
+                "Mã SP", "Tên sản phẩm", "Dung tích", "Số lượng tồn"
             }
         ));
         tblsoluongsanpham.setFocusTraversalPolicyProvider(true);
         tblsoluongsanpham.setRequestFocusEnabled(false);
         tblsoluongsanpham.setRowHeight(40);
         jScrollPane3.setViewportView(tblsoluongsanpham);
+        if (tblsoluongsanpham.getColumnModel().getColumnCount() > 0) {
+            tblsoluongsanpham.getColumnModel().getColumn(0).setMaxWidth(75);
+        }
 
         tblthongtinspdathem.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "STT", "Mã nước hoa", "Tên ", "Giới tính", "Loại hương", "Thương hiệu", "Giá bán", "Số lượng"
+                "Mã SP", "Tên SP", "Dung tích", "Giới tính", "Nồng độ", "Thương hiệu", "Giá bán", "Số lượng"
             }
         ));
         tblthongtinspdathem.setRowHeight(30);
@@ -167,10 +173,10 @@ public class ThemHoaDon extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(leftcontentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(leftcontentLayout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(containernhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2))
+                        .addComponent(jScrollPane3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(containernhap, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 864, Short.MAX_VALUE))
                 .addContainerGap())
         );
         leftcontentLayout.setVerticalGroup(
@@ -283,82 +289,69 @@ public class ThemHoaDon extends javax.swing.JPanel {
     private void btnthemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthemActionPerformed
         int selectedRow = tblsoluongsanpham.getSelectedRow();
         if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm cần thêm!");
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm.");
             return;
         }
 
-        try {
-            int soLuongNhap = Integer.parseInt(txtsoluong.getText().trim());
-            if (soLuongNhap <= 0) {
-                JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn 0!");
-                return;
-            }
-
-            // Lấy dữ liệu sản phẩm
-            int maSP = (int) tblsoluongsanpham.getValueAt(selectedRow, 0);
-            String tenSP = (String) tblsoluongsanpham.getValueAt(selectedRow, 1);
-            int soLuongTon = (int) tblsoluongsanpham.getValueAt(selectedRow, 2);
-            double giaBan = (double) tblsoluongsanpham.getValueAt(selectedRow, 3);
-
-            if (soLuongNhap > soLuongTon) {
-                JOptionPane.showMessageDialog(this, "Số lượng nhập vượt quá số lượng tồn kho!");
-                return;
-            }
-
-            // Tìm thêm thông tin ánh xạ
-            NuocHoaDTO selectedPerfume = listNuocHoa.stream()
-                    .filter(sp -> sp.getId() == maSP)
-                    .findFirst()
-                    .orElse(null);
-
-            if (selectedPerfume == null) {
-                JOptionPane.showMessageDialog(this, "Không tìm thấy sản phẩm!");
-                return;
-            }
-
-            String gioiTinh = selectedPerfume.getSex();
-            String loaiHuong = selectedPerfume.getScentName();
-            String thuongHieu = selectedPerfume.getBrandName();
-
-            DefaultTableModel model = (DefaultTableModel) tblthongtinspdathem.getModel();
-
-            boolean found = false;
-
-            for (int i = 0; i < model.getRowCount(); i++) {
-                int existingId = (int) model.getValueAt(i, 1); // cột Mã SP
-                if (existingId == maSP) {
-                    // Nếu SP đã tồn tại ➔ cộng dồn số lượng
-                    int soLuongHienTai = (int) model.getValueAt(i, 7); // cột Số lượng
-                    model.setValueAt(soLuongHienTai + soLuongNhap, i, 7); // cập nhật lại số lượng
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found) {
-                // Nếu chưa có ➔ thêm dòng mới
-                int stt = model.getRowCount() + 1;
-                model.addRow(new Object[]{
-                    stt,
-                    maSP,
-                    tenSP,
-                    gioiTinh,
-                    loaiHuong,
-                    thuongHieu,
-                    giaBan,
-                    soLuongNhap
-                });
-            }
-
-            // Reset số lượng nhập
-            txtsoluong.setText("");
-
-            // Cập nhật tổng tiền
-            tinhTongTien();
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Số lượng phải là số nguyên hợp lệ!");
+        String soLuongStr = txtsoluong.getText().trim();
+        if (soLuongStr.isEmpty() || !soLuongStr.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập số lượng hợp lệ.");
+            return;
         }
+
+        int soLuong = Integer.parseInt(soLuongStr);
+        if (soLuong <= 0) {
+            JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn 0.");
+            return;
+        }
+
+        int maSP = Integer.parseInt(tblsoluongsanpham.getValueAt(selectedRow, 0).toString());
+        int volumeSize = Integer.parseInt(tblsoluongsanpham.getValueAt(selectedRow, 2).toString());
+        int soLuongTon = Integer.parseInt(tblsoluongsanpham.getValueAt(selectedRow, 3).toString());
+
+        if (soLuong > soLuongTon) {
+            JOptionPane.showMessageDialog(this, "Số lượng vượt quá tồn kho (" + soLuongTon + " sản phẩm còn lại).");
+            return;
+        }
+
+        SanPhamDTO selectedPerfume = null;
+        for (SanPhamDTO sp : listNuocHoa) {
+            if (sp.getId() == maSP && sp.getVolumeSize() == volumeSize) {
+                selectedPerfume = sp;
+                break;
+            }
+        }
+
+        if (selectedPerfume == null) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy sản phẩm.");
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) tblthongtinspdathem.getModel();
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+            int existingId = Integer.parseInt(model.getValueAt(i, 0).toString());
+            int existingVolume = Integer.parseInt(model.getValueAt(i, 2).toString().replace("ml", "").trim());
+
+            if (existingId == maSP && existingVolume == volumeSize) {
+                JOptionPane.showMessageDialog(this, "Sản phẩm đã có trong hóa đơn.");
+                return;
+            }
+        }
+
+        model.addRow(new Object[]{
+            selectedPerfume.getId(),
+            selectedPerfume.getName(),
+            selectedPerfume.getVolumeSize() + "ml",
+            selectedPerfume.getSex(),
+            selectedPerfume.getConcentration(),
+            selectedPerfume.getBrandName(),
+            selectedPerfume.getPrice(),
+            soLuong
+        });
+
+        txtsoluong.setText("");
+        tinhTongTien();
     }//GEN-LAST:event_btnthemActionPerformed
 
     private void btnxoasanphamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxoasanphamActionPerformed
@@ -409,78 +402,60 @@ public class ThemHoaDon extends javax.swing.JPanel {
 
     private void btnxuathoadonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxuathoadonActionPerformed
         int invoiceId = Integer.parseInt(txtmahoadon.getText().trim());
-        int customerId = selectedCustomerId; // lưu khi chọn khách
-        int employeeId = loggedInEmployeeId; // lưu sẵn khi đăng nhập
-        String tongTienStr = txttongtien.getText().replace("đ", "").trim();
+        int customerId = selectedCustomerId;
+        int employeeId = loggedInEmployeeId;
+        String tongTienStr = txttongtien.getText().replace("đ", "").replace(" ", "").trim();
         double totalAmount = Double.parseDouble(tongTienStr);
-        Timestamp issueDate = new Timestamp(System.currentTimeMillis()); // giờ hiện tại
+        Timestamp issueDate = new Timestamp(System.currentTimeMillis());
 
-        Connection conn = null;
-        PreparedStatement pstInvoice = null;
-        PreparedStatement pstDetail = null;
+        ArrayList<ChiTietHoaDonDTO> chiTietList = new ArrayList<>();
+        DefaultTableModel model = (DefaultTableModel) tblthongtinspdathem.getModel();
 
-        try {
-            conn = DBConnection.getConnection();
-            conn.setAutoCommit(false); // Bắt đầu transaction
+        DungTichDAO volumeDAO = new DungTichDAO();
 
-            // 1. Insert vào bảng invoice
-            String sqlInvoice = "INSERT INTO invoice (id, customer_id, employee_id, total, issue_date) VALUES (?, ?, ?, ?, ?)";
-            pstInvoice = conn.prepareStatement(sqlInvoice);
-            pstInvoice.setInt(1, invoiceId);
-            pstInvoice.setInt(2, customerId);
-            pstInvoice.setInt(3, employeeId);
-            pstInvoice.setDouble(4, totalAmount);
-            pstInvoice.setTimestamp(5, issueDate);
-            pstInvoice.executeUpdate();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            int perfumeId = Integer.parseInt(model.getValueAt(i, 0).toString());
+            String perfumeName = model.getValueAt(i, 1).toString();
+            int volumeSize = Integer.parseInt(model.getValueAt(i, 2).toString().replace("ml", "").trim());
+            String sex = model.getValueAt(i, 3).toString();
+            String concentration = model.getValueAt(i, 4).toString();
+            String brand = model.getValueAt(i, 5).toString();
+            double price = Double.parseDouble(model.getValueAt(i, 6).toString());
+            int quantity = Integer.parseInt(model.getValueAt(i, 7).toString());
 
-            // 2. Insert từng dòng vào invoicedetail
-            String sqlDetail = "INSERT INTO invoicedetail (invoice_id, perfume_id, quantity) VALUES (?, ?, ?)";
-            pstDetail = conn.prepareStatement(sqlDetail);
+            int volumeId = volumeDAO.getVolumeIdBySize(volumeSize);
 
-            DefaultTableModel model = (DefaultTableModel) tblthongtinspdathem.getModel();
-            for (int i = 0; i < model.getRowCount(); i++) {
-                int perfumeId = Integer.parseInt(model.getValueAt(i, 1).toString()); // mã sp
-                int quantity = Integer.parseInt(model.getValueAt(i, 7).toString()); // số lượng
+            ChiTietHoaDonDTO chiTiet = new ChiTietHoaDonDTO(invoiceId, perfumeId, perfumeName,
+                    volumeSize + "ml", sex, concentration, brand, price, quantity);
+            chiTiet.setVolumeId(volumeId);
 
-                pstDetail.setInt(1, invoiceId);
-                pstDetail.setInt(2, perfumeId);
-                pstDetail.setInt(3, quantity);
-                pstDetail.addBatch(); // gom nhiều lệnh lại cho nhanh
-            }
+            chiTietList.add(chiTiet);
+        }
 
-            pstDetail.executeBatch(); // chạy hết 1 lần
-            conn.commit(); // Commit transaction
+        HoaDonDAO hoaDonDAO = new HoaDonDAO();
+        ChiTietHoaDonDAO chiTietDAO = new ChiTietHoaDonDAO();
 
-            JOptionPane.showMessageDialog(this, "Xuất hóa đơn thành công!");
+        boolean insertedHoaDon = hoaDonDAO.insertInvoice(invoiceId, customerId, employeeId, totalAmount, issueDate);
+        boolean insertedChiTiet = chiTietDAO.insertDetails(invoiceId, chiTietList);
 
-            resetForm(); // Clear form sau khi xuất hóa đơn
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            try {
-                if (conn != null) {
-                    conn.rollback(); // nếu lỗi thì rollback
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            JOptionPane.showMessageDialog(this, "Xuất hóa đơn thất bại!");
-        } finally {
-            try {
-                if (pstInvoice != null) {
-                    pstInvoice.close();
-                }
-                if (pstDetail != null) {
-                    pstDetail.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+        boolean updatedStock = true;
+        for (ChiTietHoaDonDTO ct : chiTietList) {
+            boolean ok = hoaDonDAO.capNhatTonKhoSauBanHang(ct.getPerfumeId(), ct.getVolumeId(), ct.getQuantity());
+            if (!ok) {
+                updatedStock = false;
+                break;
             }
         }
+
+        if (insertedHoaDon && insertedChiTiet && updatedStock) {
+            JOptionPane.showMessageDialog(this, "Xuất hóa đơn thành công!");
+            resetForm();
+            loadDanhSachSanPham(); // Cập nhật lại danh sách sản phẩm
+        } else {
+            JOptionPane.showMessageDialog(this, "Xuất hóa đơn thất bại!");
+        }
     }//GEN-LAST:event_btnxuathoadonActionPerformed
+
 
     private void txtsoluongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtsoluongActionPerformed
         // TODO add your handling code here:
@@ -517,17 +492,21 @@ public class ThemHoaDon extends javax.swing.JPanel {
     }
 
     private void loadDanhSachSanPham() {
-        NuocHoaDAO dao = new NuocHoaDAO();
-        listNuocHoa = dao.getAllNuocHoa();
-        DefaultTableModel model = (DefaultTableModel) tblsoluongsanpham.getModel();
+        SanPhamBUS bus = new SanPhamBUS();
+        ArrayList<SanPhamDTO> danhSach = bus.getAllSanPhamTonKho();
+
+        // GÁN danh sách này cho listNuocHoa để đảm bảo đồng bộ
+        listNuocHoa = danhSach;
+
+        DefaultTableModel model = (DefaultTableModel) tblsoluongsanpham.getModel(); // Bảng bên trái
         model.setRowCount(0);
 
-        for (NuocHoaDTO sp : listNuocHoa) {
+        for (SanPhamDTO sp : danhSach) {
             model.addRow(new Object[]{
                 sp.getId(),
                 sp.getName(),
-                sp.getStock(),
-                sp.getPrice()
+                sp.getVolumeSize(),
+                sp.getStock()
             });
         }
     }
@@ -579,7 +558,7 @@ public class ThemHoaDon extends javax.swing.JPanel {
         loggedInEmployeeId = id;
         loggedInEmployeeName = name;
     }
-    
+
     private void formatCurrencyField(javax.swing.JTextField textField) {
         String text = textField.getText().replace(",", "").trim();
         if (text.isEmpty()) {

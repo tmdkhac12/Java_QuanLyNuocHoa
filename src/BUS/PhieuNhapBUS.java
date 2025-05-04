@@ -16,7 +16,7 @@ public class PhieuNhapBUS {
 
     private PhieuNhapDAO phieuNhapDAO;
     private ChiTietPhieuNhapDAO chiTietPhieuNhapDAO;
-    
+
     public PhieuNhapBUS() {
         phieuNhapDAO = new PhieuNhapDAO();
         chiTietPhieuNhapDAO = new ChiTietPhieuNhapDAO();
@@ -31,14 +31,16 @@ public class PhieuNhapBUS {
     }
 
     public PhieuNhapDTO getPhieuNhap(int id) {
-        return phieuNhapDAO.getPhieuNhapById(id); 
+        return phieuNhapDAO.getPhieuNhapById(id);
     }
-      // Hàm thêm mới phiếu nhập (có cả chi tiết)
-    public boolean themPhieuNhap(int supplierId, double totalCost, List<ChiTietPhieuNhapDTO> chiTietList) {
-        Timestamp now = new Timestamp(System.currentTimeMillis());
+    // Hàm thêm mới phiếu nhập (có cả chi tiết)
 
-        int newId = phieuNhapDAO.insertPhieuNhap(supplierId, now, totalCost);
-        if (newId == -1) return false;
+    public boolean themPhieuNhap(int id, int supplierId, double totalCost, List<ChiTietPhieuNhapDTO> chiTietList) {
+        Timestamp now = new Timestamp(System.currentTimeMillis());
+        int newId = phieuNhapDAO.insertPhieuNhap(id, supplierId, now, totalCost);
+        if (newId == -1) {
+            return false;
+        }
 
         for (ChiTietPhieuNhapDTO ct : chiTietList) {
             ct.setImportReceiptId(newId); // Gán id vừa tạo
@@ -48,6 +50,7 @@ public class PhieuNhapBUS {
         return success;
     }
 
+    
     public List<PhieuNhapDTO> getAll() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }

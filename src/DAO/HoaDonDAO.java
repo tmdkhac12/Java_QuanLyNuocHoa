@@ -72,6 +72,22 @@ public class HoaDonDAO {
         return list;
     }
 
+    public boolean insertInvoice(int id, int customerId, int employeeId, double total, Timestamp issueDate) {
+        try (Connection conn = DBConnection.getConnection()) {
+            String sql = "INSERT INTO invoice (id, customer_id, employee_id, total, issue_date) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.setInt(2, customerId);
+            ps.setInt(3, employeeId);
+            ps.setDouble(4, total);
+            ps.setTimestamp(5, issueDate);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean deleteInvoice(int id) {
         String sql = "DELETE FROM invoice WHERE id = ?";
         try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -82,6 +98,19 @@ public class HoaDonDAO {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public boolean capNhatTonKhoSauBanHang(int perfumeId, int volumeId, int quantitySold) {
+        String sql = "UPDATE perfume_volume SET stock = stock - ? WHERE perfume_id = ? AND volume_id = ?";
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, quantitySold);
+            ps.setInt(2, perfumeId);
+            ps.setInt(3, volumeId);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

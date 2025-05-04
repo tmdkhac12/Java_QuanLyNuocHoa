@@ -14,9 +14,9 @@ import javax.swing.table.TableColumnModel;
  * @author hoang
  */
 public class ChiTietHoaDon extends javax.swing.JPanel {
-    
+
     private int invoiceId;
-    
+
     public ChiTietHoaDon(int invoiceId) {
         this.invoiceId = invoiceId;
         initComponents();
@@ -50,7 +50,7 @@ public class ChiTietHoaDon extends javax.swing.JPanel {
 
             },
             new String [] {
-                "STT", "Mã SP", "Tên sản phẩm", "Giới tính", "Loại hương", "Thương hiệu", "Giá bán", "Số lượng"
+                "Mã SP", "Tên SP", "Dung tích", "Giới tính", "Nồng độ", "Thương hiệu", "Giá bán", "Số lượng"
             }
         ));
         jScrollPane1.setViewportView(tblsanphamchitiet);
@@ -138,7 +138,7 @@ public class ChiTietHoaDon extends javax.swing.JPanel {
         // Set không cho cell có thể chỉnh sửa 
         tblsanphamchitiet.setDefaultEditor(Object.class, null);
     }
-    
+
     public void centerTableData() {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
@@ -148,26 +148,27 @@ public class ChiTietHoaDon extends javax.swing.JPanel {
             columnModel.getColumn(i).setCellRenderer(centerRenderer);
         }
     }
-    
+
     private void loadChiTietHoaDon() {
-        ChiTietHoaDonDAO dao = new ChiTietHoaDonDAO();  
+        ChiTietHoaDonDAO dao = new ChiTietHoaDonDAO();
         List<ChiTietHoaDonDTO> chiTietList = dao.getChiTietHoaDonByMaHoaDon(invoiceId);
         DefaultTableModel model = (DefaultTableModel) tblsanphamchitiet.getModel();
         model.setRowCount(0); // Clear bảng
-        int stt = 1;
+
         for (ChiTietHoaDonDTO detail : chiTietList) {
             model.addRow(new Object[]{
-                stt++,
                 detail.getPerfumeId(),
                 detail.getPerfumeName(),
+                detail.getVolumeSize(),
                 detail.getSex(),
-                detail.getScentType(),
+                detail.getConcentration(),
                 detail.getBrand(),
                 detail.getPrice(),
                 detail.getQuantity()
             });
         }
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExportPdf;
