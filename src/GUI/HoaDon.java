@@ -108,6 +108,7 @@ public class HoaDon extends javax.swing.JPanel {
         pnlTop.add(btnChiTietPX);
 
         btnXoaHD.setText("Xóa");
+        btnXoaHD.setEnabled(false);
         btnXoaHD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHuyHDActionPerformed(evt);
@@ -502,7 +503,7 @@ public class HoaDon extends javax.swing.JPanel {
         ArrayList<HoaDonDTO> danhSachHoaDon = hoaDonBUS.getAllHoaDon();
 
         DefaultTableModel model = (DefaultTableModel) tblHoaDon.getModel();
-        model.setRowCount(0); // Xóa hết dữ liệu cũ, giữ nguyên header/cột
+        model.setRowCount(0); // Xóa toàn bộ dòng cũ
 
         for (HoaDonDTO hd : danhSachHoaDon) {
             Object[] row = new Object[]{
@@ -510,10 +511,13 @@ public class HoaDon extends javax.swing.JPanel {
                 hd.getCustomerName(),
                 hd.getEmployeeName(),
                 hd.getIssueDate(),
-                String.format("%,.0f", hd.getTotal()) // 👈 format tổng tiền đẹp
+                String.format("%,.0f", hd.getTotal())
             };
             model.addRow(row);
         }
+
+        // ✅ Reset selection để không bị giữ lại dòng cũ
+        tblHoaDon.clearSelection();
     }//GEN-LAST:event_btnLamMoiMouseClicked
 
     private void btnTimKiemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTimKiemMouseClicked

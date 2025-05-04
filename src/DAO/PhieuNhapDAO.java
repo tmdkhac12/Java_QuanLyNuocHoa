@@ -90,25 +90,20 @@ public class PhieuNhapDAO {
         return false;
     }
 
-    public int insertPhieuNhap(int supplierId, Timestamp importDate, double totalCost) {
+    public int insertPhieuNhap(int id, int supplierId, Timestamp importDate, double totalCost) {
         Connection conn = DBConnection.getConnection();
-        String sql = "INSERT INTO importreceipt (supplier_id, import_date, total_cost) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO importreceipt (id, supplier_id, import_date, total_cost) VALUES (?, ?, ?, ?)";
 
         try {
-            PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, supplierId);
-            ps.setTimestamp(2, importDate);
-            ps.setDouble(3, totalCost);
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);             // <-- Dùng mã bạn truyền vào
+            ps.setInt(2, supplierId);
+            ps.setTimestamp(3, importDate);
+            ps.setDouble(4, totalCost);
 
             int affectedRows = ps.executeUpdate();
-            if (affectedRows == 0) {
-                return -1;
-            }
+            return affectedRows > 0 ? id : -1; // Trả về chính id bạn cung cấp
 
-            ResultSet generatedKeys = ps.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                return generatedKeys.getInt(1); // Trả về id phiếu nhập vừa tạo
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -132,37 +127,35 @@ public class PhieuNhapDAO {
         }
         return list;
     }
-    
+
     public List<PhieuNhapDTO> searchBySupplierName(String keyword) {
-    List<PhieuNhapDTO> list = new ArrayList<>();
-    Connection connection = DBConnection.getConnection();
-    String sql = "SELECT importreceipt.id, supplier.name AS supplier_name, import_date, total_cost "
-               + "FROM importreceipt "
-               + "JOIN supplier ON importreceipt.supplier_id = supplier.id "
-               + "WHERE importreceipt.is_deleted = 0 AND supplier.name LIKE ?";
+        List<PhieuNhapDTO> list = new ArrayList<>();
+        Connection connection = DBConnection.getConnection();
+        String sql = "SELECT importreceipt.id, supplier.name AS supplier_name, import_date, total_cost "
+                + "FROM importreceipt "
+                + "JOIN supplier ON importreceipt.supplier_id = supplier.id "
+                + "WHERE importreceipt.is_deleted = 0 AND supplier.name LIKE ?";
 
-    try (PreparedStatement ps = connection.prepareStatement(sql)) {
-        ps.setString(1, "%" + keyword + "%");
-        ResultSet rs = ps.executeQuery();
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, "%" + keyword + "%");
+            ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            int id = rs.getInt("id");
-            String supplierName = rs.getString("supplier_name");
-            Timestamp importDate = rs.getTimestamp("import_date");
-            double totalCost = rs.getDouble("total_cost");
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String supplierName = rs.getString("supplier_name");
+                Timestamp importDate = rs.getTimestamp("import_date");
+                double totalCost = rs.getDouble("total_cost");
 
-            PhieuNhapDTO dto = new PhieuNhapDTO(id, supplierName, importDate, totalCost);
-            list.add(dto);
+                PhieuNhapDTO dto = new PhieuNhapDTO(id, supplierName, importDate, totalCost);
+                list.add(dto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.close(connection);
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    } finally {
-        DBConnection.close(connection);
+
+        return list;
     }
-
-    return list;
-}
-
-    
 
 }

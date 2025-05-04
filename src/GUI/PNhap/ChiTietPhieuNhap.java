@@ -26,7 +26,6 @@ public class ChiTietPhieuNhap extends javax.swing.JPanel {
     public ChiTietPhieuNhap(int maPhieu) {
         this.maPhieu = maPhieu;
         initComponents();
-        initTable();
         loadChiTietPhieuNhap();
         setUpTable();
         centerTableData();
@@ -79,7 +78,7 @@ public class ChiTietPhieuNhap extends javax.swing.JPanel {
 
             },
             new String [] {
-                "STT", "Mã SP", "Tên sản phẩm", "Giới tính", "Hương", "Thương hiệu", "Giá nhập", "Số lượng"
+                "Mã SP", "Tên sản phẩm", "Dung tích", "Giới tính", "Nồng độ", "Thương hiệu", "Giá nhập", "Số lượng"
             }
         ));
         jScrollPane1.setViewportView(tblsanphamchitiet);
@@ -105,17 +104,12 @@ public class ChiTietPhieuNhap extends javax.swing.JPanel {
         pnlCenterLayout.setHorizontalGroup(
             pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCenterLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlCenterLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCenterLayout.createSequentialGroup()
-                        .addGap(0, 366, Short.MAX_VALUE)
-                        .addComponent(btnExportPdf, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(64, 64, 64)
-                        .addComponent(btnhuy, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(393, 393, 393))))
+                .addContainerGap(372, Short.MAX_VALUE)
+                .addComponent(btnExportPdf, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64)
+                .addComponent(btnhuy, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(393, 393, 393))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         pnlCenterLayout.setVerticalGroup(
             pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,26 +139,19 @@ public class ChiTietPhieuNhap extends javax.swing.JPanel {
 
         DefaultTableModel model = (DefaultTableModel) tblsanphamchitiet.getModel();
         model.setRowCount(0); // xóa dữ liệu cũ
-        int stt = 1;
 
         for (ChiTietPhieuNhapDTO ct : chiTietList) {
             model.addRow(new Object[]{
-                stt++,
                 ct.getPerfumeId(),
                 ct.getPerfumeName(),
+                ct.getVolumeSize(),
                 ct.getSex(),
-                ct.getScentType(),
+                ct.getConcentration(),
                 ct.getBrand(),
                 ct.getCost(),
                 ct.getQuantity()
             });
         }
-    }
-
-    private void initTable() {
-        String[] columnNames = {"STT", "Mã nước hoa", "Tên", "Giới tính", "Loại mùi", "Thương hiệu", "Giá", "Số lượng"};
-        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-        tblsanphamchitiet.setModel(model);
     }
 
     private void setUpTable() {
@@ -174,7 +161,6 @@ public class ChiTietPhieuNhap extends javax.swing.JPanel {
         // Set không cho cell có thể chỉnh sửa 
         tblsanphamchitiet.setDefaultEditor(Object.class, null);
     }
-    
 
     public void centerTableData() {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -185,7 +171,7 @@ public class ChiTietPhieuNhap extends javax.swing.JPanel {
             columnModel.getColumn(i).setCellRenderer(centerRenderer);
         }
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExportPdf;

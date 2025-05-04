@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 29, 2025 at 02:55 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th5 04, 2025 lúc 01:34 PM
+-- Phiên bản máy phục vụ: 10.4.32-MariaDB
+-- Phiên bản PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `java_nuochoa`
+-- Cơ sở dữ liệu: `java_nuochoa1`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `brand`
+-- Cấu trúc bảng cho bảng `brand`
 --
 
 CREATE TABLE `brand` (
@@ -34,7 +34,7 @@ CREATE TABLE `brand` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `brand`
+-- Đang đổ dữ liệu cho bảng `brand`
 --
 
 INSERT INTO `brand` (`id`, `name`, `is_deleted`) VALUES
@@ -54,31 +54,7 @@ INSERT INTO `brand` (`id`, `name`, `is_deleted`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `concentration`
---
-
-CREATE TABLE `concentration` (
-                                 `id` int(11) NOT NULL,
-                                 `level` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `concentration`
---
-
-INSERT INTO `concentration` (`id`, `level`) VALUES
-                                                (1, 'Parfum'),
-                                                (2, 'EDP'),
-                                                (3, 'EDT'),
-                                                (4, 'EDC'),
-                                                (5, 'Eau Fraîche'),
-                                                (6, 'Aftershave'),
-                                                (7, 'Perfume Oil');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `customer`
+-- Cấu trúc bảng cho bảng `customer`
 --
 
 CREATE TABLE `customer` (
@@ -90,7 +66,7 @@ CREATE TABLE `customer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `customer`
+-- Đang đổ dữ liệu cho bảng `customer`
 --
 
 INSERT INTO `customer` (`id`, `name`, `phone`, `email`, `is_deleted`) VALUES
@@ -116,7 +92,7 @@ INSERT INTO `customer` (`id`, `name`, `phone`, `email`, `is_deleted`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `employee`
+-- Cấu trúc bảng cho bảng `employee`
 --
 
 CREATE TABLE `employee` (
@@ -130,7 +106,7 @@ CREATE TABLE `employee` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `employee`
+-- Đang đổ dữ liệu cho bảng `employee`
 --
 
 INSERT INTO `employee` (`id`, `rolegroup_id`, `name`, `username`, `password`, `status`, `is_deleted`) VALUES
@@ -144,7 +120,7 @@ INSERT INTO `employee` (`id`, `rolegroup_id`, `name`, `username`, `password`, `s
 -- --------------------------------------------------------
 
 --
--- Table structure for table `importreceipt`
+-- Cấu trúc bảng cho bảng `importreceipt`
 --
 
 CREATE TABLE `importreceipt` (
@@ -156,7 +132,7 @@ CREATE TABLE `importreceipt` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `importreceipt`
+-- Đang đổ dữ liệu cho bảng `importreceipt`
 --
 
 INSERT INTO `importreceipt` (`id`, `supplier_id`, `import_date`, `total_cost`, `is_deleted`) VALUES
@@ -164,41 +140,55 @@ INSERT INTO `importreceipt` (`id`, `supplier_id`, `import_date`, `total_cost`, `
                                                                                                  (2, 2, '2025-04-02 09:00:00', 1240, 0),
                                                                                                  (3, 3, '2025-04-03 10:15:00', 1050, 0),
                                                                                                  (4, 4, '2025-04-04 11:30:00', 1460, 0),
-                                                                                                 (5, 5, '2025-04-05 14:45:00', 780, 0);
+                                                                                                 (5, 5, '2025-04-05 14:45:00', 780, 0),
+                                                                                                 (6, 1, '2025-05-03 22:22:09', 15100000, 0),
+                                                                                                 (7, 1, '2025-05-03 22:29:55', 30100000, 0),
+                                                                                                 (8, 1, '2025-05-03 22:32:44', 15700000, 1),
+                                                                                                 (9, 4, '2025-05-03 23:04:21', 68400000, 0),
+                                                                                                 (10, 1, '2025-05-04 16:34:45', 24000000, 0),
+                                                                                                 (11, 1, '2025-05-04 18:11:35', 4700000, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `importreceiptdetail`
+-- Cấu trúc bảng cho bảng `importreceiptdetail`
 --
 
 CREATE TABLE `importreceiptdetail` (
                                        `import_receipt_id` int(11) NOT NULL,
                                        `perfume_id` int(11) NOT NULL,
                                        `quantity` int(11) DEFAULT NULL,
-                                       `cost` double DEFAULT NULL
+                                       `volume_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `importreceiptdetail`
+-- Đang đổ dữ liệu cho bảng `importreceiptdetail`
 --
 
-INSERT INTO `importreceiptdetail` (`import_receipt_id`, `perfume_id`, `quantity`, `cost`) VALUES
-                                                                                              (1, 1, 10, 100),
-                                                                                              (1, 2, 5, 80),
-                                                                                              (2, 3, 8, 90),
-                                                                                              (2, 4, 4, 130),
-                                                                                              (3, 5, 15, 70),
-                                                                                              (4, 6, 6, 110),
-                                                                                              (4, 7, 10, 80),
-                                                                                              (5, 8, 5, 60),
-                                                                                              (5, 9, 3, 100),
-                                                                                              (5, 10, 2, 90);
+INSERT INTO `importreceiptdetail` (`import_receipt_id`, `perfume_id`, `quantity`, `volume_id`) VALUES
+                                                                                                   (1, 1, 10, 6),
+                                                                                                   (10, 1, 12, 6),
+                                                                                                   (11, 1, 1, 6),
+                                                                                                   (1, 2, 5, 6),
+                                                                                                   (8, 2, 1, 6),
+                                                                                                   (9, 2, 12, 6),
+                                                                                                   (11, 2, 1, 6),
+                                                                                                   (2, 3, 8, 6),
+                                                                                                   (8, 3, 2, 6),
+                                                                                                   (2, 4, 4, 6),
+                                                                                                   (3, 5, 15, 6),
+                                                                                                   (4, 6, 6, 6),
+                                                                                                   (4, 7, 10, 6),
+                                                                                                   (8, 7, 2, 6),
+                                                                                                   (9, 7, 12, 6),
+                                                                                                   (5, 8, 5, 6),
+                                                                                                   (5, 9, 3, 6),
+                                                                                                   (5, 10, 2, 6);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `invoice`
+-- Cấu trúc bảng cho bảng `invoice`
 --
 
 CREATE TABLE `invoice` (
@@ -210,7 +200,7 @@ CREATE TABLE `invoice` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `invoice`
+-- Đang đổ dữ liệu cho bảng `invoice`
 --
 
 INSERT INTO `invoice` (`id`, `customer_id`, `employee_id`, `total`, `issue_date`) VALUES
@@ -218,39 +208,74 @@ INSERT INTO `invoice` (`id`, `customer_id`, `employee_id`, `total`, `issue_date`
                                                                                       (2, 2, 2, 300, '2025-04-02 11:30:00'),
                                                                                       (3, 3, 3, 330, '2025-04-03 09:45:00'),
                                                                                       (4, 4, 5, 360, '2025-04-04 14:20:00'),
-                                                                                      (5, 5, 1, 295, '2025-04-05 16:15:00');
+                                                                                      (5, 5, 1, 295, '2025-04-05 16:15:00'),
+                                                                                      (6, 2, 1, 12200000, '2025-05-04 02:45:32'),
+                                                                                      (7, 6, 1, 34600000, '2025-05-04 02:46:25'),
+                                                                                      (8, 1, 1, 9710000, '2025-05-04 02:47:49'),
+                                                                                      (9, 1, 1, 77500000, '2025-05-04 13:58:15'),
+                                                                                      (10, 2, 1, 65600000, '2025-05-04 15:43:48'),
+                                                                                      (11, 2, 1, 10400000, '2025-05-04 15:46:32'),
+                                                                                      (12, 3, 1, 10400000, '2025-05-04 15:52:54'),
+                                                                                      (13, 8, 1, 14600000, '2025-05-04 16:30:51'),
+                                                                                      (14, 2, 1, 32500000, '2025-05-04 16:31:20'),
+                                                                                      (15, 4, 1, 16500000, '2025-05-04 16:35:23');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `invoicedetail`
+-- Cấu trúc bảng cho bảng `invoicedetail`
 --
 
 CREATE TABLE `invoicedetail` (
                                  `invoice_id` int(11) NOT NULL,
                                  `perfume_id` int(11) NOT NULL,
-                                 `quantity` int(11) DEFAULT NULL
+                                 `quantity` int(11) DEFAULT NULL,
+                                 `volume_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `invoicedetail`
+-- Đang đổ dữ liệu cho bảng `invoicedetail`
 --
 
-INSERT INTO `invoicedetail` (`invoice_id`, `perfume_id`, `quantity`) VALUES
-                                                                         (1, 1, 2),
-                                                                         (1, 3, 1),
-                                                                         (2, 2, 1),
-                                                                         (2, 4, 1),
-                                                                         (3, 5, 3),
-                                                                         (4, 6, 1),
-                                                                         (4, 7, 2),
-                                                                         (5, 8, 2),
-                                                                         (5, 10, 1);
+INSERT INTO `invoicedetail` (`invoice_id`, `perfume_id`, `quantity`, `volume_id`) VALUES
+                                                                                      (1, 1, 2, 6),
+                                                                                      (7, 1, 10, 6),
+                                                                                      (8, 1, 2, 6),
+                                                                                      (9, 1, 1, 6),
+                                                                                      (13, 1, 2, 6),
+                                                                                      (14, 1, 13, 6),
+                                                                                      (15, 1, 1, 6),
+                                                                                      (2, 2, 1, 6),
+                                                                                      (7, 2, 3, 6),
+                                                                                      (11, 2, 1, 6),
+                                                                                      (12, 2, 1, 6),
+                                                                                      (13, 2, 3, 6),
+                                                                                      (1, 3, 1, 6),
+                                                                                      (6, 3, 1, 6),
+                                                                                      (9, 3, 12, 6),
+                                                                                      (10, 3, 12, 6),
+                                                                                      (2, 4, 1, 6),
+                                                                                      (9, 4, 2, 6),
+                                                                                      (3, 5, 3, 6),
+                                                                                      (4, 6, 1, 6),
+                                                                                      (10, 6, 2, 6),
+                                                                                      (15, 6, 5, 6),
+                                                                                      (4, 7, 2, 6),
+                                                                                      (6, 7, 2, 6),
+                                                                                      (8, 7, 1, 6),
+                                                                                      (9, 7, 2, 6),
+                                                                                      (12, 7, 1, 6),
+                                                                                      (5, 8, 2, 6),
+                                                                                      (9, 8, 2, 6),
+                                                                                      (11, 8, 2, 6),
+                                                                                      (12, 8, 1, 6),
+                                                                                      (8, 9, 1, 6),
+                                                                                      (5, 10, 1, 6);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `notes`
+-- Cấu trúc bảng cho bảng `notes`
 --
 
 CREATE TABLE `notes` (
@@ -260,7 +285,7 @@ CREATE TABLE `notes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `notes`
+-- Đang đổ dữ liệu cho bảng `notes`
 --
 
 INSERT INTO `notes` (`id`, `note_name`, `is_deleted`) VALUES
@@ -318,69 +343,40 @@ INSERT INTO `notes` (`id`, `note_name`, `is_deleted`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `perfume`
+-- Cấu trúc bảng cho bảng `perfume`
 --
 
 CREATE TABLE `perfume` (
                            `id` int(11) NOT NULL,
                            `name` varchar(255) DEFAULT NULL,
-                           `price` double DEFAULT NULL,
-                           `stock` int(11) DEFAULT NULL,
                            `sex` varchar(255) DEFAULT NULL,
                            `images` varchar(255) DEFAULT NULL,
-                           `description` varchar(1000) DEFAULT NULL,
+                           `concentration` varchar(50) DEFAULT NULL,
                            `brand_id` int(11) DEFAULT NULL,
-                           `scent_type_id` int(11) DEFAULT NULL,
                            `promotion_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `perfume`
+-- Đang đổ dữ liệu cho bảng `perfume`
 --
 
-INSERT INTO `perfume` (`id`, `name`, `price`, `stock`, `sex`, `images`, `description`, `brand_id`, `scent_type_id`, `promotion_id`) VALUES
-                                                                                                                                        (1, 'Chanel No. 5', 150, 100, 'Female', 'chanel_no_5.jpg', 'Một biểu tượng kinh điển của nước hoa nữ.', 1, 1, 1),
-                                                                                                                                        (2, 'Dior Sauvage', 120, 200, 'Male', 'dior_sauvage.jpg', 'Nước hoa nam mạnh mẽ với hương gỗ và tiêu.', 2, 4, 3),
-                                                                                                                                        (3, 'Gucci Bloom', 130, 150, 'Female', 'gucci_bloom.jpg', 'Hương hoa tươi mát dành cho phụ nữ hiện đại.', 3, 1, 2),
-                                                                                                                                        (4, 'Tom Ford Black Orchid', 180, 50, 'Female', 'tom_ford_black_orchid.jpg', 'Một mùi hương sang trọng và quyến rũ.', 6, 1, 5),
-                                                                                                                                        (5, 'Versace Eros', 110, 180, 'Male', 'versace_eros.jpg', 'Nước hoa nam với hương gỗ và cam quýt.', 5, 2, 2),
-                                                                                                                                        (6, 'Yves Saint Laurent Libre', 160, 70, 'Female', 'ysl_libre.jpg', 'Nước hoa nữ với sự kết hợp giữa hoa oải hương và vani.', 4, 1, 4),
-                                                                                                                                        (7, 'Burberry London', 100, 200, 'Male', 'burberry_london.jpg', 'Hương gỗ và gia vị đặc trưng của nước hoa nam.', 7, 4, 1),
-                                                                                                                                        (8, 'Calvin Klein CK One', 90, 300, 'Unisex', 'ck_one.jpg', 'Nước hoa unisex dễ chịu với hương trái cây.', 8, 3, 5),
-                                                                                                                                        (9, 'Givenchy Gentleman', 140, 120, 'Male', 'givenchy_gentleman.jpg', 'Nước hoa nam tính với sự pha trộn của hương gỗ và hoa.', 9, 4, 3),
-                                                                                                                                        (10, 'Hugo Boss Bottled', 115, 250, 'Male', 'hugo_boss_bottled.jpg', 'Hương gỗ và trái cây cho người đàn ông năng động.', 10, 4, 2);
+INSERT INTO `perfume` (`id`, `name`, `sex`, `images`, `concentration`, `brand_id`, `promotion_id`) VALUES
+                                                                                                       (1, 'Chanel No. 10', 'Female', 'chaselive.jpg', 'Parfum', 1, 1),
+                                                                                                       (2, 'Dior Sauvage', 'Male', 'chaseatlantic.jpg', 'EDC', 11, 2),
+                                                                                                       (3, 'Gucci Bloom', 'Female', 'gucci_bloom.jpg', 'EDT', 3, 3),
+                                                                                                       (4, 'vcl', 'Male', 'Disconnected.jpg', 'Aftershave', 1, 1),
+                                                                                                       (5, 'Versace Eros', 'Male', 'versace_eros.jpg', 'EDP', 5, 5),
+                                                                                                       (6, 'Yves Saint Laurent Libre', 'Female', 'ysl_libre.jpg', 'EDP', 4, 5),
+                                                                                                       (7, 'Burberry London', 'Male', 'burberry_london.jpg', 'EDP', 7, 5),
+                                                                                                       (8, 'Calvin Klein CK One', 'Unisex', 'ck_one.jpg', 'EDT', 8, 5),
+                                                                                                       (9, 'Givenchy Gentleman', 'Male', 'givenchy_gentleman.jpg', 'EDP', 9, 5),
+                                                                                                       (10, 'Hugo Boss Bottled', 'Male', 'hugo_boss_bottled.jpg', 'EDT', 10, NULL),
+                                                                                                       (19, 'đâ', 'Male', 'beautyindeath.jpg', 'EDT', 1, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `perfume_concentration`
---
-
-CREATE TABLE `perfume_concentration` (
-                                         `perfume_id` int(11) DEFAULT NULL,
-                                         `concentration_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `perfume_concentration`
---
-
-INSERT INTO `perfume_concentration` (`perfume_id`, `concentration_id`) VALUES
-                                                                           (1, 2),
-                                                                           (2, 3),
-                                                                           (3, 2),
-                                                                           (4, 1),
-                                                                           (5, 3),
-                                                                           (6, 2),
-                                                                           (7, 3),
-                                                                           (8, 3),
-                                                                           (9, 2),
-                                                                           (10, 3);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `perfume_notes`
+-- Cấu trúc bảng cho bảng `perfume_notes`
 --
 
 CREATE TABLE `perfume_notes` (
@@ -390,37 +386,40 @@ CREATE TABLE `perfume_notes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `perfume_notes`
+-- Đang đổ dữ liệu cho bảng `perfume_notes`
 --
 
 INSERT INTO `perfume_notes` (`perfume_id`, `note_id`, `type`) VALUES
-                                                                  (1, 1, 'Heart'),
-                                                                  (1, 2, 'Heart'),
-                                                                  (1, 3, 'Heart'),
-                                                                  (1, 21, 'Top'),
-                                                                  (1, 23, 'Top'),
-                                                                  (1, 26, 'Base'),
-                                                                  (1, 30, 'Base'),
-                                                                  (1, 36, 'Base'),
-                                                                  (1, 41, 'Top'),
-                                                                  (2, 3, 'Heart'),
-                                                                  (2, 23, 'Top'),
-                                                                  (2, 26, 'Base'),
-                                                                  (2, 27, 'Base'),
-                                                                  (2, 32, 'Top'),
-                                                                  (2, 34, 'Heart'),
+                                                                  (1, 1, 'heart'),
+                                                                  (1, 2, 'heart'),
+                                                                  (1, 3, 'heart'),
+                                                                  (1, 21, 'top'),
+                                                                  (1, 23, 'top'),
+                                                                  (1, 26, 'base'),
+                                                                  (1, 30, 'base'),
+                                                                  (1, 36, 'base'),
+                                                                  (1, 41, 'top'),
+                                                                  (2, 3, 'heart'),
+                                                                  (2, 10, 'top'),
+                                                                  (2, 12, 'top'),
+                                                                  (2, 23, 'top'),
+                                                                  (2, 26, 'base'),
+                                                                  (2, 27, 'base'),
+                                                                  (2, 32, 'top'),
+                                                                  (2, 34, 'heart'),
                                                                   (3, 1, 'Heart'),
                                                                   (3, 2, 'Top'),
                                                                   (3, 3, 'Top'),
                                                                   (3, 4, 'Heart'),
                                                                   (3, 5, 'Base'),
                                                                   (3, 6, 'Base'),
-                                                                  (4, 10, 'Heart'),
-                                                                  (4, 23, 'Top'),
-                                                                  (4, 30, 'Base'),
-                                                                  (4, 32, 'Top'),
-                                                                  (4, 36, 'Base'),
-                                                                  (4, 43, 'Heart'),
+                                                                  (4, 3, 'top'),
+                                                                  (4, 8, 'top'),
+                                                                  (4, 10, 'heart'),
+                                                                  (4, 12, 'top'),
+                                                                  (4, 30, 'base'),
+                                                                  (4, 36, 'base'),
+                                                                  (4, 43, 'heart'),
                                                                   (5, 11, 'Top'),
                                                                   (5, 17, 'Heart'),
                                                                   (5, 21, 'Top'),
@@ -456,39 +455,47 @@ INSERT INTO `perfume_notes` (`perfume_id`, `note_id`, `type`) VALUES
                                                                   (10, 11, 'Top'),
                                                                   (10, 12, 'Top'),
                                                                   (10, 26, 'Base'),
-                                                                  (10, 30, 'Base');
+                                                                  (10, 30, 'Base'),
+                                                                  (19, 2, 'heart'),
+                                                                  (19, 9, 'top'),
+                                                                  (19, 12, 'heart'),
+                                                                  (19, 29, 'base');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `perfume_volume`
+-- Cấu trúc bảng cho bảng `perfume_volume`
 --
 
 CREATE TABLE `perfume_volume` (
-                                  `perfume_id` int(11) DEFAULT NULL,
-                                  `volume_id` int(11) DEFAULT NULL
+                                  `perfume_id` int(11) NOT NULL,
+                                  `volume_id` int(11) NOT NULL,
+                                  `price` double DEFAULT NULL,
+                                  `stock` int(11) DEFAULT 0,
+                                  `cost` double DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `perfume_volume`
+-- Đang đổ dữ liệu cho bảng `perfume_volume`
 --
 
-INSERT INTO `perfume_volume` (`perfume_id`, `volume_id`) VALUES
-                                                             (1, 6),
-                                                             (2, 6),
-                                                             (3, 6),
-                                                             (4, 6),
-                                                             (5, 6),
-                                                             (6, 6),
-                                                             (7, 6),
-                                                             (8, 6),
-                                                             (9, 6),
-                                                             (10, 6);
+INSERT INTO `perfume_volume` (`perfume_id`, `volume_id`, `price`, `stock`, `cost`) VALUES
+                                                                                       (1, 6, 2500000, 1, 2000000),
+                                                                                       (2, 6, 3200000, 1, 2700000),
+                                                                                       (3, 6, 5000000, 53, 3500000),
+                                                                                       (4, 6, 300000, 51, 100000),
+                                                                                       (5, 6, 2700000, 50, 2200000),
+                                                                                       (6, 6, 2800000, 45, 2400000),
+                                                                                       (7, 6, 3600000, 68, 3000000),
+                                                                                       (8, 6, 3600000, 52, 2800000),
+                                                                                       (9, 6, 5510000, 50, 4600000),
+                                                                                       (10, 6, 3250000, 50, 2800000),
+                                                                                       (19, 3, 222222, 0, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `promotion`
+-- Cấu trúc bảng cho bảng `promotion`
 --
 
 CREATE TABLE `promotion` (
@@ -501,7 +508,7 @@ CREATE TABLE `promotion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `promotion`
+-- Đang đổ dữ liệu cho bảng `promotion`
 --
 
 INSERT INTO `promotion` (`id`, `name`, `discount_percent`, `start_date`, `end_date`, `is_deleted`) VALUES
@@ -515,7 +522,7 @@ INSERT INTO `promotion` (`id`, `name`, `discount_percent`, `start_date`, `end_da
 -- --------------------------------------------------------
 
 --
--- Table structure for table `role`
+-- Cấu trúc bảng cho bảng `role`
 --
 
 CREATE TABLE `role` (
@@ -524,7 +531,7 @@ CREATE TABLE `role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `role`
+-- Đang đổ dữ liệu cho bảng `role`
 --
 
 INSERT INTO `role` (`id`, `name`) VALUES
@@ -541,7 +548,7 @@ INSERT INTO `role` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rolegroup`
+-- Cấu trúc bảng cho bảng `rolegroup`
 --
 
 CREATE TABLE `rolegroup` (
@@ -550,7 +557,7 @@ CREATE TABLE `rolegroup` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `rolegroup`
+-- Đang đổ dữ liệu cho bảng `rolegroup`
 --
 
 INSERT INTO `rolegroup` (`id`, `name`) VALUES
@@ -560,7 +567,7 @@ INSERT INTO `rolegroup` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `role_rolegroup`
+-- Cấu trúc bảng cho bảng `role_rolegroup`
 --
 
 CREATE TABLE `role_rolegroup` (
@@ -570,7 +577,7 @@ CREATE TABLE `role_rolegroup` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `role_rolegroup`
+-- Đang đổ dữ liệu cho bảng `role_rolegroup`
 --
 
 INSERT INTO `role_rolegroup` (`role_id`, `rolegroup_id`, `status`) VALUES
@@ -596,41 +603,7 @@ INSERT INTO `role_rolegroup` (`role_id`, `rolegroup_id`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `scenttype`
---
-
-CREATE TABLE `scenttype` (
-                             `id` int(11) NOT NULL,
-                             `type_name` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `scenttype`
---
-
-INSERT INTO `scenttype` (`id`, `type_name`) VALUES
-                                                (1, 'Floral - Hương Hoa'),
-                                                (2, 'Fruity - Hương Trái Cây'),
-                                                (3, 'Citrus - Hương Cam Chanh'),
-                                                (4, 'Woody - Hương Gỗ'),
-                                                (5, 'Oriental - Hương Phương Đông'),
-                                                (6, 'Spicy - Hương Cay'),
-                                                (7, 'Fresh - Hương Tươi Mát'),
-                                                (8, 'Aquatic - Hương Biển'),
-                                                (9, 'Green - Hương Xanh'),
-                                                (10, 'Gourmand - Hương Kẹo Ngọt'),
-                                                (11, 'Musk - Hương Xạ Hương'),
-                                                (12, 'Leather - Hương Da Thuộc'),
-                                                (13, 'Amber - Hương Hổ Phách'),
-                                                (14, 'Powdery - Hương Phấn'),
-                                                (15, 'Aromatic - Hương Thảo Mộc'),
-                                                (16, 'Chypre - Hương Rêu Sồi'),
-                                                (17, 'Fougère - Hương Dương Xỉ');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `supplier`
+-- Cấu trúc bảng cho bảng `supplier`
 --
 
 CREATE TABLE `supplier` (
@@ -642,7 +615,7 @@ CREATE TABLE `supplier` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `supplier`
+-- Đang đổ dữ liệu cho bảng `supplier`
 --
 
 INSERT INTO `supplier` (`id`, `name`, `phone`, `email`, `is_deleted`) VALUES
@@ -650,13 +623,12 @@ INSERT INTO `supplier` (`id`, `name`, `phone`, `email`, `is_deleted`) VALUES
                                                                           (2, 'Elite Perfume Distributors', '0912345678', 'info@eliteperfume.com', 0),
                                                                           (3, 'Prestige Aroma', '0923456789', 'support@prestigearoma.com', 0),
                                                                           (4, 'Exclusive Scents Ltd.', '0934567890', 'service@exclusivescents.com', 0),
-                                                                          (5, 'Premium Essence Supply', '0945678901', 'sales@premiumessence.com', 0),
-                                                                          (6, 'Alex 123', '0909876543', 'alex12@gmail.com', 1);
+                                                                          (5, 'Premium Essence Supply', '0945678901', 'sales@premiumessence.com', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `volume`
+-- Cấu trúc bảng cho bảng `volume`
 --
 
 CREATE TABLE `volume` (
@@ -665,7 +637,7 @@ CREATE TABLE `volume` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `volume`
+-- Đang đổ dữ liệu cho bảng `volume`
 --
 
 INSERT INTO `volume` (`id`, `size`) VALUES
@@ -683,50 +655,44 @@ INSERT INTO `volume` (`id`, `size`) VALUES
                                         (12, 200);
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `brand`
+-- Chỉ mục cho bảng `brand`
 --
 ALTER TABLE `brand`
     ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `concentration`
---
-ALTER TABLE `concentration`
-    ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `customer`
+-- Chỉ mục cho bảng `customer`
 --
 ALTER TABLE `customer`
     ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `employee`
+-- Chỉ mục cho bảng `employee`
 --
 ALTER TABLE `employee`
     ADD PRIMARY KEY (`id`),
   ADD KEY `rolegroup_id` (`rolegroup_id`);
 
 --
--- Indexes for table `importreceipt`
+-- Chỉ mục cho bảng `importreceipt`
 --
 ALTER TABLE `importreceipt`
     ADD PRIMARY KEY (`id`),
   ADD KEY `supplier_id` (`supplier_id`);
 
 --
--- Indexes for table `importreceiptdetail`
+-- Chỉ mục cho bảng `importreceiptdetail`
 --
 ALTER TABLE `importreceiptdetail`
-    ADD PRIMARY KEY (`import_receipt_id`,`perfume_id`),
-  ADD KEY `perfume_id` (`perfume_id`);
+    ADD PRIMARY KEY (`perfume_id`,`volume_id`,`import_receipt_id`),
+  ADD KEY `import_receipt_id` (`import_receipt_id`);
 
 --
--- Indexes for table `invoice`
+-- Chỉ mục cho bảng `invoice`
 --
 ALTER TABLE `invoice`
     ADD PRIMARY KEY (`id`),
@@ -734,193 +700,171 @@ ALTER TABLE `invoice`
   ADD KEY `employee_id` (`employee_id`);
 
 --
--- Indexes for table `invoicedetail`
+-- Chỉ mục cho bảng `invoicedetail`
 --
 ALTER TABLE `invoicedetail`
-    ADD PRIMARY KEY (`invoice_id`,`perfume_id`),
-  ADD KEY `perfume_id` (`perfume_id`);
+    ADD PRIMARY KEY (`perfume_id`,`volume_id`,`invoice_id`),
+  ADD KEY `invoice_id` (`invoice_id`);
 
 --
--- Indexes for table `notes`
+-- Chỉ mục cho bảng `notes`
 --
 ALTER TABLE `notes`
     ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `perfume`
+-- Chỉ mục cho bảng `perfume`
 --
 ALTER TABLE `perfume`
     ADD PRIMARY KEY (`id`),
   ADD KEY `brand_id` (`brand_id`),
-  ADD KEY `scent_type_id` (`scent_type_id`),
   ADD KEY `promotion_id` (`promotion_id`);
 
 --
--- Indexes for table `perfume_concentration`
---
-ALTER TABLE `perfume_concentration`
-    ADD UNIQUE KEY `Perfume_Concentration_index_1` (`perfume_id`,`concentration_id`),
-    ADD KEY `concentration_id` (`concentration_id`);
-
---
--- Indexes for table `perfume_notes`
+-- Chỉ mục cho bảng `perfume_notes`
 --
 ALTER TABLE `perfume_notes`
     ADD PRIMARY KEY (`perfume_id`,`note_id`),
   ADD KEY `note_id` (`note_id`);
 
 --
--- Indexes for table `perfume_volume`
+-- Chỉ mục cho bảng `perfume_volume`
 --
 ALTER TABLE `perfume_volume`
-    ADD UNIQUE KEY `Perfume_Volume_index_0` (`perfume_id`,`volume_id`),
-    ADD KEY `volume_id` (`volume_id`);
+    ADD PRIMARY KEY (`perfume_id`,`volume_id`),
+  ADD KEY `volume_id` (`volume_id`);
 
 --
--- Indexes for table `promotion`
+-- Chỉ mục cho bảng `promotion`
 --
 ALTER TABLE `promotion`
     ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `role`
+-- Chỉ mục cho bảng `role`
 --
 ALTER TABLE `role`
     ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `rolegroup`
+-- Chỉ mục cho bảng `rolegroup`
 --
 ALTER TABLE `rolegroup`
     ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `role_rolegroup`
+-- Chỉ mục cho bảng `role_rolegroup`
 --
 ALTER TABLE `role_rolegroup`
     ADD UNIQUE KEY `Role_RoleGroup_index_2` (`role_id`,`rolegroup_id`),
     ADD KEY `rolegroup_id` (`rolegroup_id`);
 
 --
--- Indexes for table `scenttype`
---
-ALTER TABLE `scenttype`
-    ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `supplier`
+-- Chỉ mục cho bảng `supplier`
 --
 ALTER TABLE `supplier`
     ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `volume`
+-- Chỉ mục cho bảng `volume`
 --
 ALTER TABLE `volume`
     ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `brand`
+-- AUTO_INCREMENT cho bảng `brand`
 --
 ALTER TABLE `brand`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `customer`
+-- AUTO_INCREMENT cho bảng `customer`
 --
 ALTER TABLE `customer`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
--- AUTO_INCREMENT for table `employee`
+-- AUTO_INCREMENT cho bảng `employee`
 --
 ALTER TABLE `employee`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `promotion`
+-- AUTO_INCREMENT cho bảng `perfume`
+--
+ALTER TABLE `perfume`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT cho bảng `promotion`
 --
 ALTER TABLE `promotion`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `supplier`
---
-ALTER TABLE `supplier`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `employee`
+-- Các ràng buộc cho bảng `employee`
 --
 ALTER TABLE `employee`
     ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`rolegroup_id`) REFERENCES `rolegroup` (`id`);
 
 --
--- Constraints for table `importreceipt`
+-- Các ràng buộc cho bảng `importreceipt`
 --
 ALTER TABLE `importreceipt`
     ADD CONSTRAINT `importreceipt_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`);
 
 --
--- Constraints for table `importreceiptdetail`
+-- Các ràng buộc cho bảng `importreceiptdetail`
 --
 ALTER TABLE `importreceiptdetail`
-    ADD CONSTRAINT `importreceiptdetail_ibfk_1` FOREIGN KEY (`import_receipt_id`) REFERENCES `importreceipt` (`id`),
-  ADD CONSTRAINT `importreceiptdetail_ibfk_2` FOREIGN KEY (`perfume_id`) REFERENCES `perfume` (`id`);
+    ADD CONSTRAINT `importreceiptdetail_ibfk_1` FOREIGN KEY (`perfume_id`,`volume_id`) REFERENCES `perfume_volume` (`perfume_id`, `volume_id`),
+  ADD CONSTRAINT `importreceiptdetail_ibfk_2` FOREIGN KEY (`import_receipt_id`) REFERENCES `importreceipt` (`id`);
 
 --
--- Constraints for table `invoice`
+-- Các ràng buộc cho bảng `invoice`
 --
 ALTER TABLE `invoice`
     ADD CONSTRAINT `invoice_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
   ADD CONSTRAINT `invoice_ibfk_2` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`);
 
 --
--- Constraints for table `invoicedetail`
+-- Các ràng buộc cho bảng `invoicedetail`
 --
 ALTER TABLE `invoicedetail`
     ADD CONSTRAINT `invoicedetail_ibfk_1` FOREIGN KEY (`invoice_id`) REFERENCES `invoice` (`id`),
-  ADD CONSTRAINT `invoicedetail_ibfk_2` FOREIGN KEY (`perfume_id`) REFERENCES `perfume` (`id`);
+  ADD CONSTRAINT `invoicedetail_ibfk_2` FOREIGN KEY (`perfume_id`,`volume_id`) REFERENCES `perfume_volume` (`perfume_id`, `volume_id`);
 
 --
--- Constraints for table `perfume`
+-- Các ràng buộc cho bảng `perfume`
 --
 ALTER TABLE `perfume`
     ADD CONSTRAINT `perfume_ibfk_1` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`),
-  ADD CONSTRAINT `perfume_ibfk_2` FOREIGN KEY (`scent_type_id`) REFERENCES `scenttype` (`id`),
   ADD CONSTRAINT `perfume_ibfk_3` FOREIGN KEY (`promotion_id`) REFERENCES `promotion` (`id`);
 
 --
--- Constraints for table `perfume_concentration`
---
-ALTER TABLE `perfume_concentration`
-    ADD CONSTRAINT `perfume_concentration_ibfk_1` FOREIGN KEY (`perfume_id`) REFERENCES `perfume` (`id`),
-  ADD CONSTRAINT `perfume_concentration_ibfk_2` FOREIGN KEY (`concentration_id`) REFERENCES `concentration` (`id`);
-
---
--- Constraints for table `perfume_notes`
+-- Các ràng buộc cho bảng `perfume_notes`
 --
 ALTER TABLE `perfume_notes`
     ADD CONSTRAINT `perfume_notes_ibfk_1` FOREIGN KEY (`perfume_id`) REFERENCES `perfume` (`id`),
   ADD CONSTRAINT `perfume_notes_ibfk_2` FOREIGN KEY (`note_id`) REFERENCES `notes` (`id`);
 
 --
--- Constraints for table `perfume_volume`
+-- Các ràng buộc cho bảng `perfume_volume`
 --
 ALTER TABLE `perfume_volume`
     ADD CONSTRAINT `perfume_volume_ibfk_1` FOREIGN KEY (`perfume_id`) REFERENCES `perfume` (`id`),
   ADD CONSTRAINT `perfume_volume_ibfk_2` FOREIGN KEY (`volume_id`) REFERENCES `volume` (`id`);
 
 --
--- Constraints for table `role_rolegroup`
+-- Các ràng buộc cho bảng `role_rolegroup`
 --
 ALTER TABLE `role_rolegroup`
     ADD CONSTRAINT `role_rolegroup_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),

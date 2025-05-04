@@ -2,10 +2,10 @@ package BUS;
 
 import DAO.KhuyenMaiDAO;
 import DTO.KhuyenMaiDTO;
-
 import java.util.ArrayList;
 
 public class KhuyenMaiBUS {
+
     private KhuyenMaiDAO khuyenMaiDAO;
 
     public KhuyenMaiBUS() {
@@ -45,4 +45,21 @@ public class KhuyenMaiBUS {
     public KhuyenMaiDTO getKhuyenMai(int id) {
         return khuyenMaiDAO.getKhuyenMaiById(id);
     }
+
+    public int getIdByName(String name) {
+        for (KhuyenMaiDTO km : khuyenMaiDAO.getAllKhuyenMais()) {
+            if (km.getName().equals(name)) {
+                return km.getId();
+            }
+        }
+        return -1;
+    }
+
+    // Singleton instance
+    private static final KhuyenMaiBUS instance = new KhuyenMaiBUS();
+
+    public static KhuyenMaiBUS getInstance() {
+        return instance;
+    }
+
 }
