@@ -138,7 +138,28 @@ public class ChonKhachHang extends JDialog {
     }//GEN-LAST:event_btnchonkhachhangActionPerformed
 
     private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
-        // TODO add your handling code here:
+        String keyword = txtTimKiem.getText().trim().toLowerCase(); // Lấy nội dung tìm kiếm
+
+        KhachHangBUS khachHangBUS = new KhachHangBUS();
+        ArrayList<KhachHangDTO> danhSach = khachHangBUS.getAllKhachHangs(); // Lấy danh sách khách hàng
+
+        DefaultTableModel model = (DefaultTableModel) tblkhachhang.getModel();
+        model.setRowCount(0); // Xóa bảng cũ
+
+        for (KhachHangDTO kh : danhSach) {
+            String ten = kh.getName().toLowerCase();
+            String sdt = kh.getPhone().toLowerCase();
+            String email = kh.getEmail().toLowerCase();
+
+            if (ten.contains(keyword) || sdt.contains(keyword) || email.contains(keyword)) {
+                model.addRow(new Object[]{
+                    kh.getId(),
+                    kh.getName(),
+                    kh.getPhone(),
+                    kh.getEmail(),
+                });
+            }
+        }
     }//GEN-LAST:event_txtTimKiemActionPerformed
 
     private void txtTimKiemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyPressed
@@ -162,7 +183,7 @@ public class ChonKhachHang extends JDialog {
             columnModel.getColumn(i).setCellRenderer(centerRenderer);
         }
     }
-    
+
     private void loadDanhSachKhachHang() {
         ArrayList<KhachHangDTO> khachHangDTOArrayList = khachHangBUS.getAllKhachHangs();
 

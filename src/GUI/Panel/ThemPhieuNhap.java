@@ -32,11 +32,12 @@ public class ThemPhieuNhap extends javax.swing.JPanel {
 
     private ArrayList<SanPhamDTO> listNuocHoa;
     private List<NhaCungCapDTO> danhSachNCC;
+    private PhieuNhap phieuNhapGUI;
 
     /**
      * Creates new form TaoPhieuNhap
      */
-    public ThemPhieuNhap() {
+    public ThemPhieuNhap(PhieuNhap phieuNhapGUI) {
         initComponents();
         loadDanhSachSanPham();
         setUpTable();
@@ -48,6 +49,8 @@ public class ThemPhieuNhap extends javax.swing.JPanel {
         txtmaphieunhap.setText(taoMaPhieuNhapTuDong());
         txtmaphieunhap.setEditable(false);
         loadNhaCungCapToComboBox();
+
+        this.phieuNhapGUI = phieuNhapGUI;
     }
 
     private void setupSanPhamSelectionListener() {
@@ -467,6 +470,7 @@ public class ThemPhieuNhap extends javax.swing.JPanel {
                 txtgianhap.setText("");
                 txtsoluong.setText("");
                 txttongtien.setText("0đ");
+                phieuNhapGUI.loadPhieuNhapToTable();
             } else {
                 JOptionPane.showMessageDialog(this, "Lưu chi tiết phiếu nhập thất bại!");
             }

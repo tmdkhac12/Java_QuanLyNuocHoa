@@ -21,6 +21,8 @@ import java.sql.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+
+import GUI.HoaDon;
 import util.DBConnection;
 
 /**
@@ -33,8 +35,9 @@ public class ThemHoaDon extends javax.swing.JPanel {
     private static int loggedInEmployeeId;
     private static String loggedInEmployeeName;
     private int selectedCustomerId = -1;
+    private HoaDon hoaDonGUI;
 
-    public ThemHoaDon() {
+    public ThemHoaDon(HoaDon hoaDonGUI) {
         initComponents();
         loadDanhSachSanPham();
         setUpTable();
@@ -44,6 +47,7 @@ public class ThemHoaDon extends javax.swing.JPanel {
         txtmahoadon.setEditable(false);
         setNhanVienDangNhap();
 
+        this.hoaDonGUI = hoaDonGUI;
     }
 
     @SuppressWarnings("unchecked")
@@ -451,6 +455,7 @@ public class ThemHoaDon extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Xuất hóa đơn thành công!");
             resetForm();
             loadDanhSachSanPham(); // Cập nhật lại danh sách sản phẩm
+            hoaDonGUI.loadHoaDonToTable();
         } else {
             JOptionPane.showMessageDialog(this, "Xuất hóa đơn thất bại!");
         }

@@ -108,6 +108,7 @@ public class PhieuNhap extends javax.swing.JPanel {
 
         btnXoaPN.setText("Xóa");
         btnXoaPN.setToolTipText("");
+        btnXoaPN.setEnabled(false);
         btnXoaPN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnXoaPNActionPerformed(evt);
@@ -354,7 +355,7 @@ public class PhieuNhap extends javax.swing.JPanel {
 
 
     private void btnThemPNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemPNActionPerformed
-        JPanel panel = new GUI.Panel.ThemPhieuNhap();
+        JPanel panel = new GUI.Panel.ThemPhieuNhap(this);
         JFrame frame = new JFrame("Tạo Phiếu Nhập");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().add(panel);
@@ -629,7 +630,7 @@ public class PhieuNhap extends javax.swing.JPanel {
         btnLamMoi.setIcon(new FlatSVGIcon("./res/icon/refresh.svg"));
     }
 
-    private void loadPhieuNhapToTable() {
+    public void loadPhieuNhapToTable() {
         PhieuNhapBUS phieuNhapBUS = new PhieuNhapBUS();
         ArrayList<PhieuNhapDTO> danhSachPhieuNhap = phieuNhapBUS.getAllPhieuNhap();
 
