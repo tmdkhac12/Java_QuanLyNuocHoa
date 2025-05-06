@@ -2,3 +2,4 @@ out
 build
 src/Test.java
 /dist/
+/nbproject/private/

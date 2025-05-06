@@ -13,6 +13,7 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import util.DialogUtil;
 
@@ -29,6 +30,7 @@ public class NhomQuyen extends javax.swing.JPanel {
         initComponents();
         addIcon();
         loadData();
+        
     }
 
     /** This method is called from within the constructor to
@@ -125,13 +127,34 @@ public class NhomQuyen extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     
     private void loadData() {
+    // Lấy model và reset
     DefaultTableModel model = (DefaultTableModel) tblNhomQuyen.getModel();
     model.setRowCount(0);
 
+    // 1) Thiết lập thuộc tính hiển thị cho bảng
+    //    - Khóa chỉnh sửa
+    tblNhomQuyen.setDefaultEditor(Object.class, null);
+    //    - Chỉ cho chọn nguyên hàng
+    tblNhomQuyen.setRowSelectionAllowed(true);
+    tblNhomQuyen.setColumnSelectionAllowed(false);
+    //    - Không cho reorder cột
+    tblNhomQuyen.getTableHeader().setReorderingAllowed(false);
+    //    - Căn giữa nội dung
+    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+    centerRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+    for (int i = 0; i < tblNhomQuyen.getColumnCount(); i++) {
+        tblNhomQuyen.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+    }
+    //    - Tắt grid lines nếu muốn
+    tblNhomQuyen.setShowGrid(false);
+
+    // 2) Lấy dữ liệu gộp từ BUS/DAO
     NhomQuyenBUS bus = new NhomQuyenBUS();
     for (Object[] row : bus.getAllNhomQuyenThongTin()) {
         model.addRow(row);
     }
+
+
 }
 
 
@@ -195,6 +218,8 @@ public class NhomQuyen extends javax.swing.JPanel {
         btnXoa.setIcon(new FlatSVGIcon("./res/icon/delete.svg"));
         btnChiTiet.setIcon(new FlatSVGIcon("./res/icon/detail.svg"));
     }
+
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChiTiet;
