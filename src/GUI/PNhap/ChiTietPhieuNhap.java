@@ -6,6 +6,7 @@ package GUI.PNhap;
 
 import DAO.ChiTietPhieuNhapDAO;
 import DTO.ChiTietPhieuNhapDTO;
+import java.text.DecimalFormat;
 import java.util.List;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -140,6 +141,8 @@ public class ChiTietPhieuNhap extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) tblsanphamchitiet.getModel();
         model.setRowCount(0); // xóa dữ liệu cũ
 
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0");
+        
         for (ChiTietPhieuNhapDTO ct : chiTietList) {
             model.addRow(new Object[]{
                 ct.getPerfumeId(),
@@ -148,7 +151,7 @@ public class ChiTietPhieuNhap extends javax.swing.JPanel {
                 ct.getSex(),
                 ct.getConcentration(),
                 ct.getBrand(),
-                ct.getCost(),
+                decimalFormat.format(ct.getCost()),
                 ct.getQuantity()
             });
         }

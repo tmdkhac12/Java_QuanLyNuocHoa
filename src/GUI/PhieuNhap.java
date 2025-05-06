@@ -108,6 +108,7 @@ public class PhieuNhap extends javax.swing.JPanel {
 
         btnXoaPN.setText("Xóa");
         btnXoaPN.setToolTipText("");
+        btnXoaPN.setEnabled(false);
         btnXoaPN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnXoaPNActionPerformed(evt);

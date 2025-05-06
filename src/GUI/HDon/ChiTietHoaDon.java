@@ -2,6 +2,7 @@ package GUI.HDon;
 
 import DAO.ChiTietHoaDonDAO;
 import DTO.ChiTietHoaDonDTO;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.SwingUtilities;
@@ -155,6 +156,8 @@ public class ChiTietHoaDon extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) tblsanphamchitiet.getModel();
         model.setRowCount(0); // Clear bảng
 
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0");
+        
         for (ChiTietHoaDonDTO detail : chiTietList) {
             model.addRow(new Object[]{
                 detail.getPerfumeId(),
@@ -163,7 +166,7 @@ public class ChiTietHoaDon extends javax.swing.JPanel {
                 detail.getSex(),
                 detail.getConcentration(),
                 detail.getBrand(),
-                detail.getPrice(),
+                decimalFormat.format(detail.getPrice()),
                 detail.getQuantity()
             });
         }
