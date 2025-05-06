@@ -343,7 +343,7 @@ public class HoaDon extends javax.swing.JPanel {
         }
     }
     private void btnThemHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemHDActionPerformed
-        JPanel panel = new GUI.Panel.ThemHoaDon();
+        JPanel panel = new GUI.Panel.ThemHoaDon(this);
         JFrame frame = new JFrame("Thêm hóa đơn");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().add(panel);
@@ -570,7 +570,7 @@ public class HoaDon extends javax.swing.JPanel {
         btnLamMoi.setIcon(new FlatSVGIcon("./res/icon/refresh.svg"));
     }
 
-    private void loadHoaDonToTable() {
+    public void loadHoaDonToTable() {
         danhSachHoaDon = hoaDonBUS.getAllHoaDon();
 
         DefaultTableModel model = (DefaultTableModel) tblHoaDon.getModel();
