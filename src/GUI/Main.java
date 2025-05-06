@@ -311,18 +311,7 @@ public class Main extends javax.swing.JFrame {
         mainContent.setLayout(new java.awt.BorderLayout());
 
         mainContent2.setBackground(new java.awt.Color(235, 235, 235));
-
-        javax.swing.GroupLayout mainContent2Layout = new javax.swing.GroupLayout(mainContent2);
-        mainContent2.setLayout(mainContent2Layout);
-        mainContent2Layout.setHorizontalGroup(
-            mainContent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 632, Short.MAX_VALUE)
-        );
-        mainContent2Layout.setVerticalGroup(
-            mainContent2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 676, Short.MAX_VALUE)
-        );
-
+        mainContent2.setLayout(new javax.swing.OverlayLayout(mainContent2));
         mainContent.add(mainContent2, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(mainContent, java.awt.BorderLayout.CENTER);
