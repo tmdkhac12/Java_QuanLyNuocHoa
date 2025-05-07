@@ -155,8 +155,11 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="pnlLoc" alignment="0" pref="684" max="32767" attributes="0"/>
-                          <Component id="scpnltable" max="32767" attributes="0"/>
+                          <Component id="scpnltable" pref="684" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="pnlLoc" min="-2" pref="667" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -238,33 +241,24 @@
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="txtminprice" alignment="1" max="32767" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                              <Component id="txtmaxprice" alignment="1" max="32767" attributes="0"/>
                                               <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                                      <Component id="txtmaxprice" alignment="1" max="32767" attributes="0"/>
-                                                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                                              <Component id="comboboxKH" alignment="1" max="32767" attributes="0"/>
-                                                              <Component id="txtnhacungcap" alignment="0" min="-2" pref="116" max="-2" attributes="0"/>
-                                                              <Component id="txtnhacungcap2" alignment="0" min="-2" pref="116" max="-2" attributes="0"/>
-                                                              <Component id="txtnhacungcap1" alignment="0" min="-2" pref="116" max="-2" attributes="0"/>
-                                                              <Component id="comboboxNV" alignment="1" pref="248" max="32767" attributes="0"/>
-                                                          </Group>
-                                                          <Component id="txtnhacungcap3" alignment="0" min="-2" pref="116" max="-2" attributes="0"/>
-                                                      </Group>
+                                                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                                      <Component id="comboboxKH" alignment="1" max="32767" attributes="0"/>
+                                                      <Component id="txtnhacungcap" alignment="0" min="-2" pref="116" max="-2" attributes="0"/>
+                                                      <Component id="txtnhacungcap2" alignment="0" min="-2" pref="116" max="-2" attributes="0"/>
+                                                      <Component id="txtnhacungcap1" alignment="0" min="-2" pref="116" max="-2" attributes="0"/>
+                                                      <Component id="comboboxNV" alignment="1" pref="248" max="32767" attributes="0"/>
                                                   </Group>
-                                                  <Component id="txtnhacungcap4" alignment="0" min="-2" pref="116" max="-2" attributes="0"/>
-                                                  <Component id="txtnhacungcap5" alignment="0" min="-2" pref="116" max="-2" attributes="0"/>
+                                                  <Component id="txtnhacungcap3" alignment="0" min="-2" pref="116" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
-                                          <Component id="btnTimKiem" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtnhacungcap4" alignment="0" min="-2" pref="116" max="-2" attributes="0"/>
+                                          <Component id="txtnhacungcap5" alignment="0" min="-2" pref="116" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
@@ -275,9 +269,14 @@
                               <Group type="102" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="txtngaycuoi" alignment="0" min="-2" pref="248" max="-2" attributes="0"/>
+                                      <Component id="txtngaycuoi" min="-2" pref="248" max="-2" attributes="0"/>
                                       <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtminprice" alignment="0" min="-2" pref="248" max="-2" attributes="0"/>
                                   </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
+                                  <Component id="btnTimKiem" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace pref="22" max="32767" attributes="0"/>
@@ -291,31 +290,31 @@
                           <Component id="txtnhacungcap4" min="-2" pref="24" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="comboboxKH" min="-2" pref="30" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtnhacungcap" min="-2" pref="24" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="comboboxNV" min="-2" pref="30" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="txtnhacungcap2" min="-2" pref="24" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtngaydau" min="-2" pref="31" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtnhacungcap3" min="-2" pref="24" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtngaycuoi" min="-2" pref="33" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="txtnhacungcap5" min="-2" pref="24" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtminprice" min="-2" pref="30" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="txtnhacungcap1" min="-2" pref="24" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtmaxprice" min="-2" pref="30" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                           <Component id="btnTimKiem" min="-2" pref="52" max="-2" attributes="0"/>
-                          <EmptySpace pref="54" max="32767" attributes="0"/>
+                          <EmptySpace pref="131" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>

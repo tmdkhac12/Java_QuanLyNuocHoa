@@ -3,6 +3,7 @@ package GUI.ThongKeHeThong;
 import BUS.ThongKeBUS;
 import DTO.ThongKeDTO;
 import java.awt.BorderLayout;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.List;
@@ -27,6 +28,7 @@ public class ThongKeDoanhThu extends JPanel {
     public ThongKeDoanhThu() {
         initComponents();
         loadYearOverview();
+        setUpTable();
     }
 
     private void initComponents() {
@@ -91,7 +93,7 @@ public class ThongKeDoanhThu extends JPanel {
     pnlChart.add(cp, BorderLayout.CENTER);
     pnlChart.revalidate();
     pnlChart.repaint();
-
+    DecimalFormat decimalFormat = new DecimalFormat("#,##0");
     // 5) Đổ dữ liệu chi tiết vào JTable
     DefaultTableModel model = (DefaultTableModel) tblDetail.getModel();
     model.setRowCount(0);
@@ -99,14 +101,22 @@ public class ThongKeDoanhThu extends JPanel {
         model.addRow(new Object[]{
             dto.getDate(),
             dto.getCapital(),
-            dto.getRevenue(),
-            dto.getProfit()
+            decimalFormat.format(dto.getRevenue()),
+                decimalFormat.format(dto.getProfit())
         });
     }
 
     // 6) Căn giữa tất cả các cột trong table
     centerTableData(tblDetail);
 }
+
+    private void setUpTable() {
+        // Set ẩn hiển thị ô vuông khi bấm vào cell
+        tblDetail.setFocusable(false);
+
+        // Set không cho cell có thể chỉnh sửa
+        tblDetail.setDefaultEditor(Object.class, null);
+    }
 
 /**
  * Giúp căn giữa nội dung của mọi cột trong JTable.

@@ -7,6 +7,7 @@ import com.toedter.calendar.JDateChooser;
 import java.awt.BorderLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +29,7 @@ public class ThongKeNhaCungCap extends javax.swing.JPanel {
     public ThongKeNhaCungCap() {
         initComponents();
         initCustom();
+        setUpTable();
     }
 
     private void initCustom() {
@@ -69,6 +71,7 @@ private void loadData() {
             .filter(dto -> dto.getName().toLowerCase().contains(key))
             .collect(Collectors.toList());
 
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0");
         // 3) Đổ vào bảng
         model.setRowCount(0);
         int stt = 1;
@@ -78,7 +81,7 @@ private void loadData() {
                 dto.getId(),
                 dto.getName(),
                 dto.getQuantity(),
-                dto.getTotalAmount()
+                decimalFormat.format(dto.getTotalAmount())
             });
         }
 
@@ -108,6 +111,14 @@ private void centerTableData(javax.swing.JTable table) {
     private void exportToExcel(JTable table, String sheetName) {
         // TODO: gọi ExcelExporter.export(table, sheetName)
         JOptionPane.showMessageDialog(this, "Xuất Excel: " + sheetName);
+    }
+
+    private void setUpTable() {
+        // Set ẩn hiển thị ô vuông khi bấm vào cell
+        tblThongKeNcc.setFocusable(false);
+
+        // Set không cho cell có thể chỉnh sửa
+        tblThongKeNcc.setDefaultEditor(Object.class, null);
     }
 
     @SuppressWarnings("unchecked")

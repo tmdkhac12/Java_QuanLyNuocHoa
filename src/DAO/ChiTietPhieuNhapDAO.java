@@ -16,7 +16,7 @@ public class ChiTietPhieuNhapDAO {
 
         try {
             String sql = "SELECT ird.import_receipt_id, ird.perfume_id, ird.volume_id, ird.quantity, "
-                    + "pv.price AS cost, "
+                    + "pv.cost AS cost, "
                     + "p.name AS perfume_name, p.sex, p.concentration, b.name AS brand, v.size AS volume_size "
                     + "FROM importreceiptdetail ird "
                     + "JOIN perfume p ON ird.perfume_id = p.id "

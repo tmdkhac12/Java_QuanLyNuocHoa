@@ -7,6 +7,7 @@ import com.toedter.calendar.JDateChooser;
 import java.awt.BorderLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +29,7 @@ public class ThongKeKhachHang extends javax.swing.JPanel {
     public ThongKeKhachHang() {
         initComponents();
         initCustom();
+        setUpTable();
     }
 
     private void initCustom() {
@@ -70,6 +72,7 @@ public class ThongKeKhachHang extends javax.swing.JPanel {
             .filter(dto -> dto.getName().toLowerCase().contains(key))
             .collect(Collectors.toList());
 
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0");
         // 3) Đổ vào bảng
         model.setRowCount(0);
         int stt = 1;
@@ -79,7 +82,7 @@ public class ThongKeKhachHang extends javax.swing.JPanel {
                 dto.getId(),
                 dto.getName(),
                 dto.getQuantity(),
-                dto.getTotalAmount()
+                decimalFormat.format(dto.getTotalAmount())
             });
         }
 
@@ -108,6 +111,14 @@ private void centerTableData(javax.swing.JTable table) {
     private void exportToExcel(JTable table, String sheetName) {
         // Gọi ExcelExporter.export(table, sheetName) khi đã có util
         JOptionPane.showMessageDialog(this, "Xuất Excel: " + sheetName);
+    }
+
+    private void setUpTable() {
+        // Set ẩn hiển thị ô vuông khi bấm vào cell
+        tblThongKeKhachHang.setFocusable(false);
+
+        // Set không cho cell có thể chỉnh sửa
+        tblThongKeKhachHang.setDefaultEditor(Object.class, null);
     }
 
     @SuppressWarnings("unchecked")
