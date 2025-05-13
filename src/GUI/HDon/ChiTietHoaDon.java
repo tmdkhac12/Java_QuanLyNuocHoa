@@ -2,16 +2,27 @@ package GUI.HDon;
 
 import DAO.ChiTietHoaDonDAO;
 import DTO.ChiTietHoaDonDTO;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 /**
- *
  * @author hoang
  */
 public class ChiTietHoaDon extends javax.swing.JPanel {
@@ -47,12 +58,12 @@ public class ChiTietHoaDon extends javax.swing.JPanel {
         setLayout(new java.awt.BorderLayout());
 
         tblsanphamchitiet.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+                new Object[][]{
 
-            },
-            new String [] {
-                "Mã SP", "Tên SP", "Dung tích", "Giới tính", "Nồng độ", "Thương hiệu", "Giá bán", "Số lượng"
-            }
+                },
+                new String[]{
+                        "Mã SP", "Tên SP", "Dung tích", "Giới tính", "Nồng độ", "Thương hiệu", "Giá bán", "Số lượng"
+                }
         ));
         jScrollPane1.setViewportView(tblsanphamchitiet);
 
@@ -75,28 +86,28 @@ public class ChiTietHoaDon extends javax.swing.JPanel {
         javax.swing.GroupLayout pnlCenterLayout = new javax.swing.GroupLayout(pnlCenter);
         pnlCenter.setLayout(pnlCenterLayout);
         pnlCenterLayout.setHorizontalGroup(
-            pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlCenterLayout.createSequentialGroup()
-                .addGap(350, 350, 350)
-                .addComponent(btnExportPdf, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
-                .addComponent(btnhuy, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 431, Short.MAX_VALUE))
-            .addGroup(pnlCenterLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlCenterLayout.createSequentialGroup()
+                                .addGap(350, 350, 350)
+                                .addComponent(btnExportPdf, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(47, 47, 47)
+                                .addComponent(btnhuy, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 431, Short.MAX_VALUE))
+                        .addGroup(pnlCenterLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane1)
+                                .addContainerGap())
         );
         pnlCenterLayout.setVerticalGroup(
-            pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlCenterLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnhuy, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                    .addComponent(btnExportPdf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlCenterLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(btnhuy, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                                        .addComponent(btnExportPdf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap())
         );
 
         add(pnlCenter, java.awt.BorderLayout.CENTER);
@@ -110,15 +121,15 @@ public class ChiTietHoaDon extends javax.swing.JPanel {
         javax.swing.GroupLayout pnlTopLayout = new javax.swing.GroupLayout(pnlTop);
         pnlTop.setLayout(pnlTopLayout);
         pnlTopLayout.setHorizontalGroup(
-            pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlTopLayout.createSequentialGroup()
-                .addGap(421, 421, 421)
-                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(461, Short.MAX_VALUE))
+                pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlTopLayout.createSequentialGroup()
+                                .addGap(421, 421, 421)
+                                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(461, Short.MAX_VALUE))
         );
         pnlTopLayout.setVerticalGroup(
-            pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
         );
 
         add(pnlTop, java.awt.BorderLayout.PAGE_START);
@@ -126,6 +137,139 @@ public class ChiTietHoaDon extends javax.swing.JPanel {
 
     private void btnExportPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportPdfActionPerformed
         // TODO add your handling code here:
+        try {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Chọn nơi lưu file PDF");
+
+            // Đặt bộ lọc chỉ cho phép lưu file .pdf
+            fileChooser.setFileFilter(new FileNameExtensionFilter("PDF Files", "pdf"));
+
+            // Mở hộp thoại
+            int userSelection = fileChooser.showSaveDialog(null);
+
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File fileToSave = fileChooser.getSelectedFile();
+
+                // Đảm bảo file có đuôi .pdf
+                String filePath = fileToSave.getAbsolutePath();
+                if (!filePath.toLowerCase().endsWith(".pdf")) {
+                    filePath += ".pdf";
+                }
+
+                // khởi tạo một PdfWriter truyền vào document và FileOutputStream
+                Document document = new Document();
+                PdfWriter.getInstance(document, new FileOutputStream(filePath));
+                document.open();
+
+                PdfPTable table = new PdfPTable(7);
+                BaseFont baseFont = BaseFont.createFont("C:\\Windows\\Fonts\\arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                Font font = new Font(baseFont, 12);
+
+                // Font tiêu đề (to hơn, in đậm)
+                Font titleFont = new Font(baseFont, 18, Font.BOLD);
+                Font subTitleFont = new Font(baseFont, 14, Font.NORMAL);
+                Font smallFont = new Font(baseFont, 10, Font.ITALIC);
+
+                // Tiêu đề chính
+                Paragraph title = new Paragraph("CỬA HÀNG NƯỚC HOA", titleFont);
+                title.setAlignment(Element.ALIGN_CENTER);
+                title.setSpacingAfter(10);
+                document.add(title);
+
+                // Tiêu đề phụ
+                Paragraph subTitle = new Paragraph("HÓA ĐƠN BÁN HÀNG", subTitleFont);
+                subTitle.setAlignment(Element.ALIGN_CENTER);
+                subTitle.setSpacingAfter(20);
+                document.add(subTitle);
+
+                // Ngày giờ tạo hóa đơn
+                String currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date());
+                Paragraph dateInfo = new Paragraph("Ngày xuất: " + currentDate, smallFont);
+                dateInfo.setAlignment(Element.ALIGN_RIGHT);
+                dateInfo.setSpacingAfter(20);
+                document.add(dateInfo);
+
+
+                // Set column width
+                float[] columnWidths = {1f, 3f, 3f, 3f, 3f, 1f, 3f};
+                table.setWidths(columnWidths);
+
+                // Set headers
+                PdfPCell header1 = new PdfPCell(new Paragraph("STT"));
+                PdfPCell header2 = new PdfPCell(new Paragraph("Tên nước hoa", font));
+                PdfPCell header3 = new PdfPCell(new Paragraph("Dung tích", font));
+                PdfPCell header5 = new PdfPCell(new Paragraph("Nồng độ", font));
+                PdfPCell header7 = new PdfPCell(new Paragraph("Đơn giá", font));
+                PdfPCell header8 = new PdfPCell(new Paragraph("SL"));
+                PdfPCell header9 = new PdfPCell(new Paragraph("Thành tiền", font));
+
+                table.addCell(header1);
+                table.addCell(header2);
+                table.addCell(header3);
+                table.addCell(header5);
+                table.addCell(header7);
+                table.addCell(header8);
+                table.addCell(header9);
+
+                // Write file
+                ChiTietHoaDonDAO dao = new ChiTietHoaDonDAO();
+                List<ChiTietHoaDonDTO> chiTietList = dao.getChiTietHoaDonByMaHoaDon(invoiceId);
+                DecimalFormat decimalFormat = new DecimalFormat("#,##0");
+
+            /*
+                    detail.getPerfumeId(),
+                    detail.getPerfumeName(),
+                    detail.getVolumeSize(),
+                    detail.getSex(),
+                    detail.getConcentration(),
+                    detail.getBrand(),
+                    decimalFormat.format(detail.getPrice()),
+                    detail.getQuantity()
+             */
+
+                int i = 1;
+                double total = 0;
+                for (ChiTietHoaDonDTO detail : chiTietList) {
+                    total += detail.getPrice() * detail.getQuantity();
+
+                    PdfPCell data1 = new PdfPCell(new Paragraph(Integer.toString(i)));
+                    PdfPCell data2 = new PdfPCell(new Paragraph(detail.getPerfumeName()));
+                    PdfPCell data3 = new PdfPCell(new Paragraph(detail.getVolumeSize()));
+                    PdfPCell data5 = new PdfPCell(new Paragraph(detail.getConcentration()));
+                    PdfPCell data7 = new PdfPCell(new Paragraph(decimalFormat.format(detail.getPrice())));
+                    PdfPCell data8 = new PdfPCell(new Paragraph(Integer.toString(detail.getQuantity())));
+                    PdfPCell data9 = new PdfPCell(new Paragraph(decimalFormat.format(detail.getPrice() * detail.getQuantity())));
+
+                    table.addCell(data1);
+                    table.addCell(data2);
+                    table.addCell(data3);
+                    table.addCell(data5);
+                    table.addCell(data7);
+                    table.addCell(data8);
+                    table.addCell(data9);
+
+                    i++;
+                }
+
+                Font boldFont = new Font(baseFont, 12, Font.BOLD);
+                PdfPCell data3 = new PdfPCell(new Paragraph("Thành tiền:", boldFont));
+                data3.setColspan(6);
+                PdfPCell data9 = new PdfPCell(new Paragraph(decimalFormat.format(total), boldFont));
+
+                table.addCell(data3);
+                table.addCell(data9);
+
+                document.add(table);
+
+                // đóng file
+                JOptionPane.showMessageDialog(this, "Xuất file PDF thành công!");
+                document.close();
+            }
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnExportPdfActionPerformed
 
     private void btnhuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhuyActionPerformed
@@ -133,10 +277,10 @@ public class ChiTietHoaDon extends javax.swing.JPanel {
     }//GEN-LAST:event_btnhuyActionPerformed
 
     private void setUpTable() {
-        // Set ẩn hiển thị ô vuông khi bấm vào cell 
+        // Set ẩn hiển thị ô vuông khi bấm vào cell
         tblsanphamchitiet.setFocusable(false);
 
-        // Set không cho cell có thể chỉnh sửa 
+        // Set không cho cell có thể chỉnh sửa
         tblsanphamchitiet.setDefaultEditor(Object.class, null);
     }
 
@@ -157,17 +301,17 @@ public class ChiTietHoaDon extends javax.swing.JPanel {
         model.setRowCount(0); // Clear bảng
 
         DecimalFormat decimalFormat = new DecimalFormat("#,##0");
-        
+
         for (ChiTietHoaDonDTO detail : chiTietList) {
             model.addRow(new Object[]{
-                detail.getPerfumeId(),
-                detail.getPerfumeName(),
-                detail.getVolumeSize(),
-                detail.getSex(),
-                detail.getConcentration(),
-                detail.getBrand(),
-                decimalFormat.format(detail.getPrice()),
-                detail.getQuantity()
+                    detail.getPerfumeId(),
+                    detail.getPerfumeName(),
+                    detail.getVolumeSize(),
+                    detail.getSex(),
+                    detail.getConcentration(),
+                    detail.getBrand(),
+                    decimalFormat.format(detail.getPrice()),
+                    detail.getQuantity()
             });
         }
     }
